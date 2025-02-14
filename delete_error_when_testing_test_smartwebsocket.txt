@@ -1,0 +1,4 @@
+/home/sinhurry/Documents/GitHub/Algo_Test/.algo/lib/python3.10/site-packages/logzero/__init__.py:433: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/sinhurry/Documents/GitHub/Algo_Test/logs/2025-02-14/app.log' mode='a' encoding='UTF-8'>
+  __remove_internal_loggers(logger, disableStderrLogger)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+....

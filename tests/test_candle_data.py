@@ -5,7 +5,7 @@ import json
 import pandas as pd
 
 # credentials
-from src import config as dd
+from base import config as cnf
 
 # Constants
 TRADING_SYMBOL = "SBIN-EQ"  # Replace with the desired future symbol
@@ -13,12 +13,12 @@ EXCHANGE = "NSE"
 SYMBOL_TOKEN = "3045"
 
 # ✅ Replace with your Angel Broking credentials
-API_KEY = dd.API_KEY
-CLIENT_ID = dd.CLIENT_ID
-PASSWORD = dd.PASSWORD
+API_KEY = cnf.API_KEY
+CLIENT_ID = cnf.CLIENT_ID
+PASSWORD = cnf.PASSWORD
 
 # totp
-totp = pyotp.TOTP(dd.TOTP)
+totp = pyotp.TOTP(cnf.TOTP)
 totp = totp.now()
 
 # ✅ Login to SmartAPI

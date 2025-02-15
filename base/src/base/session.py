@@ -3,7 +3,7 @@ from SmartApi.smartConnect import SmartConnect
 import pyotp
 
 # credentials
-from . import config as cnf
+from base import config as cnf
 
 class Session:
 

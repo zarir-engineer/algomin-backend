@@ -7,8 +7,8 @@
 import unittest
 from unittest.mock import patch
 from SmartApi.smartWebSocketV2 import SmartWebSocketV2
-from src import config as cnf
-from src.session import Session
+from base import config as cnf
+from base.session import Session
 
 
 class TestSmartWebSocketV2(unittest.TestCase):

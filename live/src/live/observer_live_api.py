@@ -19,8 +19,8 @@ import plotly.graph_objects as go
 from SmartApi.smartWebSocketV2 import SmartWebSocketV2
 
 # custom modules
-from src import config as cnf
-from src.session import Session
+from base import config as cnf
+from base.session import Session
 
 
 # instance of session

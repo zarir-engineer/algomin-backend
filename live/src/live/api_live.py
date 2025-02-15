@@ -1,6 +1,6 @@
 import websocket
 import json
-from src import config as dd
+from base import config as cnf
 import pyotp
 
 TRADING_SYMBOL = "SBIN-EQ"  # Replace with the desired future symbol
@@ -29,7 +29,7 @@ def on_close(ws, close_status_code, close_msg):
 def on_open(ws):
     """Send a subscription request when the WebSocket connection opens."""
     print("WebSocket Connected")
-    _totp = pyotp.TOTP(dd.TOTP)
+    _totp = pyotp.TOTP(cnf.TOTP)
     YOUR_ACCESS_TOKEN = _totp.now()
 
     # Example subscription payload (modify as per Angel Broking API documentation)

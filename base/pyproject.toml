@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "base"
+version = "0.1.1"
+description = "common module used by multiple packages"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [{ name = "Ni Si", email = "singhai.nish@gmail.com" }]
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["base"]

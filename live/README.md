@@ -1,36 +1,35 @@
-Metadata-Version: 2.2
-Name: algomin
-Version: 0.1.0
-Summary: A brief description of your package
-Author-email: Nishith Singhai <singhai.nish@gmail.com>, Pravin Vhatkar <your.email@example.com>
-License: MIT
-Project-URL: homepage, https://yourprojecthomepage.com
-Project-URL: repository, https://github.com/vhatkar/Algo_Test
-Project-URL: documentation, https://yourprojectdocs.com
-Classifier: Programming Language :: Python :: 3
-Classifier: License :: OSI Approved :: MIT License
-Classifier: Operating System :: OS Independent
-Requires-Python: >=3.8
-Description-Content-Type: text/markdown
-License-File: LICENSE
-Requires-Dist: requests>=2.31.0
-Requires-Dist: numpy>=1.25.2
-Requires-Dist: certifi>=2025.1.31
-Requires-Dist: charset-normalizer>=3.4.1
-Requires-Dist: idna>=3.10
-Requires-Dist: logzero>=1.7.0
-Requires-Dist: pandas>=2.0.3
-Requires-Dist: pyotp>=2.9.0
-Requires-Dist: python-dateutil>=2.9.0.post0
-Requires-Dist: pytz>=2025.1
-Requires-Dist: six>=1.17.0
-Requires-Dist: smartapi-python>=1.5.4
-Requires-Dist: tabulate>=0.9.0
-Requires-Dist: tzdata>=2025.1
-Requires-Dist: urllib3>=2.3.0
-Requires-Dist: websocket-client>=1.6.4
-Requires-Dist: plotly>=6.0.0
-Requires-Dist: setuptools>=75.8.0
+> project_name/
+        ├── package_one/
+        │   ├── pyproject.toml
+        │   └── src/
+        │       └── package_one/
+        │           └── __init__.py
+        ├── package_two/
+        │   ├── pyproject.toml
+        │   └── src/
+        │       └── package_two/
+        │           └── __init__.py
+        └── shared_module/
+            ├── pyproject.toml
+            └── src/
+                └── shared_module/
+                    └── __init__.py
+
+
+> project_name/
+        ├── package_one/
+        │   ├── src/
+        │   │   ├── package_one/
+        │   │   │   ├── __init__.py
+        │   │   │   ├── module1.py
+        │   │   │   ├── module2.py
+        ├── package_two/
+        │   ├── src/
+        │   │   ├── package_two/
+        │   │   │   ├── __init__.py
+        │   │   │   ├── moduleA.py
+        │   │   │   ├── moduleB.py
+
 
 # Algo_Test
 > Installation

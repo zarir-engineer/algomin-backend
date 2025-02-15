@@ -21,7 +21,7 @@
 
 import unittest
 from unittest.mock import patch
-from live import SmartWebSocketV2Client
+from live.observer_live_api import SmartWebSocketV2Client
 
 class TestSmartWebSocketV2(unittest.TestCase):
     def setUp(self):

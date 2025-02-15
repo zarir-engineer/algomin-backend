@@ -4,7 +4,51 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6dd9c6d9-38f6-4a34-863d-a92053a1a1e8" name="Changes" comment="" />
+    <list default="true" id="6dd9c6d9-38f6-4a34-863d-a92053a1a1e8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Thing.egg-info/PKG-INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Thing.egg-info/SOURCES.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Thing.egg-info/dependency_links.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Thing.egg-info/requires.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Thing.egg-info/top_level.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UNKNOWN.egg-info/PKG-INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UNKNOWN.egg-info/SOURCES.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UNKNOWN.egg-info/dependency_links.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UNKNOWN.egg-info/top_level.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/2025-02-11/app.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/2025-02-14/app.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/test_api_live.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/test_candle_data_results.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/test_candle_data_results_02.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/test_candledata_to_dataframe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algomin.egg-info/PKG-INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algomin.egg-info/SOURCES.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algomin.egg-info/dependency_links.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algomin.egg-info/requires.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algomin.egg-info/top_level.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/historical/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/historical/ema_indicator_query.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/line_command.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/live/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/live/api_live.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/live/live_using_smartwebsocketv2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/live/observer_live_api.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/patterns/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/patterns/sample_observer_pattern.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/patterns/test_sample_observer_pattern.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/session.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/using_smartwebsocketv2/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/using_smartwebsocketv2/auto_authenticate.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/using_smartwebsocketv2/real_time_ltp.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_candle_data.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_observer_live_api.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_smartwebsocket.py" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,17 +75,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/sinhurry/Documents/GitHub/algomin",
-    "settings.editor.selected.configurable": "settings.sync"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/sinhurry/Documents/GitHub/algomin&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/historical" />

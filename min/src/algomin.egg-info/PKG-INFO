@@ -30,6 +30,7 @@ Requires-Dist: tzdata>=2025.1
 Requires-Dist: urllib3>=2.3.0
 Requires-Dist: websocket-client>=1.6.4
 Requires-Dist: plotly>=6.0.0
+Requires-Dist: setuptools>=75.8.0
 
 # Algo_Test
 > Installation

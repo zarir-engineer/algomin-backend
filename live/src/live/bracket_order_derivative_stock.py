@@ -77,16 +77,18 @@ class BracketOrderStock(LoadConf):
     def execute(self):
         print(f"Executing {self.__class__} with config {self.config_file}")
         order_params = self.load_config()
-        order_response = self.current_session.smart_api.placeOrder(order_params)
-        return order_response
+        print(f"bracket order params :  {order_params}")
+        # order_response = self.current_session.smart_api.placeOrder(order_params)
+        # return order_response
 
 
 class BracketOrderDerivative(LoadConf):
     def execute(self):
         print(f"Executing {self.__class__} Order with config {self.config_file}")
         order_params = self.load_config()
-        order_response = self.current_session.smart_api.placeOrder(order_params)
-        return order_response
+        print(f"derivative order params : {order_params}")
+        # order_response = self.current_session.smart_api.placeOrder(order_params)
+        # return order_response
 
 
 class OrderFactory:

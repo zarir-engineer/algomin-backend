@@ -21,8 +21,10 @@ from abc import ABC, abstractmethod
 class LoadConf(ABC):
     def __init__(self, file_type_config):
         # Get the absolute path of the YAML file within the package
+        super().__init__()
         _package_dir = Path(__file__).resolve().parent.parent
         self.config_file = os.path.join(_package_dir, "data", file_type_config)
+        self.current_session = Session()
 
     def load_config(self):
         """Load YAML configuration file."""
@@ -47,6 +49,12 @@ class LoadConf(ABC):
     def execute(self):
         pass
 
+    def verify_login(self):
+        # Step 1: Fetch User Profile to verify login
+        _client_id = self.current_session.smart_api.cnf.CLIENT_ID
+        profile = self.current_session.smart_api.getProfile(_client_id)
+        return profile
+
 
 class MarketOrder(LoadConf):
     def execute(self):
@@ -65,7 +73,7 @@ class StopLossOrder(LoadConf):
 
 class BracketOrderStock(LoadConf):
     def execute(self):
-        return "Executing Bracket Order with config {self.config_file} "
+        print(f"Executing Bracket Order with config {self.config_file}")
         order_params = self.load_config()
         order_response = self.current_session.smart_api.placeOrder(order_params)
         return order_response
@@ -73,7 +81,7 @@ class BracketOrderStock(LoadConf):
 
 class BracketOrderDerivative(LoadConf):
     def execute(self):
-        return "Executing Derivative Order with config {self.config_file}"
+        print(f"Executing Derivative Order with config {self.config_file}")
         order_params = self.load_config()
         order_response = self.current_session.smart_api.placeOrder(order_params)
         return order_response
@@ -93,7 +101,7 @@ class OrderFactory:
         if order_type.lower() in orders:
             return orders[order_type.lower()](conf_type)
         else:
-            raise ValueError(f"Unknown shape type: {order_type}")
+            raise ValueError(f"Unknown order type: {order_type}")
 
 
 if __name__ == "__main__":
@@ -105,10 +113,3 @@ if __name__ == "__main__":
         print(order.execute())
     except ValueError as e:
         print(e)
-
-
-def verify_login(self):
-    # Step 1: Fetch User Profile to verify login
-    _client_id = self.smart_api.cnf.CLIENT_ID
-    profile = self.smart_api.getProfile(_client_id)
-    return profile

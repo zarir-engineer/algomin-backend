@@ -5,22 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6dd9c6d9-38f6-4a34-863d-a92053a1a1e8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/INSTALL.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/live/src/data/bo_derivative_data.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/live/src/data/bo_stock_data.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/live/src/data/common.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/live/src/live/bracket_order_derivative.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/live/src/live/bracket_order_derivative_stock.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/live/src/live/bracket_order_stock.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/live/src/live/normal_order_derivative_stock.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/src/base/session.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/src/base/session.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/live_using_smartwebsocketv2.py" beforeDir="false" afterPath="$PROJECT_DIR$/live/src/live/using_smartwebsocketv2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/order.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_candle_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_candle_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/live/src/live/bracket_order_derivative_stock.py" beforeDir="false" afterPath="$PROJECT_DIR$/live/src/live/bracket_order_derivative_stock.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

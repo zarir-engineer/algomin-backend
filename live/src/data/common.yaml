@@ -1,0 +1,6 @@
+
+common:  # order basic
+    exchange: "NFO",  # NSE Derivative Segment
+    producttype: "INTRADAY",  # Bracket Order only supports INTRADAY
+    duration: "DAY"
+    ordertype: "LIMIT",   # LIMIT or MARKET

@@ -3,7 +3,8 @@ from SmartApi.smartConnect import SmartConnect
 import pyotp
 
 # credentials
-from base import config as cnf
+from base import config as cnf          # Your API credentials from config
+
 
 class Session:
 

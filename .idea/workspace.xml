@@ -4,7 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6dd9c6d9-38f6-4a34-863d-a92053a1a1e8" name="Changes" comment="" />
+    <list default="true" id="6dd9c6d9-38f6-4a34-863d-a92053a1a1e8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/INSTALL.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/live/src/data/bo_derivative_data.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/live/src/data/bo_stock_data.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/live/src/data/common.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/live/src/live/bracket_order_derivative.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/live/src/live/bracket_order_derivative_stock.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/live/src/live/bracket_order_stock.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/live/src/live/normal_order_derivative_stock.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/src/base/session.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/src/base/session.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/live/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/live/src/live/live_using_smartwebsocketv2.py" beforeDir="false" afterPath="$PROJECT_DIR$/live/src/live/using_smartwebsocketv2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/live/src/live/order.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_candle_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_candle_data.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,29 +48,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/sinhurry/Documents/GitHub/algomin/historical&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/sinhurry/Documents/GitHub/algomin/live/src/live",
+    "settings.editor.selected.configurable": "settings.sync"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/live/src/live" />
       <recent name="$PROJECT_DIR$/historical" />
       <recent name="$PROJECT_DIR$/base" />
       <recent name="$PROJECT_DIR$/live" />
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/" />
+      <recent name="$PROJECT_DIR$/live" />
+      <recent name="$PROJECT_DIR$/live/src" />
       <recent name="$PROJECT_DIR$/live/src/live" />
       <recent name="$PROJECT_DIR$/historical/src/historical" />
-      <recent name="$PROJECT_DIR$/live" />
-      <recent name="$PROJECT_DIR$/src" />
-      <recent name="$PROJECT_DIR$/src/min/base" />
     </key>
   </component>
   <component name="SharedIndexes">

@@ -16,3 +16,4 @@ urllib3==2.3.0
 websocket-client==1.6.4
 plotly==6.0.0
 setuptools==75.8.0
+yaml==6.0.2

@@ -26,7 +26,7 @@ class LoadConf(ABC):
         super().__init__()
         _package_dir = Path(__file__).resolve().parent.parent
         self.config_file = os.path.join(_package_dir, "data", file_type_config)
-        # self.current_session = Session()
+        self.current_session = Session()
 
     def load_config(self):
         """Load YAML configuration file."""

@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6dd9c6d9-38f6-4a34-863d-a92053a1a1e8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/error.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/live/src/data/bo_derivative_data.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/live/src/data/bo_derivative_data.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/live/src/data/bo_stock_data.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/live/src/data/bo_stock_data.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/live/src/live/bracket_order_derivative_stock.py" beforeDir="false" afterPath="$PROJECT_DIR$/live/src/live/bracket_order_derivative_stock.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

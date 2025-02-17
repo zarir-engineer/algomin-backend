@@ -1,3 +1,5 @@
+# command : python -m live.bracket_order_derivative_stock
+
 from base.session import Session
 import yaml
 import os
@@ -24,7 +26,7 @@ class LoadConf(ABC):
         super().__init__()
         _package_dir = Path(__file__).resolve().parent.parent
         self.config_file = os.path.join(_package_dir, "data", file_type_config)
-        self.current_session = Session()
+        # self.current_session = Session()
 
     def load_config(self):
         """Load YAML configuration file."""
@@ -73,7 +75,7 @@ class StopLossOrder(LoadConf):
 
 class BracketOrderStock(LoadConf):
     def execute(self):
-        print(f"Executing Bracket Order with config {self.config_file}")
+        print(f"Executing {self.__class__} with config {self.config_file}")
         order_params = self.load_config()
         order_response = self.current_session.smart_api.placeOrder(order_params)
         return order_response
@@ -81,7 +83,7 @@ class BracketOrderStock(LoadConf):
 
 class BracketOrderDerivative(LoadConf):
     def execute(self):
-        print(f"Executing Derivative Order with config {self.config_file}")
+        print(f"Executing {self.__class__} Order with config {self.config_file}")
         order_params = self.load_config()
         order_response = self.current_session.smart_api.placeOrder(order_params)
         return order_response
@@ -105,9 +107,10 @@ class OrderFactory:
 
 
 if __name__ == "__main__":
-    order_type = input("Enter Order type (stock/derivative/market/Limit/StopLoss): ").strip().lower()
-    conf_type = input("Enter config type: ").strip().lower()
-
+    order_type = input("Enter Order type (bostock/boderivative/market/Limit/StopLoss): ").strip().lower()
+    conf_type = input("Enter config type (bo_stock_data.yaml/bo_derivative_data.yaml): ").strip().lower()
+    print('+++ order type : ', order_type)
+    print('+++ conf type : ', conf_type)
     try:
         order = OrderFactory.create_order(order_type, conf_type)
         print(order.execute())

@@ -4,6 +4,8 @@ import pandas as pd
 # config
 from src import config as cnf, session
 
+from base import config as cnf
+from base import session
 
 class EMA(session.Session):
     # Constants
@@ -13,6 +15,7 @@ class EMA(session.Session):
 
     def __init__(self):
         super().__init__()
+
 
     def get_historical_data(self, symbol, interval, duration):
         """Fetch historical data to calculate EMA."""

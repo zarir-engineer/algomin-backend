@@ -6,10 +6,12 @@ sess = Session()
 AUTH_TOKEN = sess.auth_token()
 FEED_TOKEN = sess.feed_token()
 
-sws = SmartWebSocketV2(AUTH_TOKEN, cnf.API_KEY, cnf.CLIENT_ID, FEED_TOKEN, max_retry_attempt=5)
+sws = SmartWebSocketV2(AUTH_TOKEN, cnf.API_KEY, cnf.CLIENT_ID, FEED_TOKEN, max_retry_attempt=3)
 
 def on_open(wsapp):
     print("✅ WebSocket Opened!")
+    test_message = "Just Testing ..."
+    wsapp.on_data(None, test_message)
     sws.close_connection()  # Immediately close after test
 
 def on_close(wsapp):

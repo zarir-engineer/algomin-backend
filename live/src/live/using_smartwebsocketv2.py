@@ -23,6 +23,7 @@ sess = Session()
 AUTH_TOKEN = sess.auth_token()
 FEED_TOKEN = sess.feed_token()
 
+stop_event = threading.Event()
 
 sws = SmartWebSocketV2(AUTH_TOKEN, cnf.API_KEY, cnf.CLIENT_ID, FEED_TOKEN, max_retry_attempt=5)
 
@@ -123,6 +124,14 @@ sws.on_error = on_error
 # or
 threading.Thread(target=sws.connect).start()
 
+# Let it run for 5 seconds
+time.sleep(5)
+stop_event.set()  # Signal the thread to stop
+
+
+# Ensure thread stops before continuing
+t.join()
+print("Main program finished.")
 
 def live_chart():
     """Updates the chart in real-time."""

@@ -17,7 +17,6 @@ from pathlib import Path
     appropriate instance.    
 """
 
-
 from abc import ABC, abstractmethod
 
 class LoadConf(ABC):

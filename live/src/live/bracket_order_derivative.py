@@ -12,7 +12,6 @@
 
 from base.session import Session
 from base import config as cnf
-from live.bracket_order_stock import current_session
 
 current_session = Session()
 

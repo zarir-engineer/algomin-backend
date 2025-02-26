@@ -134,15 +134,16 @@ t.join()
 print("Main program finished.")
 
 def live_chart():
-    """Updates the chart in real-time."""
     fig = go.Figure()
 
     while True:
         if len(data_queue) > 0:
-            df = pd.DataFrame(list(data_queue))
+            df = pd.DataFrame([row.split(", ") for row in data_queue], columns=["Exchange Type", "Token", "LTP", "Timestamp"])
+            df["Timestamp"] = pd.to_datetime(df["Timestamp"])
+            df["LTP"] = df["LTP"].str.extract(r"([\d.]+)").astype(float)
 
             fig.data = []  # Clear old data
-            fig.add_trace(go.Scatter(x=df["timestamp"], y=df["price"], mode="lines", name="LTP"))
+            fig.add_trace(go.Scatter(x=df["Timestamp"], y=df["LTP"], mode="lines", name="LTP"))
             fig.update_layout(title="Live Market Price", xaxis_title="Time", yaxis_title="Price")
             fig.show()
 

@@ -4,11 +4,11 @@ import json
 import unittest
 from unittest.mock import patch
 from collections import deque
-from datetime import datetime
+import datetime
 import pytz
 
 # Import the classes
-from your_module import LoggerObserver, AlertObserver, SmartWebSocketV2Client
+from live.observer_live_api import LoggerObserver, AlertObserver, EmailAlertObserver, MongoDBObserver, SmartWebSocketV2Client
 
 class TestObservers(unittest.TestCase):
 
@@ -29,6 +29,20 @@ class TestObservers(unittest.TestCase):
         mock_print.assert_called_with('+++ data ', {"price": 1500})
         # Uncomment below if you want to check alert logic
         # mock_print.assert_any_call("[Alert] Price exceeded 1000:", 1500)
+
+    @patch('builtins.print')
+    def test_email_alert_observer(self, mock_print):
+        observer = EmailAlertObserver()
+        message = json.dumps({"price": 1500})
+        observer.update(message)
+        mock_print.assert_called_with('[Email Alert] Sending email to pvhatkar@gmail.com: Price has exceeded 1000. Current price: 1500')
+
+    @patch('builtins.print')
+    def test_mongodb_observer(self, mock_print):
+        observer = MongoDBObserver()
+        message = json.dumps({"price": 1500})
+        observer.update(message)
+        mock_print.assert_called_with("[MongoDB] Message saved:", message)
 
 class TestSmartWebSocketV2Client(unittest.TestCase):
 
@@ -63,7 +77,7 @@ class TestTimestampConversion(unittest.TestCase):
         client = SmartWebSocketV2Client()
         test_message = {"exchange_timestamp": 1700000000000}  # Milliseconds
 
-        expected_time = datetime.utcfromtimestamp(1700000000).replace(tzinfo=pytz.utc).astimezone(pytz.timezone('Asia/Kolkata')).strftime('%Y-%m-%d %H:%M:%S')
+        expected_time = datetime.datetime.utcfromtimestamp(1700000000).replace(tzinfo=pytz.utc).astimezone(pytz.timezone('Asia/Kolkata')).strftime('%Y-%m-%d %H:%M:%S')
 
         result = client.time_stamp(None, test_message)
 

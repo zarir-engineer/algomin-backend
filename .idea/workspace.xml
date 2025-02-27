@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6dd9c6d9-38f6-4a34-863d-a92053a1a1e8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/tests/test_observer_smartwebsocketclient.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/bracket_order_derivative.py" beforeDir="false" afterPath="$PROJECT_DIR$/live/src/live/bracket_order_derivative.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/bracket_order_derivative_stock.py" beforeDir="false" afterPath="$PROJECT_DIR$/live/src/live/bracket_order_derivative_stock.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/using_smartwebsocketv2.py" beforeDir="false" afterPath="$PROJECT_DIR$/live/src/live/using_smartwebsocketv2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/live/src/live/observer_live_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/live/src/live/observer_live_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_observer_smartwebsocketclient.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_observer_smartwebsocketclient.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

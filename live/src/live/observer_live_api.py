@@ -15,6 +15,7 @@ import threading
 import pandas as pd
 from logzero import logger
 from collections import deque
+from pymongo import MongoClient
 import plotly.graph_objects as go
 from SmartApi.smartWebSocketV2 import SmartWebSocketV2
 
@@ -49,6 +50,52 @@ class AlertObserver(WebSocketObserver):
         # if "price" in data and data["price"] > 1000:  # Example condition
         #     print("[Alert] Price exceeded 1000:", data["price"])
 
+
+# Concrete Observer: Sends an email alert when price exceeds 1000
+class EmailAlertObserver(WebSocketObserver):
+    def update(self, message):
+        data = json.loads(message)
+        if "price" in data and data["price"] > 1000:
+            self.send_email_alert(data["price"])
+
+    def send_email_alert(self, price):
+        sender = "singhai.nish@gmail.com"
+        receiver = "pvhatkar@gmail.com"
+        subject = "Price Alert!"
+        body = f"Price has exceeded 1000. Current price: {price}"
+
+        message = f"Subject: {subject}\n\n{body}"
+
+        # Simulating email sending
+        print(f"[Email Alert] Sending email to {receiver}: {body}")
+        # Uncomment below to send actual email (requires SMTP setup)
+        # with smtplib.SMTP("smtp.example.com", 587) as server:
+        #     server.starttls()
+        #     server.login(sender, "your_password")
+        #     server.sendmail(sender, receiver, message)
+
+
+# Concrete Observer: Stores messages in MongoDB
+class MongoDBObserver(WebSocketObserver):
+    def __init__(self, db_name="websocketDB", collection_name="messages"):
+        self.client = MongoClient("mongodb://localhost:27017/")  # Connect to local MongoDB
+        self.db = self.client[db_name]  # Select database
+        self.collection = self.db[collection_name]  # Select collection
+
+    def update(self, message):
+        """Store message data in MongoDB."""
+        data = json.loads(message)
+        self.collection.insert_one(data)  # Insert data into MongoDB
+        print("[MongoDB] Message saved:", data)
+
+    def get_all_messages(self):
+        """Fetch all stored messages from MongoDB."""
+        return list(self.collection.find({}, {"_id": 0}))  # Exclude MongoDB's default '_id' field
+
+
+'''
+ws_client.add_observer(ml_observer)  # ML price prediction
+'''
 
 class SmartWebSocketV2Client:
     ACTION = "subscribe"
@@ -85,7 +132,7 @@ class SmartWebSocketV2Client:
     def time_stamp(self, wsapp, message):
         # Convert timestamp from milliseconds to seconds
         timestamp = message['exchange_timestamp'] / 1000  # Convert to seconds
-        utc_time = datetime.utcfromtimestamp(timestamp)
+        utc_time = datetime.datetime.utcfromtimestamp(timestamp)
 
         # Define the timezone for UTC +05:30
         timezone = pytz.timezone('Asia/Kolkata')  # 'Asia/Kolkata' is the timezone for UTC +05:30
@@ -186,22 +233,6 @@ class SmartWebSocketV2Client:
         # except Exception as e:
         #     print(f"Error fetching candle data: {str(e)}")
         # return _flag
-
-    # def live_chart(self):
-    #     """Updates the chart in real-time."""
-    #     fig = go.Figure()
-    #
-    #     while True:
-    #         if len(self.data_queue) > 0:
-    #             df = pd.DataFrame(list(self.data_queue))
-    #
-    #             fig.data = []  # Clear old data
-    #             fig.add_trace(go.Scatter(x=df["timestamp"], y=df["last_traded_price"], mode="lines", name="LTP"))
-    #             fig.update_layout(title="Live Market Price", xaxis_title="Time", yaxis_title="Price")
-    #             fig.show()
-    #
-    #         time.sleep(2)  # Update every 2 seconds
-
 
     def live_chart(self):
         fig = go.Figure()

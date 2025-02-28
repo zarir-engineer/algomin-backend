@@ -12,6 +12,7 @@ import pytz
 import time
 import datetime
 import threading
+import subprocess
 import pandas as pd
 from logzero import logger
 from collections import deque
@@ -78,9 +79,39 @@ class EmailAlertObserver(WebSocketObserver):
 # Concrete Observer: Stores messages in MongoDB
 class MongoDBObserver(WebSocketObserver):
     def __init__(self, db_name="websocketDB", collection_name="messages"):
-        self.client = MongoClient("mongodb://localhost:27017/")  # Connect to local MongoDB
+        # self.client = MongoClient("mongodb://localhost:27017/")  # Connect to local MongoDB
+        self.client = self.run_mongodb()
         self.db = self.client[db_name]  # Select database
         self.collection = self.db[collection_name]  # Select collection
+
+    def is_mongodb_running(self):
+        """Check if MongoDB is running using systemctl status."""
+        try:
+            subprocess.run(["systemctl", "is-active", "--quiet", "mongod"])
+            return True
+        except subprocess.CalledProcessError:
+            return False
+
+    def start_mongodb(self):
+        """Start MongoDB service if not running."""
+        print("Starting MongoDB...")
+        subprocess.run(["sudo", "systemctl", "start", "mongod"])
+        time.sleep(5)  # Give MongoDB time to start
+
+
+    def run_mongodb(self):
+        # Ensure MongoDB is running
+        if not self.is_mongodb_running():
+            self.start_mongodb()
+
+        # Connect to MongoDB
+        try:
+            client = MongoClient("mongodb://localhost:27017/")
+            print("Connected to MongoDB successfully!")
+            print("Databases:", client.list_database_names())
+        except Exception as e:
+            print("Failed to connect to MongoDB:", e)
+        return client
 
     def update(self, message):
         """Store message data in MongoDB."""

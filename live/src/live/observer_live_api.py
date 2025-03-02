@@ -5,7 +5,6 @@
 # CLIENT_ID from cnf
 # FEED_TOKEN from session
 ##########################################################
-
 # system modules
 import json
 import pytz
@@ -23,12 +22,6 @@ from SmartApi.smartWebSocketV2 import SmartWebSocketV2
 # custom modules
 from base import config as cnf
 from base.session import Session
-
-
-# instance of session
-sess = Session() # get smart_api
-AUTH_TOKEN = sess.auth_token()
-FEED_TOKEN = sess.feed_token()
 
 
 # Observer Interface
@@ -129,6 +122,19 @@ ws_client.add_observer(ml_observer)  # ML price prediction
 '''
 
 class SmartWebSocketV2Client:
+    # get smart_api
+    _session = None
+
+    @property
+    def session(self):
+        if self._session is None:  # Only initialize when accessed
+            print("Initializing session...")
+            self._session = Session()
+            self.AUTH_TOKEN = self._session.auth_token()
+            self.FEED_TOKEN = self._session.feed_token()
+        return self._session
+
+
     ACTION = "subscribe"
     FEED_TYPE = "ltp"
     YOUR_ACCESS_TOKEN = cnf.TOTP
@@ -150,6 +156,7 @@ class SmartWebSocketV2Client:
     data_queue = deque(maxlen=50)  # Store the last 50 data points
 
     def __init__(self):
+        # instance of session
         self.observers = []
         self.sws = None
 
@@ -226,10 +233,10 @@ class SmartWebSocketV2Client:
     def start(self):
 
         self.sws = SmartWebSocketV2(
-            self.auth_token,
+            self.AUTH_TOKEN,
             self.api_key,
             self.client_id,
-            self.feed_token,
+            self.FEED_TOKEN,
             max_retry_attempt=5
         )
 
@@ -237,11 +244,11 @@ class SmartWebSocketV2Client:
         self.sws.on_open = self.on_open
         self.sws.on_close = self.on_close
         self.sws.on_error = self.on_error
-        # Run WebSocket in a separate thread to keep the main thread free
-        thread = threading.Thread(target=self.sws.run_forever, daemon=True)
-        # or
-        thread = threading.Thread(target=self.sws.connect)
-        thread.start()
+        # # Run WebSocket in a separate thread to keep the main thread free
+        # thread = threading.Thread(target=self.sws.run_forever, daemon=True)
+        # # or
+        # thread = threading.Thread(target=self.sws.connect)
+        # thread.start()
 
     def get_latest_close_greater_than_ema(self, _live_data, time_interval, start_date, end_date):
         # _flag = None
@@ -288,3 +295,4 @@ class SmartWebSocketV2Client:
 # swsc.start()
 # # Run the live chart function
 # swsc.live_chart()
+

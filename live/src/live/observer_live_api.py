@@ -72,10 +72,14 @@ class EmailAlertObserver(WebSocketObserver):
 # Concrete Observer: Stores messages in MongoDB
 class MongoDBObserver(WebSocketObserver):
     def __init__(self, db_name="websocketDB", collection_name="messages"):
-        # self.client = MongoClient("mongodb://localhost:27017/")  # Connect to local MongoDB
         self.client = self.run_mongodb()
         self.db = self.client[db_name]  # Select database
         self.collection = self.db[collection_name]  # Select collection
+        # Integrating other observers
+        self.logger_observer = LoggerObserver()
+        self.alert_observer = AlertObserver()
+        self.logger_observer.update('+++ client ', self.client, '\n\ndb :', self.db, '\n\ncollection : ', self.collection)
+
 
     def is_mongodb_running(self):
         """Check if MongoDB is running using systemctl status."""
@@ -87,15 +91,24 @@ class MongoDBObserver(WebSocketObserver):
 
     def start_mongodb(self):
         """Start MongoDB service if not running."""
-        print("Starting MongoDB...")
-        subprocess.run(["sudo", "systemctl", "start", "mongod"])
-        time.sleep(5)  # Give MongoDB time to start
+        try:
+            print("Starting MongoDB...")
+            subprocess.run(["sudo", "systemctl", "start", "mongod"])
+            time.sleep(5)  # Give MongoDB time to start
+            return True
+        except subprocess.CalledProcessError:
+            return False
 
+    def stop_mongodb(self):
+        print("Stopping MongoDB...")
+        pass
 
     def run_mongodb(self):
         # Ensure MongoDB is running
         if not self.is_mongodb_running():
             self.start_mongodb()
+        else:
+            print('+++ Already running ')
 
         # Connect to MongoDB
         try:
@@ -107,10 +120,12 @@ class MongoDBObserver(WebSocketObserver):
         return client
 
     def update(self, message):
-        """Store message data in MongoDB."""
         data = json.loads(message)
-        self.collection.insert_one(data)  # Insert data into MongoDB
-        print("[MongoDB] Message saved:", data)
+        self.collection.insert_one(data)  # Store message in MongoDB
+        print("[MongoDB] Stored message:", data)
+
+        # Check for alert condition
+        self.alert_observer.update(message)
 
     def get_all_messages(self):
         """Fetch all stored messages from MongoDB."""
@@ -124,6 +139,8 @@ ws_client.add_observer(ml_observer)  # ML price prediction
 class SmartWebSocketV2Client:
     # get smart_api
     _session = None
+    AUTH_TOKEN = None
+    FEED_TOKEN = None
 
     @property
     def session(self):
@@ -142,7 +159,7 @@ class SmartWebSocketV2Client:
     TRADING_SYMBOL = "SBIN-EQ"
     EXCHANGE = "NSE"
     # variables
-    correlation_id = "ws_test"
+    correlation_id = f"subscription_{int(time.time())}"  # Generates a unique ID
     action = 1  # action = 1, subscribe to the feeds action = 2 - unsubscribe
     mode = 1  # mode = 1 , Fetches LTP quotes
     # Tokens to subscribe (Example: Nifty 50)
@@ -159,6 +176,7 @@ class SmartWebSocketV2Client:
         # instance of session
         self.observers = []
         self.sws = None
+        self.sess = self.session
 
     def add_observer(self, observer):
         self.observers.append(observer)
@@ -186,7 +204,7 @@ class SmartWebSocketV2Client:
         try:
             formatted_timestamp = self.time_stamp(message)
             data = json.loads(message)
-            print('+++ data ', data)
+            print('+++ incoming data ', data)
             for item in data["data"]:
                 _token = item["token"]
                 _item_price = item.get("ltp", 0)  # Last traded price
@@ -211,10 +229,32 @@ class SmartWebSocketV2Client:
             print(f"Error processing data: {e}")
 
     def on_open(self, wsapp):
-        """Handles WebSocket opening and subscription."""
-        logger.info("on open")
-        wsapp.subscribe(self.correlation_id, self.mode, self.token_list)
-        # sws.subscribe(correlation_id, mode, self.token_list1)
+        print("✅ WebSocket Opened!")
+        time.sleep(1)  # Add slight delay before subscribing
+
+        try:
+            wsapp.subscribe(
+                correlation_id=self.correlation_id,  # Unique identifier
+                mode=self.mode,  # LTP mode
+                token_list=[
+                    {
+                        "exchangeType": 2,  # NSE
+                        "tokens": ["26000"]  # NIFTY 50 Token
+                    }
+                ]
+            )
+            print("✅ Subscription successful!")
+        except Exception as e:
+            print(f"⚠️ Subscription failed: {e}")
+
+
+    # def on_open(self, wsapp):
+    #     """Handles WebSocket opening and subscription."""
+    #     print(f"wsapp instance: {wsapp}")
+    #     print('corelation id ', self.correlation_id)
+    #     print('mode ', self.mode)
+    #     print('token list ', self.token_list)
+    #     wsapp.subscribe(self.correlation_id, self.mode, self.token_list)
 
     def on_close(self, wsapp):
         """Handles WebSocket closing."""
@@ -234,21 +274,23 @@ class SmartWebSocketV2Client:
 
         self.sws = SmartWebSocketV2(
             self.AUTH_TOKEN,
-            self.api_key,
-            self.client_id,
+            cnf.API_KEY,
+            cnf.CLIENT_ID,
             self.FEED_TOKEN,
             max_retry_attempt=5
         )
 
         self.sws.on_data = self.on_data
         self.sws.on_open = self.on_open
+        print('+++ before on open')
         self.sws.on_close = self.on_close
         self.sws.on_error = self.on_error
-        # # Run WebSocket in a separate thread to keep the main thread free
-        # thread = threading.Thread(target=self.sws.run_forever, daemon=True)
-        # # or
-        # thread = threading.Thread(target=self.sws.connect)
-        # thread.start()
+        self.sws.AUTH_TOKEN = self.AUTH_TOKEN
+        self.sws.FEED_TOKEN = self.FEED_TOKEN
+
+        thread = threading.Thread(target=self.sws.connect)
+        thread.start()
+        #TODO add time check
 
     def get_latest_close_greater_than_ema(self, _live_data, time_interval, start_date, end_date):
         # _flag = None

@@ -2,13 +2,22 @@
 import argparse
 
 # custom import
-from observer_live_api import SmartWebSocketV2Client, AlertObserver
+from observer_live_api import SmartWebSocketV2Client, AlertObserver, MongoDBObserver
 
+def run_command(args):
+    """ Run Mongo Db server locally/cloud"""
+    _mdb = MongoDBObserver()
+    # check if is running
+    if not _mdb.is_mongodb_running():
+        print('+++ Run MongoDb Server')
+        _mdb.start_mongodb()
 
 def start_command(args):
     """Handles the 'start' command"""
     print('+++ SmartWebSocketV2Client.start ')
     print(f"Starting WebSocket with max_retries={args.max_retries} and log_level={args.log_level}")
+    smartWebSocketObject = SmartWebSocketV2Client()
+    smartWebSocketObject.start()
 
 def stop_command(args):
     """Handles the 'stop' command"""
@@ -39,6 +48,9 @@ def create_parser():
     parser_restart.add_argument('--delay', type=int, default=5, help="Delay before restarting (in seconds)")
     parser_restart.set_defaults(func=restart_command)
 
+    # 'runmongodb' command
+    parser_run = subparsers.add_parser('runmongo', help="Start Mongo DB server")
+    parser_run.set_defaults(func=run_command)
     return parser
 
 def main(args=None):

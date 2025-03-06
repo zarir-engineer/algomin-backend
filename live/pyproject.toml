@@ -14,7 +14,7 @@ authors = [
     { name = "Pravin Vhatkar", email = "vhatkar.automobiles@gmail.com"}
 ]
 dependencies = [
-    "base @ file:///home/sinhurry/Documents/GitHub/algomin/base"
+    "base @ file:///home/nishith/Documents/GitHub/algomin/base"
 ]
 
 [tool.setuptools.packages.find]

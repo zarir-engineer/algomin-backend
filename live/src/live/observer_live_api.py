@@ -12,6 +12,7 @@ import time
 import datetime
 import threading
 import subprocess
+import traceback
 import pandas as pd
 from logzero import logger
 from collections import deque
@@ -78,13 +79,14 @@ class MongoDBObserver(WebSocketObserver):
         # Integrating other observers
         self.logger_observer = LoggerObserver()
         self.alert_observer = AlertObserver()
-        self.logger_observer.update('+++ client ', self.client, '\n\ndb :', self.db, '\n\ncollection : ', self.collection)
+        self.logger_observer.update(f'+++ client: {self.client}, db: {self.db}, collection: {self.collection}')
+
 
 
     def is_mongodb_running(self):
         """Check if MongoDB is running using systemctl status."""
         try:
-            subprocess.run(["systemctl", "is-active", "--quiet", "mongod"])
+            subprocess.run(["systemctl", "is-active", "--quiet", "mongod"], check=True)
             return True
         except subprocess.CalledProcessError:
             return False
@@ -108,7 +110,7 @@ class MongoDBObserver(WebSocketObserver):
         if not self.is_mongodb_running():
             self.start_mongodb()
         else:
-            print('+++ Already running ')
+            print('+++ ✅ Already running ')
 
         # Connect to MongoDB
         try:
@@ -122,7 +124,7 @@ class MongoDBObserver(WebSocketObserver):
     def update(self, message):
         data = json.loads(message)
         self.collection.insert_one(data)  # Store message in MongoDB
-        print("[MongoDB] Stored message:", data)
+        print("✅ [MongoDB] Stored message:", data)
 
         # Check for alert condition
         self.alert_observer.update(message)
@@ -145,12 +147,11 @@ class SmartWebSocketV2Client:
     @property
     def session(self):
         if self._session is None:  # Only initialize when accessed
-            print("Initializing session...")
+            print(" ✅ Initializing session...")
             self._session = Session()
             self.AUTH_TOKEN = self._session.auth_token()
             self.FEED_TOKEN = self._session.feed_token()
         return self._session
-
 
     ACTION = "subscribe"
     FEED_TYPE = "ltp"
@@ -163,20 +164,102 @@ class SmartWebSocketV2Client:
     action = 1  # action = 1, subscribe to the feeds action = 2 - unsubscribe
     mode = 1  # mode = 1 , Fetches LTP quotes
     # Tokens to subscribe (Example: Nifty 50)
-    token_list = [
-        {
-            "exchangeType": 2,  # NSE
-            "tokens": ["26000"]  # NIFTY 50 Token
-        }
-    ]
+    # token_list = [
+    #     {
+    #         "exchangeType": 2,  # NSE
+    #         "tokens": ["26000"],  # NIFTY 50 Token
+    #         "interval": 60
+    #     }
+    # ]
     # Store live data
     data_queue = deque(maxlen=50)  # Store the last 50 data points
 
     def __init__(self):
-        # instance of session
+        self.sws = None  # Store WebSocket instance persistently
+        self.lock = threading.Lock()  # To prevent race conditions
         self.observers = []
-        self.sws = None
         self.sess = self.session
+        self.stop_heartbeat = False  # Control flag for stopping heartbeat
+
+    def send_heartbeat(self):
+        """Sends a 'ping' message every 30 seconds to keep the WebSocket alive."""
+        while not self.stop_heartbeat:
+            try:
+                if self.sws:
+                    print("💓 Sending heartbeat: ping")
+                    heartbeat_message = json.dumps({
+                        "correlationID": self.correlation_id,
+                        "action": 1,
+                        "params": {
+                            "mode": self.mode,
+                            "tokenList": [
+                                {"exchangeType": 2, "tokens": ["26000"]}
+                            ]
+                        }
+                    })
+                    print("🔄 Sending heartbeat...")
+                    self.sws.send(heartbeat_message)  # Send ping message
+                time.sleep(30)  # Wait 30 seconds before sending the next ping
+            except Exception as e:
+                print(f"⚠️ Heartbeat error: {e}")
+
+    def start_heartbeat_thread(self):
+        """Starts the heartbeat in a separate thread."""
+        heartbeat_thread = threading.Thread(target=self.send_heartbeat, daemon=True)
+        heartbeat_thread.start()
+
+    def on_open(self, wsapp):
+        print("✅ WebSocket Opened!")
+
+        time.sleep(1)
+
+        try:
+            # Ensure `self.sws` is properly initialized
+            with self.lock:  # Ensure thread safety
+                if self.sws:
+                    self.sws.subscribe(
+                        correlation_id=self.correlation_id,
+                        mode=self.mode,
+                        token_list=[{"exchangeType": 2, "tokens": ["26000"], "interval":60}]
+                    )
+                    print("✅ Subscription successful!")
+                else:
+                    print("⚠️ WebSocket instance (self.sws) is not initialized!")
+        except Exception as e:
+            print(f"⚠️ Subscription failed: {e}")
+
+    def start_websocket(self):
+        print("🔄 Starting WebSocket connection...")
+
+        while True:
+            try:
+                print('Auth Token:', self.AUTH_TOKEN)
+                print('Feed Token:', self.FEED_TOKEN)
+
+                with self.lock:  # Ensure thread safety when setting `self.sws`
+                    if not self.sws:  # Initialize only if not already set
+                        self.sws = SmartWebSocketV2(
+                            self.AUTH_TOKEN,
+                            cnf.API_KEY,
+                            cnf.CLIENT_ID,
+                            self.FEED_TOKEN,
+                            max_retry_attempt=5
+                        )
+
+                        self.sws.on_data = self.on_data
+                        self.sws.on_open = self.on_open
+                        self.sws.on_close = self.on_close
+                        self.sws.on_error = self.on_error
+
+                self.sws.connect()
+                print('✅ WebSocket connection established ...')
+                # Start sending heartbeats after connection is established
+                self.start_heartbeat_thread()
+
+                break  # Exit loop after successful connection
+            except Exception as e:
+                print(f"⚠️ WebSocket connection failed: {e}")
+                time.sleep(5)  # Retry after a delay
 
     def add_observer(self, observer):
         self.observers.append(observer)
@@ -185,26 +268,21 @@ class SmartWebSocketV2Client:
         for observer in self.observers:
             observer.update(message)
 
-    def time_stamp(self, wsapp, message):
-        # Convert timestamp from milliseconds to seconds
-        timestamp = message['exchange_timestamp'] / 1000  # Convert to seconds
+    def time_stamp(self, message):
+        data = json.loads(message)  # Convert JSON string to dictionary
+        timestamp = data['exchange_timestamp'] / 1000  # Convert to seconds
         utc_time = datetime.datetime.utcfromtimestamp(timestamp)
 
-        # Define the timezone for UTC +05:30
-        timezone = pytz.timezone('Asia/Kolkata')  # 'Asia/Kolkata' is the timezone for UTC +05:30
-
-        # Convert UTC time to UTC +05:30
+        timezone = pytz.timezone('Asia/Kolkata')
         local_time = utc_time.replace(tzinfo=pytz.utc).astimezone(timezone)
-        formatted_timestamp = local_time.strftime('%Y-%m-%d %H:%M:%S')
-        return formatted_timestamp
+        return local_time.strftime('%Y-%m-%d %H:%M:%S')
 
     def on_data(self, wsapp, message):
         """Handles incoming live market data."""
-
+        print(f"📥 Received message: {message}")  # Debugging
         try:
             formatted_timestamp = self.time_stamp(message)
             data = json.loads(message)
-            print('+++ incoming data ', data)
             for item in data["data"]:
                 _token = item["token"]
                 _item_price = item.get("ltp", 0)  # Last traded price
@@ -228,34 +306,6 @@ class SmartWebSocketV2Client:
         except Exception as e:
             print(f"Error processing data: {e}")
 
-    def on_open(self, wsapp):
-        print("✅ WebSocket Opened!")
-        time.sleep(1)  # Add slight delay before subscribing
-
-        try:
-            wsapp.subscribe(
-                correlation_id=self.correlation_id,  # Unique identifier
-                mode=self.mode,  # LTP mode
-                token_list=[
-                    {
-                        "exchangeType": 2,  # NSE
-                        "tokens": ["26000"]  # NIFTY 50 Token
-                    }
-                ]
-            )
-            print("✅ Subscription successful!")
-        except Exception as e:
-            print(f"⚠️ Subscription failed: {e}")
-
-
-    # def on_open(self, wsapp):
-    #     """Handles WebSocket opening and subscription."""
-    #     print(f"wsapp instance: {wsapp}")
-    #     print('corelation id ', self.correlation_id)
-    #     print('mode ', self.mode)
-    #     print('token list ', self.token_list)
-    #     wsapp.subscribe(self.correlation_id, self.mode, self.token_list)
-
     def on_close(self, wsapp):
         """Handles WebSocket closing."""
         logger.info("WebSocket Closed!")
@@ -271,26 +321,9 @@ class SmartWebSocketV2Client:
         self.notify_observers(message)
 
     def start(self):
-
-        self.sws = SmartWebSocketV2(
-            self.AUTH_TOKEN,
-            cnf.API_KEY,
-            cnf.CLIENT_ID,
-            self.FEED_TOKEN,
-            max_retry_attempt=5
-        )
-
-        self.sws.on_data = self.on_data
-        self.sws.on_open = self.on_open
-        print('+++ before on open')
-        self.sws.on_close = self.on_close
-        self.sws.on_error = self.on_error
-        self.sws.AUTH_TOKEN = self.AUTH_TOKEN
-        self.sws.FEED_TOKEN = self.FEED_TOKEN
-
-        thread = threading.Thread(target=self.sws.connect)
+        thread = threading.Thread(target=self.send_heartbeat) # ❌ Remove daemon=True
         thread.start()
-        #TODO add time check
+        thread.join()  # 🔥 Wait for the thread to finish before exiting
 
     def get_latest_close_greater_than_ema(self, _live_data, time_interval, start_date, end_date):
         # _flag = None
@@ -338,3 +371,6 @@ class SmartWebSocketV2Client:
 # # Run the live chart function
 # swsc.live_chart()
 
+# if __name__ == "__main__":
+#     client = SmartWebSocketV2Client()
+#     client.start_websocket()  # Start WebSocket connection

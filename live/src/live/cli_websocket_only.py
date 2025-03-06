@@ -14,7 +14,6 @@ def run_command(args):
 
 def start_command(args):
     """Handles the 'start' command"""
-    print('+++ SmartWebSocketV2Client.start ')
     print(f"Starting WebSocket with max_retries={args.max_retries} and log_level={args.log_level}")
     smartWebSocketObject = SmartWebSocketV2Client()
     smartWebSocketObject.start()

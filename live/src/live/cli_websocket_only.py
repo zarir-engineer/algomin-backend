@@ -1,8 +1,16 @@
 # system import
 import argparse
+import datetime
+import requests
 
 # custom import
 from observer_live_api import SmartWebSocketV2Client, AlertObserver, MongoDBObserver
+
+def is_market_open():
+    today = datetime.datetime.today().strftime('%Y-%m-%d')
+    response = requests.get("https://api.yourbroker.com/market-status")
+    data = response.json()
+    return data.get("market_open", False)  # Example key, check your API docs
 
 def run_command(args):
     """ Run Mongo Db server locally/cloud"""
@@ -14,9 +22,13 @@ def run_command(args):
 
 def start_command(args):
     """Handles the 'start' command"""
+    # if not is_market_open():
+    #     print("🚫 Market is closed today. No WebSocket data will be received.")
+    # else:
+    print("✅ Market is open. Starting WebSocket...")
     print(f"Starting WebSocket with max_retries={args.max_retries} and log_level={args.log_level}")
     smartWebSocketObject = SmartWebSocketV2Client()
-    smartWebSocketObject.start()
+    smartWebSocketObject.start_websocket()
 
 def stop_command(args):
     """Handles the 'stop' command"""

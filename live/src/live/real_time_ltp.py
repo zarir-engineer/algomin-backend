@@ -24,7 +24,7 @@ CLIENT_ID = cnf.CLIENT_ID
 
 # Subscription Tokens
 token_list = [
-    {"exchangeType": 2, "tokens": ["57920"]}  # Example: Token for a stock (NSE)
+    {"exchangeType": 2, "tokens": ["26000"]}  # Example: Token for a stock (NSE)
 ]
 
 # Initialize SmartWebSocketV2

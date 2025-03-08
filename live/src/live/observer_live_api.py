@@ -182,31 +182,52 @@ class SmartWebSocketV2Client:
         self.stop_heartbeat = False  # Control flag for stopping heartbeat
 
     def send_heartbeat(self):
-        """Sends a 'ping' message every 30 seconds to keep the WebSocket alive."""
+        last_message_time = time.time()
+
         while not self.stop_heartbeat:
             try:
-                if self.sws:
+                if self.sws and self.sws.sock and self.sws.sock.connected:
                     print("💓 Sending heartbeat: ping")
-                    heartbeat_message = json.dumps({
+                    self.sws.send(json.dumps({
                         "correlationID": self.correlation_id,
                         "action": 1,
                         "params": {
                             "mode": self.mode,
-                            "tokenList": [
-                                {"exchangeType": 2, "tokens": ["26000"]}
-                            ]
+                            "tokenList": [{"exchangeType": 2, "tokens": ["26000"]}]
                         }
-                    })
-                    print("🔄 Sending heartbeat...")
-                    self.sws.send(heartbeat_message)  # Send ping message
-                time.sleep(30)  # Wait 30 seconds before sending the next ping
+                    }))
+                else:
+                    print("⚠️ WebSocket not connected. Reconnecting...")
+                    self.reconnect()
+
+                # If no message received for 60 sec, force reconnection
+                if time.time() - last_message_time > 60:
+                    print("⚠️ No messages received in 60 seconds. Reconnecting...")
+                    self.reconnect()
+                    last_message_time = time.time()
+
             except Exception as e:
                 print(f"⚠️ Heartbeat error: {e}")
+
+            time.sleep(30)  # Send heartbeat every 30 sec
 
     def start_heartbeat_thread(self):
         """Starts the heartbeat in a separate thread."""
         heartbeat_thread = threading.Thread(target=self.send_heartbeat, daemon=True)
         heartbeat_thread.start()
+
+    def listen_websocket(self):
+        """Listens for messages from the WebSocket."""
+        print('+++ listen websocket')
+        while self.sws and self.sws.sock and self.sws.sock.connected:
+            try:
+                message = self.sws.recv()  # Blocking call
+                if message:
+                    print(f"📩 Received: {message}")
+            except Exception as e:
+                print(f"⚠️ WebSocket listening error: {e}")
+                self.reconnect()  # Reconnect if there's an error
+
 
     def on_open(self, wsapp):
         print("✅ WebSocket Opened!")
@@ -253,10 +274,16 @@ class SmartWebSocketV2Client:
 
                 self.sws.connect()
                 print('✅ WebSocket connection established ...')
-                # Start sending heartbeats after connection is established
+
+                # Start sending heartbeats
                 self.start_heartbeat_thread()
 
+                # Start listening for messages in a new thread
+                listen_thread = threading.Thread(target=self.listen_websocket, daemon=True)
+                listen_thread.start()
+
                 break  # Exit loop after successful connection
+
             except Exception as e:
                 print(f"⚠️ WebSocket connection failed: {e}")
                 time.sleep(5)  # Retry after a delay
@@ -319,11 +346,6 @@ class SmartWebSocketV2Client:
     def on_message(self, wsapp, message):
         print("[WebSocket] Message received")
         self.notify_observers(message)
-
-    def start(self):
-        thread = threading.Thread(target=self.send_heartbeat) # ❌ Remove daemon=True
-        thread.start()
-        thread.join()  # 🔥 Wait for the thread to finish before exiting
 
     def get_latest_close_greater_than_ema(self, _live_data, time_interval, start_date, end_date):
         # _flag = None

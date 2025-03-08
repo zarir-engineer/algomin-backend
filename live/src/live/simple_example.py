@@ -1,34 +1,56 @@
-from smartapi import SmartWebSocketV2
+import time
+from SmartApi.smartWebSocketV2 import SmartWebSocketV2
+from auto_authenticate import AUTH_TOKEN as AT, FEED_TOKEN as FT
+
+
+# custom modules
+from base import config as cnf
+from base.session import Session
 
 # Replace with your credentials
-AUTH_TOKEN = "your_auth_token"
-API_KEY = "your_api_key"
-CLIENT_ID = "your_client_id"
-FEED_TOKEN = "your_feed_token"
+# Authentication Details
+AUTH_TOKEN = AT
+FEED_TOKEN = FT
+API_KEY = cnf.API_KEY
+CLIENT_ID = cnf.CLIENT_ID
 
-# Initialize WebSocket
+
+# WebSocket Instance
 sws = SmartWebSocketV2(AUTH_TOKEN, API_KEY, CLIENT_ID, FEED_TOKEN)
 
-# Callback functions
+# Callback function to handle received messages
 def on_data(wsapp, message):
-    print(f'+++ {message}')
+    print(f"📩 Live Data: {message}")  # Print received data
 
+# Callback function when WebSocket opens
 def on_open(wsapp):
-    print(f'+++ socket opened')
-    # Subscribe to a sample token (Replace with an actual token)
-    sws.subscribe("nse_cm", "26000")
+    print("✅ WebSocket Connection Opened")
 
+    # Example subscription - Replace with actual exchange & token
+    subscription_list = [{"exchangeType": 2, "tokens": ["26000"]}]
+    sws.subscribe(correlation_id="sub_001", mode=1, token_list=subscription_list)
+
+# Callback function when WebSocket closes
 def on_close(wsapp):
-    print(f'+++ socket closed')
+    print("❌ WebSocket Closed! Reconnecting...")
+    time.sleep(5)
+    start_websocket()  # Auto-reconnect
 
+# Callback function for handling errors
 def on_error(wsapp, error):
-    print(f'+++ error {error}')
+    print(f"⚠️ WebSocket Error: {error}")
 
-# Assign the event handlers
+# Assign callback functions
 sws.on_data = on_data
 sws.on_open = on_open
 sws.on_close = on_close
 sws.on_error = on_error
 
-# Start WebSocket
-sws.connect()
+# Function to start WebSocket
+def start_websocket():
+    print("🔄 Connecting to WebSocket...")
+    sws.connect()
+
+# Start receiving live data
+if __name__ == "__main__":
+    start_websocket()

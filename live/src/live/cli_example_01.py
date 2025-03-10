@@ -1,8 +1,14 @@
+'''
+python script.py --auth_token YOUR_AUTH_TOKEN --api_key YOUR_API_KEY --client_id YOUR_CLIENT_ID --feed_token YOUR_FEED_TOKEN --trading_symbol SBIN-EQ --exchange NSE --symbol_token 3045
+'''
+
 import argparse
 import json
 import threading
 import time
 from collections import deque
+
+#TODO take auth_token, api_key, client_id and feed_token from base AngelOneSession
 
 class SmartWebSocketV2Client:
     def __init__(self, auth_token, api_key, client_id, feed_token, trading_symbol, exchange, symbol_token):
@@ -51,14 +57,11 @@ class SmartWebSocketV2Client:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Start the Smart WebSocket Client")
-    parser.add_argument("--auth_token", required=True, help="Authentication token")
-    parser.add_argument("--api_key", required=True, help="API Key")
-    parser.add_argument("--client_id", required=True, help="Client ID")
-    parser.add_argument("--feed_token", required=True, help="Feed token")
-    parser.add_argument("--trading_symbol", required=True, help="Trading symbol (e.g., SBIN-EQ)")
-    parser.add_argument("--exchange", required=True, help="Exchange (e.g., NSE)")
-    parser.add_argument("--symbol_token", required=True, help="Symbol token")
-
+    parser.add_argument("--trading_symbol", default="SBIN-EQ", help="Trading Symbol (default: SBIN-EQ)")
+    parser.add_argument("--exchange", choices=["NSE", "BSE"], default="NSE", help="Exchange (NSE/BSE)")
+    parser.add_argument("--symbol_token", type=int, help="Symbol token (numeric value required)")
+    parser.add_argument("--mode", type=int, choices=[1, 2, 3], default=1, help="Mode: 1=LTP, 2=Quote, 3=Market Depth")
+    parser.add_argument("--debug", action="store_true", help="Enable debug mode")
     args = parser.parse_args()
 
     client = SmartWebSocketV2Client(
@@ -72,3 +75,9 @@ if __name__ == "__main__":
     )
 
     client.start_websocket()
+
+
+parser = argparse.ArgumentParser(description="SmartWebSocketV2 Client CLI")
+args = parser.parse_args()
+
+print(f"Running WebSocket with: {args}")

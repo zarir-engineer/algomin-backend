@@ -5,45 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6dd9c6d9-38f6-4a34-863d-a92053a1a1e8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/base/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/base/src/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/base/src/base/config.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/base/src/base/config_loader.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/base/src/base/observer/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/base/src/base/observer/alert.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/base/src/base/observer/base_observer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/base/src/base/observer/database.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/base/src/base/observer/ema.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/base/src/base/observer/email.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/base/src/base/observer/logger_observer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/base/src/base/observer/mongodaba.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/base/src/base/observer/price_prediction.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/base/src/base/observer/web_socket_base.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/live/src/live/bracket/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/live/src/live/cli_example_01.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/live/src/live/fastapi-websocket-example.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/live/src/live/live_api.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/live/src/live/next-js-frontend.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/live/src/live/normal/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/live/src/live/send_live_data_to_front_end.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/src/base/config.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/src/base/session.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/src/base/session.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/auto_authenticate.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/src/base/auto_authenticate.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/bracket_order_derivative.py" beforeDir="false" afterPath="$PROJECT_DIR$/live/src/live/bracket/bracket_order_derivative.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/bracket_order_derivative_stock.py" beforeDir="false" afterPath="$PROJECT_DIR$/live/src/live/bracket/bracket_order_derivative_stock.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/bracket_order_stock.py" beforeDir="false" afterPath="$PROJECT_DIR$/live/src/live/bracket/bracket_order_stock.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/cli_websocket_only.py" beforeDir="false" afterPath="$PROJECT_DIR$/live/src/live/cli_websocket_only.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/ema.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/normal_order_derivative_stock.py" beforeDir="false" afterPath="$PROJECT_DIR$/live/src/live/normal/normal_order_derivative_stock.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/observer_live_api.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/simple_example.py" beforeDir="false" afterPath="$PROJECT_DIR$/live/src/live/simple_example_01.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/test_timestamp.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/using_smartwebsocketv2.py" beforeDir="false" afterPath="$PROJECT_DIR$/live/src/live/simple_example_02.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_observer_live_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_observer_live_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_observer_smartwebsocketclient.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_observer_smartwebsocketclient.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/live/src/live/cli_example_01.py" beforeDir="false" afterPath="$PROJECT_DIR$/live/src/live/cli_example_01.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/live/src/live/simple_example_01.py" beforeDir="false" afterPath="$PROJECT_DIR$/live/src/live/simple_example_01.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -3,18 +3,6 @@ from SmartApi.smartWebSocketV2 import SmartWebSocketV2
 from base.src.base.auto_authenticate import AUTH_TOKEN as AT, FEED_TOKEN as FT
 
 
-# custom modules
-from base import config as cnf
-from base.session import Session
-
-# Replace with your credentials
-# Authentication Details
-AUTH_TOKEN = AT
-FEED_TOKEN = FT
-API_KEY = cnf.API_KEY
-CLIENT_ID = cnf.CLIENT_ID
-
-
 # WebSocket Instance
 sws = SmartWebSocketV2(AUTH_TOKEN, API_KEY, CLIENT_ID, FEED_TOKEN)
 

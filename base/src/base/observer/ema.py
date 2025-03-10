@@ -1,57 +1,7 @@
-import json
-import time
-import smtplib
-from collections import deque
-from pymongo import MongoClient
-from smartapi import SmartWebSocketV2
-
-# WebSocket Credentials (Replace with actual values)
-AUTH_TOKEN = "your_auth_token"
-API_KEY = "your_api_key"
-CLIENT_ID = "your_client_id"
-FEED_TOKEN = "your_feed_token"
-
-# Observer Interface
-class WebSocketObserver:
-    def update(self, message):
-        raise NotImplementedError("Observer must implement the update method.")
-
-# Logger Observer
-class LoggerObserver(WebSocketObserver):
-    def update(self, message):
-        print(f"📝 [Logger] {message}")
-
-# Email Alert Observer
-class EmailAlertObserver(WebSocketObserver):
-    def send_email_alert(self, subject, body):
-        sender = "your_email@gmail.com"
-        receiver = "recipient_email@gmail.com"
-        message = f"Subject: {subject}\n\n{body}"
-        print(f"📧 [Email Alert] Sending email: {subject}")
-
-        # Uncomment to send actual email (requires SMTP setup)
-        # with smtplib.SMTP("smtp.example.com", 587) as server:
-        #     server.starttls()
-        #     server.login(sender, "your_password")
-        #     server.sendmail(sender, receiver, message)
-
-    def update(self, message):
-        pass  # Not needed here since alerts are triggered from EMAObserver
-
-# MongoDB Observer
-class MongoDBObserver(WebSocketObserver):
-    def __init__(self):
-        self.client = MongoClient("mongodb://localhost:27017/")
-        self.db = self.client["websocketDB"]
-        self.collection = self.db["messages"]
-
-    def update(self, message):
-        data = json.loads(message)
-        self.collection.insert_one(data)
-        print(f"✅ [MongoDB] Stored: {data}")
+from base_observer import BaseObserver
 
 # EMA Observer with Stop-Loss & Take-Profit Tracking
-class EMAObserver(WebSocketObserver):
+class EMAObserver(BaseObserver):
     def __init__(self, period=10, stop_loss_pct=2, take_profit_pct=4):
         self.period = period
         self.stop_loss_pct = stop_loss_pct / 100  # Convert percentage to decimal
@@ -192,8 +142,3 @@ class EMAObserver(WebSocketObserver):
         self.stop_loss = None
         self.take_profit = None
         self.trade_type = None
-
-# Start WebSocket Client
-client = SmartWebSocketClient()
-client.add_observer(EMAObserver(period=10, stop_loss_pct=2, take_profit_pct=4))  # 2% SL, 4% TP
-client.start_websocket()

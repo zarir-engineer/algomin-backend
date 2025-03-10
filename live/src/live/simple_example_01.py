@@ -1,6 +1,6 @@
 import time
 from SmartApi.smartWebSocketV2 import SmartWebSocketV2
-from auto_authenticate import AUTH_TOKEN as AT, FEED_TOKEN as FT
+from base.src.base.auto_authenticate import AUTH_TOKEN as AT, FEED_TOKEN as FT
 
 
 # custom modules

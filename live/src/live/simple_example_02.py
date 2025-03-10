@@ -4,26 +4,13 @@ import pytz
 import time
 import datetime
 import threading
-import pandas as pd
 from logzero import logger
 from collections import deque
-import plotly.graph_objects as go
 from SmartApi.smartWebSocketV2 import SmartWebSocketV2
 
 # custom modules
 from base import config as cnf
-from base.session import Session
-
-# variables
-correlation_id = "ws_test"
-action = 1  # action = 1, subscribe to the feeds action = 2 - unsubscribe
-mode = 1  # mode = 1 , Fetches LTP quotes
-
-sess = Session()
-AUTH_TOKEN = sess.auth_token()
-FEED_TOKEN = sess.feed_token()
-
-stop_event = threading.Event()
+from base.session import AngelOneSession
 
 sws = SmartWebSocketV2(AUTH_TOKEN, cnf.API_KEY, cnf.CLIENT_ID, FEED_TOKEN, max_retry_attempt=5)
 
@@ -132,22 +119,3 @@ stop_event.set()  # Signal the thread to stop
 # Ensure thread stops before continuing
 t.join()
 print("Main program finished.")
-
-# def live_chart():
-#     fig = go.Figure()
-#
-#     while True:
-#         if len(data_queue) > 0:
-#             df = pd.DataFrame([row.split(", ") for row in data_queue], columns=["Exchange Type", "Token", "LTP", "Timestamp"])
-#             df["Timestamp"] = pd.to_datetime(df["Timestamp"])
-#             df["LTP"] = df["LTP"].str.extract(r"([\d.]+)").astype(float)
-#
-#             fig.data = []  # Clear old data
-#             fig.add_trace(go.Scatter(x=df["Timestamp"], y=df["LTP"], mode="lines", name="LTP"))
-#             fig.update_layout(title="Live Market Price", xaxis_title="Time", yaxis_title="Price")
-#             fig.show()
-#
-#         time.sleep(2)  # Update every 2 seconds
-#
-# # Run the live chart function
-# live_chart()

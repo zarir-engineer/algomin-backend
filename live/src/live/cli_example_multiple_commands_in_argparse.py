@@ -4,7 +4,8 @@ import datetime
 import requests
 
 # custom import
-from observer_live_api import SmartWebSocketV2Client, AlertObserver, MongoDBObserver
+from live_api import SmartWebSocketV2Client
+from base.observer import AlertObserver, MongoDbObserver
 
 def is_market_open():
     today = datetime.datetime.today().strftime('%Y-%m-%d')

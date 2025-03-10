@@ -1,33 +1,31 @@
-# modules
+# system modules
+
 from SmartApi.smartConnect import SmartConnect
-import pyotp
-
-# credentials
-from base import config as cnf          # Your API credentials from config
+from config_loader import ConfigLoader  # Load from config.yml
 
 
-class Session:
-
+class AngelOneSession:
     def __init__(self):
-        self.init()
+        self.config = ConfigLoader()
+        self.api_key = self.config.get("api.api_key")
+        self.client_id = self.config.get("user.client_id")
+        self.password = self.config.get("user.password")
+        self.totp = self.config.get("user.totp")
 
-    def init(self):
-        _totp = pyotp.TOTP(cnf.TOTP)
-        _totp = _totp.now()
-        self.smart_api = SmartConnect(api_key=cnf.API_KEY)
-        self.login_response = self.smart_api.generateSession(cnf.CLIENT_ID, cnf.PASSWORD, totp=_totp)
+        self.auth_token = None
+        self.feed_token = None
 
-    def auth_token(self):
-        if self.login_response.get("status"):
-            _auth_token = self.login_response["data"]["jwtToken"]
-            # print(f"Auth Token: {_auth_token}")
-            return _auth_token
+    def generate_tokens(self):
+        """Login to Angel One SmartAPI and generate tokens dynamically."""
+        obj = SmartConnect(api_key=self.api_key)
 
-    def refresh_token(self):
-        if self.login_response.get("status"):
-            _refresh_token = self.login_response["data"]["refreshToken"]
-            print(f"Refresh Token: {_refresh_token}")
-            return _refresh_token
+        data = obj.generateSession(self.client_id, self.password, self.totp)
 
-    def feed_token(self):
-        return self.smart_api.getfeedToken()
+        if "status" in data and data["status"] == True:
+            self.auth_token = data["data"]["jwtToken"]
+            self.feed_token = obj.getfeedToken()
+            print("✅ Auth Token & Feed Token Generated!")
+        else:
+            raise Exception("⚠️ Failed to generate tokens. Check login credentials!")
+
+        return self.auth_token, self.feed_token

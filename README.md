@@ -1,3 +1,35 @@
+> 1️⃣ Market Data Arrives → SmartWebSocketV2Client receives live data from the broker's WebSocket.
+> 2️⃣ Notifying Backend Observers → The backend observers (e.g., database, email) process the data.
+> 3️⃣ Notifying Frontend Clients →
+
+> WebSocketObserver in FastAPI sends live data to all connected WebSocket clients (frontend).
+> The frontend (e.g., Next.js) updates charts in real-time.
+
+
+        +------------------+      +-------------------------+
+        |  Trading API     |      |  SmartWebSocketV2Client |
+        |  (Broker Feed)   | ---> |  (Market Data Source)  |
+        +------------------+      +-------------------------+
+                                           ⬇
+        +--------------------------------------------------+
+        |  Backend (Python)                               |
+        |  - DatabaseObserver (Store data)               |
+        |  - EmailObserver (Send alerts)                 |
+        |  - StrategyObserver (Apply trade strategies)   |
+        |  - WebSocketObserver (Send to WebSocket)       |
+        +--------------------------------------------------+
+                                           ⬇
+        +--------------------------------------------------+
+        |  FastAPI WebSocket Server (Exposes /ws route)   |
+        +--------------------------------------------------+
+                                           ⬇
+        +---------------------------+
+        |  Frontend (Next.js, React)|
+        |  - Connects to WebSocket  |
+        |  - Displays live charts   |
+        +---------------------------+
+
+
 # algomin
 > pip installation
 > cd algomin/base

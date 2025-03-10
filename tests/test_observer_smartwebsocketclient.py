@@ -8,7 +8,7 @@ import datetime
 import pytz
 
 # Import the classes
-from live.observer_live_api import LoggerObserver, AlertObserver, EmailAlertObserver, MongoDBObserver, SmartWebSocketV2Client
+from live.live_api import LoggerObserver, AlertObserver, EmailAlertObserver, MongoDBObserver, SmartWebSocketV2Client
 
 class TestObservers(unittest.TestCase):
 

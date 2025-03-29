@@ -1,5 +1,10 @@
 [phases.setup]
-aptPkgs = ["python3-distutils"]
+nixPkgs = ["python311", "python311Packages.pip", "python311Packages.setuptools", "python311Packages.wheel"]
 
 [phases.build]
-cmds = ["pip install --upgrade pip setuptools wheel", "pip install -r requirements.txt"]
+cmds = [
+    "python3 -m venv /opt/venv",
+    ". /opt/venv/bin/activate",
+    "pip install --upgrade pip setuptools wheel",
+    "pip install -r requirements.txt"
+]

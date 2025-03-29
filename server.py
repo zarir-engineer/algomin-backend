@@ -1,12 +1,12 @@
 from fastapi import FastAPI, WebSocket
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
-from smart_websocket import SmartWebSocketV2Client  # Import your WebSocket client
+from live.live_api import SmartWebSocketV2Client  # Import your WebSocket client
 
 app = FastAPI()
 
 # MongoDB Connection
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
+MONGO_URI = os.getenv("MONGO_URI")  # Railway injects this automatically
 mongo_client = AsyncIOMotorClient(MONGO_URI)
 db = mongo_client["trading"]
 collection = db["market_data"]

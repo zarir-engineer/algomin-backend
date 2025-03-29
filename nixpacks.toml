@@ -1,0 +1,5 @@
+[phases.setup]
+aptPkgs = ["python3-distutils"]
+
+[phases.build]
+cmds = ["pip install --upgrade pip setuptools wheel", "pip install -r requirements.txt"]

@@ -1,0 +1,8 @@
+<!-- templates/html_to_audio.html -->
+<form action="/html-to-audio/" method="post" enctype="multipart/form-data">
+  <label>Upload HTML file:</label><br/>
+  <input type="file" name="file"><br/><br/>
+  <label>Selectors (comma-separated):</label><br/>
+  <input type="text" name="selectors" placeholder="e.g., p,div.main-content"><br/><br/>
+  <input type="submit" value="Generate Audio">
+</form>

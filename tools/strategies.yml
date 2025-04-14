@@ -1,0 +1,7 @@
+link_strategies:
+  - module: "social-stock-exchanges-sses"  # This can be the name of the module (like innerworth, chapter1, etc.)
+    selector: "section.chapter-list a.inv[href]"
+    strategy: "parse_with_heading_and_paragraphs"
+  - module: "innerworth"
+    selector: "tbody a[href]"
+    strategy: "parse_with_paragraphs_only"

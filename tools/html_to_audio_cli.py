@@ -3,6 +3,8 @@ import requests
 from bs4 import BeautifulSoup
 import yaml
 from pathlib import Path
+from gtts import gTTS
+import os
 
 class InnerworthScraper:
     def __init__(self, config_path="strategies.yml", target_module=None):
@@ -72,34 +74,53 @@ class InnerworthScraper:
         soup = BeautifulSoup(response.text, 'html.parser')
         return parser_func(soup)
 
-    def scrape_all(self):
+    def text_to_audio(self, text, output_path):
+        tts = gTTS(text=text, lang='en', slow=False)
+        tts.save(output_path)
+
+    def scrape_all(self, audio_output_dir=None):
         links_and_strategies = self.extract_links_and_strategies()
         full_text = []
+        audio_files = []
 
-        for url, parser_func in links_and_strategies:
+        # Create audio output directory if it doesn't exist
+        if audio_output_dir:
+            os.makedirs(audio_output_dir, exist_ok=True)
+
+        for i, (url, parser_func) in enumerate(links_and_strategies):
             try:
                 print(f"Scraping: {url}")
                 chapter_text = self.extract_text_from_chapter(url, parser_func)
                 full_text.append(chapter_text)
+
+                # Convert to audio if output directory is specified
+                if audio_output_dir:
+                    audio_path = os.path.join(audio_output_dir, f"chapter_{i+1}.mp3")
+                    self.text_to_audio(chapter_text, audio_path)
+                    audio_files.append(audio_path)
+                    print(f"Saved audio to {audio_path}")
+
             except Exception as e:
                 print(f"Failed to fetch {url}: {e}")
 
-        return "\n\n---\n\n".join(full_text)
+        return "\n\n---\n\n".join(full_text), audio_files
 
-def main(output_file=None, module=None):
+def main(output_file=None, module=None, audio_output_dir=None):
     scraper = InnerworthScraper(target_module=module)
-    extracted_text = scraper.scrape_all()
+    extracted_text, audio_files = scraper.scrape_all(audio_output_dir)
 
     if output_file:
         with open(output_file, 'w', encoding='utf-8') as f:
             f.write(extracted_text)
-        print(f"Saved output to {output_file}")
-    else:
-        print(extracted_text)
+        print(f"Saved text output to {output_file}")
+
+    if audio_output_dir:
+        print(f"Saved {len(audio_files)} audio files to {audio_output_dir}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Scrape Innerworth or other Varsity modules and extract insights.")
-    parser.add_argument("-o", "--output", help="Output file to save extracted text.")
-    parser.add_argument("-m", "--module", help="Target module to scrape (e.g., innerworth, social-stock-exchanges-sses).")
+    parser.add_argument("-o", "--output", required=True, help="Output file to save extracted text.")
+    parser.add_argument("-m", "--module", required=True, help="Target module to scrape (e.g., innerworth, social-stock-exchanges-sses).")
+    parser.add_argument("-a", "--audio", required=True, help="Directory to save audio files. If specified, text will be converted to audio.")
     args = parser.parse_args()
-    main(args.output, args.module)
+    main(args.output, args.module, args.audio)

@@ -5,17 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6dd9c6d9-38f6-4a34-863d-a92053a1a1e8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/routes/html_to_audio_api.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/html_to_audio.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/HTML_TO_AUDIO_README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/html_to_audio.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/html_to_audio_cli.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/html_to_audio_main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tools/strategies.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tools/scraper.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nixpacks.toml" beforeDir="false" afterPath="$PROJECT_DIR$/nixpacks.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/html_to_audio_cli.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/html_to_audio_cli.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/strategies.yml" beforeDir="false" afterPath="$PROJECT_DIR$/tools/strategies.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +44,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/nishith/Documents/GitHub/algomin/.algo/bin/python",
+    "last_opened_file_path": "/home/nishith/Documents/GitHub/algomin/tools",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   },
   "keyToStringList": {
@@ -63,11 +56,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tools" />
       <recent name="$PROJECT_DIR$/live/src/live" />
       <recent name="$PROJECT_DIR$/historical" />
       <recent name="$PROJECT_DIR$/base" />
       <recent name="$PROJECT_DIR$/live" />
-      <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/live/src/live/normal" />
@@ -80,7 +73,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-4f4e415b4190-aa17d162503b-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-243.26053.29" />
+        <option value="bundled-python-sdk-348a24fa61fa-5312c7369657-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-251.23774.444" />
       </set>
     </attachedChunks>
   </component>
@@ -108,5 +101,15 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/tools/html_to_audio_cli.py</url>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

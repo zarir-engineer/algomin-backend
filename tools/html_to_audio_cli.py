@@ -1,10 +1,10 @@
+import os
+import yaml
 import argparse
 import requests
-from bs4 import BeautifulSoup
-import yaml
-from pathlib import Path
 from gtts import gTTS
-import os
+from bs4 import BeautifulSoup
+from urllib.parse import urljoin
 
 class InnerworthScraper:
     def __init__(self, config_path="strategies.yml", target_module=None):
@@ -13,23 +13,77 @@ class InnerworthScraper:
             "parse_with_paragraphs_only": self.parse_with_paragraphs_only,
             "parse_with_heading_and_paragraphs": self.parse_with_heading_and_paragraphs
         }
-        self.link_strategies = self.load_strategies(config_path, target_module)
+        try:
+            self.link_strategies = self.load_strategies(config_path, target_module)
+        except ValueError as e:
+            print(f"Error: {e}")
+            self.link_strategies = []  # Set to empty list to prevent further errors
+            # Optionally exit the program here if you want to fail fast
+            import sys
+            sys.exit(1)
 
     def load_strategies(self, path, target_module):
-        with open(path, 'r') as f:
-            config = yaml.safe_load(f)
+        """Load strategies from YAML file with comprehensive error handling
 
-        strategies = []
-        for entry in config['link_strategies']:
-            module = entry['module']
-            if target_module and module != target_module:
-                continue
-            selector = entry['selector']
-            strategy_name = entry.get('strategy', 'parse_with_paragraphs_only')
-            strategy_func = self.strategy_map.get(strategy_name, self.parse_with_paragraphs_only)
-            full_url = self.base_url + module + "/"
-            strategies.append((full_url, selector, strategy_func))
-        return strategies
+        Args:
+            path: Path to the YAML configuration file
+            target_module: Specific module to filter for (None for all modules)
+
+        Returns:
+            List of strategy tuples (base_url, selector, parsing_function)
+
+        Raises:
+            ValueError: If configuration is invalid or module not found
+        """
+        try:
+            # Load YAML file with fallback for empty files
+            with open(path, 'r') as f:
+                config = yaml.safe_load(f) or {'link_strategies': []}
+
+            strategies = []
+            module_found = False
+
+            # Process each strategy entry
+            for entry in config.get('link_strategies', []):
+                module = entry.get('module')
+                selector = entry.get('selector')
+
+                # Validate required fields
+                if not module or not selector:
+                    continue
+
+                # Filter by target module if specified
+                if target_module and module != target_module:
+                    continue
+
+                module_found = True
+
+                # Get parsing strategy function
+                strategy_name = entry.get('strategy', 'parse_with_paragraphs_only')
+                strategy_func = self.strategy_map.get(strategy_name, self.parse_with_paragraphs_only)
+
+                # Construct full URL safely
+                full_url = urljoin(self.base_url, f"{module}/")
+
+                strategies.append((
+                    full_url,
+                    selector,
+                    strategy_func
+                ))
+
+            # Validate we found something
+            if target_module and not module_found:
+                raise ValueError(f"strategies.yml has no content for module '{target_module}'")
+
+            if not strategies:
+                raise ValueError("No valid strategies found in the configuration")
+
+            return strategies
+
+        except yaml.YAMLError as e:
+            raise ValueError(f"Invalid YAML configuration: {str(e)}")
+        except Exception as e:
+            raise ValueError(f"Error loading strategies: {str(e)}")
 
     def fetch_module_page(self, url):
         response = requests.get(url)
@@ -79,6 +133,10 @@ class InnerworthScraper:
         tts.save(output_path)
 
     def scrape_all(self, audio_output_dir=None):
+        if not self.link_strategies:
+            print("No scraping strategies available - cannot continue")
+            return "", []
+
         links_and_strategies = self.extract_links_and_strategies()
         full_text = []
         audio_files = []

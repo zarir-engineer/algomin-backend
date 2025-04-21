@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6dd9c6d9-38f6-4a34-863d-a92053a1a1e8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/tools/scraper.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tools/html_to_audio_cli.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/html_to_audio_cli.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/strategies.yml" beforeDir="false" afterPath="$PROJECT_DIR$/tools/strategies.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,15 +99,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/tools/html_to_audio_cli.py</url>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

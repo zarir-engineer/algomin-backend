@@ -1,0 +1,16 @@
+Failed to fetch https://zerodha.com/varsity/chapter/introduction/: No text to speak
+Scraping: https://zerodha.com/varsity/chapter/perverse-incentives/
+Saved audio to /home/nishith/test-audio/chapter_2.mp3
+Scraping: https://zerodha.com/varsity/chapter/the-nudge/
+Saved audio to /home/nishith/test-audio/chapter_3.mp3
+Scraping: https://zerodha.com/varsity/chapter/skin-in-the-game/
+Saved audio to /home/nishith/test-audio/chapter_4.mp3
+Scraping: https://zerodha.com/varsity/chapter/dunning-kruger-effect/
+Failed to fetch https://zerodha.com/varsity/chapter/dunning-kruger-effect/: No text to speak
+Scraping: https://zerodha.com/varsity/chapter/a-mighty-defence/
+Saved audio to /home/nishith/test-audio/chapter_6.mp3
+Scraping: https://zerodha.com/varsity/chapter/no-free-lunch/
+Failed to fetch https://zerodha.com/varsity/chapter/no-free-lunch/: No text to send to TTS API
+Scraping: https://zerodha.com/varsity/chapter/gimmik-or-not-part-1/
+Saved audio to /home/nishith/test-audio/chapter_8.mp3
+Scraping: https://zerodha.com/varsity/chapter/gimmik-or-not-part-2/

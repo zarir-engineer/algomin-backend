@@ -1,4 +1,5 @@
-from base_observer import BaseObserver
+from .base_observer import BaseObserver
+
 
 class AlertObserver(BaseObserver):
     def update(self, data):

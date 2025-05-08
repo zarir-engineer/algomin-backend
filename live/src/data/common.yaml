@@ -1,6 +1,16 @@
-
 common:  # order basic
-    exchange: "NFO",  # NSE Derivative Segment
-    producttype: "INTRADAY",  # Bracket Order only supports INTRADAY
+    exchange: "NFO"  # NSE Derivative Segment
+    producttype: "INTRADAY"  # Bracket Order only supports INTRADAY
     duration: "DAY"
-    ordertype: "LIMIT",   # LIMIT or MARKET
+    ordertype: "LIMIT"   # LIMIT or MARKET
+
+websocket:
+  mode: full
+  correlation_id: subscription_1234567890
+  token_list:
+    - exchangeType: 2
+      tokens: ["26000"]
+      interval: 60
+    - exchangeType: 1
+      tokens: ["500112"]
+      interval: 30

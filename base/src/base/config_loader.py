@@ -4,7 +4,7 @@
 ✅ Nested Keys Support: Use "api.api_key" instead of manually traversing dictionaries
 ✅ Performance: Avoids unnecessary file reads
 """
-
+import os
 import yaml
 
 class ConfigLoader:
@@ -17,6 +17,10 @@ class ConfigLoader:
         return cls._instance
 
     def _load_config(self, config_path):
+        # Resolve absolute path relative to this file
+        if not os.path.isabs(config_path):
+            config_path = os.path.join(os.path.dirname(__file__), config_path)
+
         with open(config_path, "r") as file:
             self.config = yaml.safe_load(file)
 

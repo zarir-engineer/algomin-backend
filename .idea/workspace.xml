@@ -5,7 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6dd9c6d9-38f6-4a34-863d-a92053a1a1e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/tools/output_html_text.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tools/troubleshoot.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/base/src/base/observer/limit_order_trigger_observer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/database.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/init_db.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/strategy_form.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/strategy_list.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tools/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tools/strategy_loader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/src/base/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/base/src/base/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/src/base/config_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/src/base/config_loader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/src/base/observer/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/src/base/observer/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/src/base/observer/alert.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/src/base/observer/alert.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/src/base/observer/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/src/base/observer/database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/src/base/observer/ema.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/src/base/observer/ema.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/src/base/observer/email.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/src/base/observer/email.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/src/base/observer/logger_observer.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/src/base/observer/logger_observer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/src/base/observer/mongodaba.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/src/base/observer/mongodaba.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/src/base/observer/price_prediction.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/src/base/observer/price_prediction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/src/base/observer/web_socket_base.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/src/base/observer/web_socket_base.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/src/base/session.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/src/base/session.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/live/src/data/common.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/live/src/data/common.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/live/src/live/live_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/live/src/live/live_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/strategies.yml" beforeDir="false" afterPath="$PROJECT_DIR$/tools/strategies.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,23 +61,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/nishith/Documents/GitHub/algomin/tools",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/nishith/Documents/GitHub/algomin/tools&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "yaml",
-      "Python"
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;yaml&quot;,
+      &quot;Python&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/tools" />

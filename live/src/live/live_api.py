@@ -9,6 +9,7 @@
 import time
 import json
 import pytz
+import yaml
 import asyncio
 import datetime
 import threading
@@ -24,10 +25,15 @@ from base.observer import (LoggerObserver,
                            AlertObserver,
                            EmailAlertObserver,
                            DatabaseObserver,
-                           MongoDbObserver,
+                           MongoDBObserver,
                            EMAObserver,
-                           WebSocketObserver
+                           WebSocketRealObserver,
+                           LimitOrderTriggerObserver
                            )
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../")))
+from tools.strategy_loader import load_limit_order_strategies
 
 
 '''
@@ -39,8 +45,7 @@ class SmartWebSocketV2Client:
     """Handles WebSocket connection and observer pattern for market data."""
 
     def __init__(self):
-        session = AngelOneSession()
-        self.auth_token, self.feed_token = session.generate_tokens()  # Auto-generate tokens
+        self.session = AngelOneSession()
 
         self.sws = None  # Store WebSocket instance persistently
         self.lock = threading.Lock()  # Prevent race conditions
@@ -49,6 +54,24 @@ class SmartWebSocketV2Client:
         self.data_queue = deque(maxlen=50)  # Store last 50 data points
         self.correlation_id = f"subscription_{int(time.time())}"  # Generates a unique ID
 
+        # Load WebSocket config from common.yaml
+        try:
+            BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+            # COMMON_YAML_PATH = os.path.join(BASE_DIR, "live", "src", "data", "common.yaml")
+            COMMON_YAML_PATH = os.path.join(BASE_DIR, "..", "data", "common.yaml")  # adjusts relative to the script
+
+            with open(COMMON_YAML_PATH, "r") as f:
+                config = yaml.safe_load(f)
+
+            ws_config = config.get("websocket", {})
+            self.mode = ws_config.get("mode", "full")
+            self.correlation_id = ws_config.get("correlation_id", self.correlation_id)
+            self.token_list = ws_config.get("subscriptions", [])
+        except Exception as e:
+            print(f"⚠️ Failed to load WebSocket config: {e}")
+            self.mode = "full"
+            self.token_list = []
+
     def add_observer(self, observer):
         """Attach an observer."""
         self.observers.append(observer)
@@ -56,7 +79,7 @@ class SmartWebSocketV2Client:
     def notify_observers(self, data):
         """Notify all observers when new market data is received."""
         for observer in self.observers:
-            if isinstance(observer, WebSocketObserver):
+            if isinstance(observer, WebSocketRealObserver):
                 asyncio.run(observer.update(data))  # Async update
             else:
                 observer.update(data)  # Sync update
@@ -76,7 +99,7 @@ class SmartWebSocketV2Client:
                         "action": 1,
                         "params": {
                             "mode": self.mode,
-                            "tokenList": [{"exchangeType": 2, "tokens": ["26000"]}]
+                            "tokenList": self.token_list  # ✅ load from YAML instead of hardcoded
                         }
                     }))
                 else:
@@ -96,6 +119,7 @@ class SmartWebSocketV2Client:
 
     def start_heartbeat_thread(self):
         """Starts the heartbeat in a separate thread."""
+        print('+++ start_heartbeat_thread')
         heartbeat_thread = threading.Thread(target=self.send_heartbeat, daemon=True)
         heartbeat_thread.start()
 
@@ -123,7 +147,7 @@ class SmartWebSocketV2Client:
                     self.sws.subscribe(
                         correlation_id=self.correlation_id,
                         mode=self.mode,
-                        token_list=[{"exchangeType": 2, "tokens": ["26000"], "interval":60}]
+                        token_list=self.token_list
                     )
                     print("✅ Subscription successful!")
                 else:
@@ -133,18 +157,28 @@ class SmartWebSocketV2Client:
 
     def start_websocket(self):
         print("🔄 Starting WebSocket connection...")
+        auth_info = self.session.get_auth_info()
+        if not auth_info or any(i is None for i in auth_info):
+            raise RuntimeError("Auth info retrieval failed — aborting WebSocket start")
+
+        self.AUTH_TOKEN, self.FEED_TOKEN, self.API_KEY, self.CLIENT_ID = (
+            auth_info["auth_token"],
+            auth_info["feed_token"],
+            auth_info["api_key"],
+            auth_info["client_id"]
+        )
 
         while True:
             try:
                 print('Auth Token:', self.AUTH_TOKEN)
                 print('Feed Token:', self.FEED_TOKEN)
 
-                with self.lock:  # Ensure thread safety when setting `self.sws`
+                with self.lock:  # Ensure thread safety when setting self.sws`
                     if not self.sws:  # Initialize only if not already set
                         self.sws = SmartWebSocketV2(
                             self.AUTH_TOKEN,
-                            cnf.API_KEY,
-                            cnf.CLIENT_ID,
+                            self.API_KEY,
+                            self.CLIENT_ID,
                             self.FEED_TOKEN,
                             max_retry_attempt=5
                         )
@@ -169,13 +203,6 @@ class SmartWebSocketV2Client:
             except Exception as e:
                 print(f"⚠️ WebSocket connection failed: {e}")
                 time.sleep(5)  # Retry after a delay
-
-    def add_observer(self, observer):
-        self.observers.append(observer)
-
-    def notify_observers(self, message):
-        for observer in self.observers:
-            observer.update(message)
 
     def time_stamp(self, message):
         data = json.loads(message)  # Convert JSON string to dictionary
@@ -287,18 +314,34 @@ class SmartWebSocketV2Client:
             time.sleep(2)  # Update every 2 seconds
 
 
-# if __name__ == "__main__":
+if __name__ == "__main__":
 #     client = SmartWebSocketV2Client()
 #     client.start_websocket()  # Start WebSocket connection
 #     websocket_instance = comes from fastapi running on another server
     smart_ws_client = SmartWebSocketV2Client()
+    print('+++ smart_ws_client ', smart_ws_client)
     # Add different observers
-    smart_ws_client.add_observer(AlertObserver())
-    smart_ws_client.add_observer(DatabaseObserver())
+    # smart_ws_client.add_observer(AlertObserver())
+    # smart_ws_client.add_observer(DatabaseObserver())
     # smart_ws_client.add_observer(WebSocketObserver(websocket_instance))
-    smart_ws_client.add_observer(EMAObserver(period=10, stop_loss_pct=2, take_profit_pct=4))  # 2% SL, 4% TP
+    # smart_ws_client.add_observer(EMAObserver(period=10, stop_loss_pct=2, take_profit_pct=4))  # 2% SL, 4% TP
     # websocket_instance is coming from fastapi
     # Attach Flask-based WebSocket observer
-    smart_ws_client.add_observer(WebSocketObserver())
+    # smart_ws_client.add_observer(WebSocketObserver())
+    # smart_ws_client.add_observer(LoggerObserver())
+
+    # ✅ Load strategies from YAML
+    strategies = load_limit_order_strategies()
+
+    for strat in strategies:
+        observer = LimitOrderTriggerObserver(
+            symbol_token=strat["symbol_token"],
+            tradingsymbol=strat["tradingsymbol"],
+            target_price=strat["target_price"],
+            quantity=strat["quantity"],
+            order_type=strat["order_type"]
+        )
+        smart_ws_client.add_observer(observer)
+
     # Start WebSocket
     smart_ws_client.start_websocket()

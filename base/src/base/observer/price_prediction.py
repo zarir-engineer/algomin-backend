@@ -4,7 +4,9 @@ from sklearn.linear_model import LinearRegression
 from collections import deque
 import json
 
-class PricePredictionObserver:
+from .base_observer import BaseObserver
+
+class PricePredictionObserver(BaseObserver):
     """Observer that uses ML to predict future prices."""
     def __init__(self, lookback=10):
         self.lookback = lookback  # Number of past data points to use

@@ -1,4 +1,4 @@
-from base_observer import BaseObserver
+from .base_observer import BaseObserver
 
 # Email Alert Observer
 class EmailAlertObserver(BaseObserver):

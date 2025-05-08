@@ -4,9 +4,9 @@ import subprocess
 from pymongo import MongoClient
 
 # custom modules
-from base_observer import BaseObserver
-from logger_observer import LoggerObserver
-from alert import AlertObserver
+from .base_observer import BaseObserver
+from .logger_observer import LoggerObserver
+from .alert import AlertObserver
 
 # Concrete Observer: Stores messages in MongoDB
 class MongoDBObserver(BaseObserver):

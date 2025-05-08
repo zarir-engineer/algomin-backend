@@ -8,4 +8,4 @@ api:
 user:
   client_id: "P74418"  # Your Angel login user-id
   password: "2030"  # Your Angel login password
-  totp: "55QWHV2AP2VJ3UJK5ITAYRZMYI"
+  totp_secret: "55QWHV2AP2VJ3UJK5ITAYRZMYI"

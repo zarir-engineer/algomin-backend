@@ -2,7 +2,7 @@
 import json
 
 # custom modules
-from base_observer import BaseObserver
+from .base_observer import BaseObserver
 
 
 class WebSocketRealObserver(BaseObserver):

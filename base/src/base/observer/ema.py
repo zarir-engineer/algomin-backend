@@ -1,4 +1,4 @@
-from base_observer import BaseObserver
+from .base_observer import BaseObserver
 
 # EMA Observer with Stop-Loss & Take-Profit Tracking
 class EMAObserver(BaseObserver):

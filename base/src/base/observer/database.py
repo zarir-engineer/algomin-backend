@@ -2,7 +2,7 @@
 import sqlite3
 
 # custom modules
-from base_observer import BaseObserver
+from .base_observer import BaseObserver
 
 
 class DatabaseObserver(BaseObserver):

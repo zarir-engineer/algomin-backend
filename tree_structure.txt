@@ -1,0 +1,89 @@
+.
+├── api
+│   ├── __init__.py
+│   └── routes.py
+├── ARCHITECTURE.md
+├── bracket_order
+│   ├── bracket_order_derivative_stock.py
+│   └── __init__.py
+├── config
+│   ├── common.yaml
+│   └── __init__.py
+├── core
+│   ├── config_loader.py
+│   ├── __init__.py
+│   ├── session.py
+│   └── websocket_client.py
+├── data
+│   ├── bo_derivative_data.yaml
+│   ├── bo_stock_data.yaml
+│   ├── config.yml
+│   └── strategies.yml
+├── db
+│   └── database.py
+├── frontend
+│   ├── next-js-frontend.md
+│   ├── README.md
+│   └── send_live_data_to_front_end.py
+├── init_db.py
+├── __init__.py
+├── INSTALL.md
+├── LICENSE
+├── main.py
+├── models
+│   └── models.py
+├── nixpacks.toml
+├── normal_order
+│   ├── __init__.py
+│   └── normal_order_derivative_stock.py
+├── observer
+│   ├── alert.py
+│   ├── base_observer.py
+│   ├── chart.py
+│   ├── database.py
+│   ├── email.py
+│   ├── ema_indicator_query.py
+│   ├── ema.py
+│   ├── __init__.py
+│   ├── limit_order_trigger.py
+│   ├── logger.py
+│   ├── mongodaba.py
+│   ├── price_prediction.py
+│   ├── __pycache__
+│   └── web_socket_base.py
+├── pyproject.toml
+├── README.md
+├── requirements.txt
+├── routes
+│   └── html_to_audio_api.py
+├── server.py
+├── setup.cfg
+├── setup.py
+├── templates
+│   ├── base.html
+│   ├── html_to_audio.html
+│   ├── strategy_form.html
+│   └── strategy_list.html
+├── tests
+│   ├── test_advanced_line_command.py
+│   ├── test_candle_data.py
+│   ├── test_observer_live_api.py
+│   ├── test_observer_smartwebsocketclient.py
+│   ├── test_only_observer.py
+│   ├── test_simple_line_command.py
+│   └── test_smartwebsocket.py
+├── TODO.md
+├── tools
+│   ├── html_to_audio_cli.py
+│   ├── html_to_audio_main.py
+│   ├── HTML_TO_AUDIO.md
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── __init__.cpython-310.pyc
+│   │   └── strategy_loader.cpython-310.pyc
+│   ├── scraper.py
+│   ├── strategy_loader.py
+│   └── troubleshoot.txt
+└── tree_structure.txt
+
+16 directories, 70 files

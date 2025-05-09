@@ -6,11 +6,12 @@ common:  # order basic
 
 websocket:
   mode: full
-  correlation_id: subscription_1234567890
-  token_list:
-    - exchangeType: 2
-      tokens: ["26000"]
-      interval: 60
-    - exchangeType: 1
-      tokens: ["500112"]
-      interval: 30
+  correlation_id: "sub_001"
+  subscriptions:
+    - "26000"
+
+limit_orders:
+  - tradingsymbol: "RELIANCE-EQ"
+    symbol_token: "26000"
+    quantity: 1
+    price: 95.0

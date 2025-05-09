@@ -13,10 +13,7 @@ import yaml
 import asyncio
 import datetime
 import threading
-import pandas as pd
 from logzero import logger
-from collections import deque
-import plotly.graph_objects as go
 from SmartApi.smartWebSocketV2 import SmartWebSocketV2
 
 # custom modules
@@ -32,7 +29,7 @@ from base.observer import (LoggerObserver,
                            )
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../")))
 from tools.strategy_loader import load_limit_order_strategies
 
 
@@ -42,7 +39,16 @@ ws_client.add_observer(ml_observer)  # ML price prediction
 
 
 class SmartWebSocketV2Client:
-    """Handles WebSocket connection and observer pattern for market data."""
+    """
+        Core WebSocket client — responsible only for connection and observer dispatch.
+        What should SmartWebSocketV2Client ideally be responsible for?
+        Only these:
+        Initializing and managing the WebSocket (sws)
+        Handling lifecycle events (on_open, on_data, etc.)
+        Notifying observers
+        Managing threading for heartbeat + message listening
+        Providing utility methods like time_stamp
+    """
 
     def __init__(self):
         self.session = AngelOneSession()
@@ -51,18 +57,17 @@ class SmartWebSocketV2Client:
         self.lock = threading.Lock()  # Prevent race conditions
         self.observers = []  # Store observer instances
         self.stop_heartbeat = False  # Control flag for stopping heartbeat
-        self.data_queue = deque(maxlen=50)  # Store last 50 data points
         self.correlation_id = f"subscription_{int(time.time())}"  # Generates a unique ID
 
-        # Load WebSocket config from common.yaml
-        try:
+    def load_ws_config(self, config_path=None):
+        """Optional method to configure token list and mode externally"""
+        if config_path is None:
             BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-            # COMMON_YAML_PATH = os.path.join(BASE_DIR, "live", "src", "data", "common.yaml")
-            COMMON_YAML_PATH = os.path.join(BASE_DIR, "..", "data", "common.yaml")  # adjusts relative to the script
+            config_path = os.path.join(BASE_DIR, "../live/src", "data", "common.yaml")
 
-            with open(COMMON_YAML_PATH, "r") as f:
+        try:
+            with open(config_path, "r") as f:
                 config = yaml.safe_load(f)
-
             ws_config = config.get("websocket", {})
             self.mode = ws_config.get("mode", "full")
             self.correlation_id = ws_config.get("correlation_id", self.correlation_id)
@@ -137,7 +142,6 @@ class SmartWebSocketV2Client:
 
     def on_open(self, wsapp):
         print("✅ WebSocket Opened!")
-
         time.sleep(1)
 
         try:
@@ -214,73 +218,11 @@ class SmartWebSocketV2Client:
         return local_time.strftime('%Y-%m-%d %H:%M:%S')
 
     def on_data(self, wsapp, message):
-        """Handles incoming live market data and notifies observers."""
-        print(f"📥 Received message: {message}")
-
         try:
             data = json.loads(message)
-            formatted_timestamp = self.time_stamp(message)
-
-            for item in data["data"]:
-                _token = item["token"]
-                _ltp = item.get("ltp", 0) / 100  # Convert price to proper format
-
-                # Store the latest price
-                self.data_queue.append({
-                    "timestamp": formatted_timestamp,
-                    "ltp": _ltp,
-                    "token": _token
-                })
-
-                # Compute EMA
-                price_series = [entry["ltp"] for entry in self.data_queue]
-                ema = pd.Series(price_series).ewm(span=10, adjust=False).mean().iloc[-1]
-
-                # Prepare structured data for observers
-                market_data = {
-                    "timestamp": formatted_timestamp,
-                    "ltp": _ltp,
-                    "ema": ema,
-                    "prev_close": price_series[-2] if len(price_series) > 1 else _ltp  # Track previous close
-                }
-
-                # 🔔 Notify observers (Email alerts, DB storage, WebSocket updates)
-                self.notify_observers(market_data)
-
-                print(f"Token: {_token}, LTP: {_ltp}, EMA: {ema}")
-
+            self.notify_observers(data)
         except Exception as e:
-            print(f"⚠️ Error processing data: {e}")
-
-
-    # def on_data(self, wsapp, message):
-    #     """Handles incoming live market data."""
-    #     print(f"📥 Received message: {message}")  # Debugging
-    #     try:
-    #         formatted_timestamp = self.time_stamp(message)
-    #         data = json.loads(message)
-    #         for item in data["data"]:
-    #             _token = item["token"]
-    #             _item_price = item.get("ltp", 0)  # Last traded price
-    #             row_format = "Exchange Type: {exchange_type}, Token: {token}, Last Traded Price: {last_traded_price:.2f}, Timestamp: {timestamp}"
-    #
-    #             # Format the message data
-    #             formatted_row = row_format.format(
-    #                 exchange_type=data['exchange_type'],
-    #                 token=_token,
-    #                 last_traded_price=_item_price / 100,
-    #                 # Assuming this division by 100 is required for your specific case
-    #                 timestamp=formatted_timestamp
-    #             )
-    #
-    #             # Store data
-    #             self.data_queue.append(formatted_row)
-    #
-    #             # Print latest price
-    #             print(f"Token: {_token}, LTP: {_item_price}")
-    #
-    #     except Exception as e:
-    #         print(f"Error processing data: {e}")
+            print(f"⚠️ Error in on_data: {e}")
 
     def on_close(self, wsapp):
         """Handles WebSocket closing."""
@@ -296,43 +238,17 @@ class SmartWebSocketV2Client:
         print("[WebSocket] Message received")
         self.notify_observers(message)
 
-#TODO this will go inside render cloud server - fastapi
-    def live_chart(self):
-        fig = go.Figure()
-
-        while True:
-            if len(self.data_queue) > 0:
-                df = pd.DataFrame([row.split(", ") for row in self.data_queue], columns=["Exchange Type", "Token", "LTP", "Timestamp"])
-                df["Timestamp"] = pd.to_datetime(df["Timestamp"])
-                df["LTP"] = df["LTP"].str.extract(r"([\d.]+)").astype(float)
-
-                fig.data = []  # Clear old data
-                fig.add_trace(go.Scatter(x=df["Timestamp"], y=df["LTP"], mode="lines", name="LTP"))
-                fig.update_layout(title="Live Market Price", xaxis_title="Time", yaxis_title="Price")
-                fig.show()
-
-            time.sleep(2)  # Update every 2 seconds
-
+    def stop(self):
+        self._running = False
+        if self.sws and self.sws.sock and self.sws.sock.connected:
+            self.sws.close_connection()
+            print("🔴 WebSocket manually stopped.")
 
 if __name__ == "__main__":
-#     client = SmartWebSocketV2Client()
-#     client.start_websocket()  # Start WebSocket connection
-#     websocket_instance = comes from fastapi running on another server
     smart_ws_client = SmartWebSocketV2Client()
-    print('+++ smart_ws_client ', smart_ws_client)
-    # Add different observers
-    # smart_ws_client.add_observer(AlertObserver())
-    # smart_ws_client.add_observer(DatabaseObserver())
-    # smart_ws_client.add_observer(WebSocketObserver(websocket_instance))
-    # smart_ws_client.add_observer(EMAObserver(period=10, stop_loss_pct=2, take_profit_pct=4))  # 2% SL, 4% TP
-    # websocket_instance is coming from fastapi
-    # Attach Flask-based WebSocket observer
-    # smart_ws_client.add_observer(WebSocketObserver())
-    # smart_ws_client.add_observer(LoggerObserver())
-
     # ✅ Load strategies from YAML
     strategies = load_limit_order_strategies()
-
+    print('+++ strategies ', strategies)
     for strat in strategies:
         observer = LimitOrderTriggerObserver(
             symbol_token=strat["symbol_token"],

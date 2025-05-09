@@ -61,4 +61,3 @@ class Order:
         # cancel order
         cancel_response = self.session_obj.smart_api.cancelOrder(order_id=order_id)
         print("Cancel Order Response:", cancel_response)
-

@@ -1,4 +1,6 @@
-> 1️⃣ Market Data Arrives → SmartWebSocketV2Client receives live data from the broker's WebSocket.
+>  _“See [INSTALL.md](INSTALL.md) for setup instructions.”_
+> 
+> > > 1️⃣ Market Data Arrives → SmartWebSocketV2Client receives live data from the broker's WebSocket.
 > 2️⃣ Notifying Backend Observers → The backend observers (e.g., database, email) process the data.
 > 3️⃣ Notifying Frontend Clients →
 

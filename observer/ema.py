@@ -1,4 +1,7 @@
 from .base_observer import BaseObserver
+from .email import EmailAlertObserver
+from collections import deque
+import json
 
 # EMA Observer with Stop-Loss & Take-Profit Tracking
 class EMAObserver(BaseObserver):

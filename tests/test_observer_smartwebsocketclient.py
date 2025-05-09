@@ -3,12 +3,11 @@
 import json
 import unittest
 from unittest.mock import patch
-from collections import deque
 import datetime
 import pytz
 
 # Import the classes
-from live.live_api import LoggerObserver, AlertObserver, EmailAlertObserver, MongoDBObserver, SmartWebSocketV2Client
+from core.websocket_client import LoggerObserver, AlertObserver, EmailAlertObserver, MongoDBObserver, SmartWebSocketV2Client
 
 class TestObservers(unittest.TestCase):
 

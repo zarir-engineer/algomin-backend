@@ -20,31 +20,31 @@ from pathlib import Path
 from abc import ABC, abstractmethod
 
 class LoadConf(ABC):
-    def __init__(self, file_type_config):
-        # Get the absolute path of the YAML file within the package
-        super().__init__()
-        _package_dir = Path(__file__).resolve().parent.parent
-        self.config_file = os.path.join(_package_dir, "data", file_type_config)
+    def __init__(self, config=None, config_file=None):
         self.current_session = Session()
+        if config:
+            self.config = config
+        elif config_file:
+            self.config = self._load_config_from_file(config_file)
+        else:
+            raise ValueError("Must provide either config dict or config_file")
 
-    def load_config(self):
-        """Load YAML configuration file."""
-        with open(self.config_file, "r") as file:
+    def _load_config_from_file(self, file_name):
+        _package_dir = Path(__file__).resolve().parent.parent
+        config_file = os.path.join(_package_dir, "data", file_name)
+        with open(config_file, "r") as file:
             yaml_data = yaml.safe_load(file)
+        return self._flatten(yaml_data)
 
-        result_dict = {}
-
-        def flatten_dict(d, parent_key=""):
-            """Recursively flatten nested YAML structures into a dictionary"""
-            for key, value in d.items():
-                new_key = f"{parent_key}.{key}" if parent_key else key
-                if isinstance(value, dict):
-                    flatten_dict(value, new_key)
-                else:
-                    result_dict[new_key] = value
-
-        flatten_dict(yaml_data)
-        return result_dict
+    def _flatten(self, d, parent_key="", sep="."):
+        result = {}
+        for k, v in d.items():
+            new_key = f"{parent_key}{sep}{k}" if parent_key else k
+            if isinstance(v, dict):
+                result.update(self._flatten(v, new_key, sep=sep))
+            else:
+                result[new_key] = v
+        return result
 
     @abstractmethod
     def execute(self):

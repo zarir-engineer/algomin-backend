@@ -6,6 +6,8 @@
 # FEED_TOKEN from session
 ##########################################################
 # system modules
+import os
+import sys
 import time
 import json
 import pytz
@@ -17,20 +19,9 @@ from logzero import logger
 from SmartApi.smartWebSocketV2 import SmartWebSocketV2
 
 # custom modules
-from base.session import AngelOneSession
-from base.observer import (LoggerObserver,
-                           AlertObserver,
-                           EmailAlertObserver,
-                           DatabaseObserver,
-                           MongoDBObserver,
-                           EMAObserver,
-                           WebSocketRealObserver,
-                           LimitOrderTriggerObserver
-                           )
-import sys
-import os
+from core.session import AngelOneSession
+from observer import WebSocketRealObserver
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../")))
-from tools.strategy_loader import load_limit_order_strategies
 
 
 '''
@@ -243,21 +234,3 @@ class SmartWebSocketV2Client:
         if self.sws and self.sws.sock and self.sws.sock.connected:
             self.sws.close_connection()
             print("🔴 WebSocket manually stopped.")
-
-if __name__ == "__main__":
-    smart_ws_client = SmartWebSocketV2Client()
-    # ✅ Load strategies from YAML
-    strategies = load_limit_order_strategies()
-    print('+++ strategies ', strategies)
-    for strat in strategies:
-        observer = LimitOrderTriggerObserver(
-            symbol_token=strat["symbol_token"],
-            tradingsymbol=strat["tradingsymbol"],
-            target_price=strat["target_price"],
-            quantity=strat["quantity"],
-            order_type=strat["order_type"]
-        )
-        smart_ws_client.add_observer(observer)
-
-    # Start WebSocket
-    smart_ws_client.start_websocket()

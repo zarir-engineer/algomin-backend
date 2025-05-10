@@ -5,67 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6dd9c6d9-38f6-4a34-863d-a92053a1a1e8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/core/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/normal/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/observer/chart.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/bootstrap.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loaders/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loaders/base_loader.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loaders/db_loader.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loaders/yaml_loader.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/start_websocket.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/test_config_loader.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/test_loader_factory.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/loader_factory.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ARCHITECTURE.md" beforeDir="false" afterPath="$PROJECT_DIR$/ARCHITECTURE.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/INSTALL.md" beforeDir="false" afterPath="$PROJECT_DIR$/INSTALL.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TODO.md" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/ARCHITECTURE.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/pyproject.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/src/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/src/base/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/src/base/advanced_line_command.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/src/base/auto_authenticate.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/src/base/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/data/config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/src/base/config_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/config_loader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/src/base/observer/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/observer/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/src/base/observer/alert.py" beforeDir="false" afterPath="$PROJECT_DIR$/observer/alert.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/src/base/observer/base_observer.py" beforeDir="false" afterPath="$PROJECT_DIR$/observer/base_observer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/src/base/observer/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/observer/database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/src/base/observer/ema.py" beforeDir="false" afterPath="$PROJECT_DIR$/observer/ema.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/src/base/observer/email.py" beforeDir="false" afterPath="$PROJECT_DIR$/observer/email.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/src/base/observer/limit_order_trigger_observer.py" beforeDir="false" afterPath="$PROJECT_DIR$/observer/limit_order_trigger.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/src/base/observer/logger_observer.py" beforeDir="false" afterPath="$PROJECT_DIR$/observer/logger.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/src/base/observer/mongodaba.py" beforeDir="false" afterPath="$PROJECT_DIR$/observer/mongodaba.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/src/base/observer/price_prediction.py" beforeDir="false" afterPath="$PROJECT_DIR$/observer/price_prediction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/src/base/observer/web_socket_base.py" beforeDir="false" afterPath="$PROJECT_DIR$/observer/web_socket_base.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/src/base/session.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/session.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/src/base/simple_line_command.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/error.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/data/bo_derivative_data.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/data/bo_derivative_data.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/data/bo_stock_data.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/data/bo_stock_data.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/data/common.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/common.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/bracket/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/bracket/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/bracket/bracket_order_derivative.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/bracket/bracket_order_derivative_stock.py" beforeDir="false" afterPath="$PROJECT_DIR$/bracket/bracket_order_derivative_stock.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/bracket/bracket_order_stock.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/cli_example_01.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/cli_example_multiple_commands_in_argparse.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/ema.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/fastapi-websocket-example.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/live_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/websocket_client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/next-js-frontend.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/next-js-frontend.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/normal/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/normal/normal_order_derivative_stock.py" beforeDir="false" afterPath="$PROJECT_DIR$/normal/normal_order_derivative_stock.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/send_live_data_to_front_end.py" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/send_live_data_to_front_end.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/simple_example_01.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/live/src/live/simple_example_02.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/start.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_algomin.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_observer_live_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_observer_live_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_observer_smartwebsocketclient.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_observer_smartwebsocketclient.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/HTML_TO_AUDIO_README.md" beforeDir="false" afterPath="$PROJECT_DIR$/tools/HTML_TO_AUDIO.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/html_to_audio.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/strategies.yml" beforeDir="false" afterPath="$PROJECT_DIR$/data/strategies.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/common.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/common.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/config_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/config_loader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/session.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/session.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/websocket_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/websocket_client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/observer/limit_order_trigger.py" beforeDir="false" afterPath="$PROJECT_DIR$/observer/limit_order_trigger.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tools/strategy_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/strategy_loader.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -102,7 +60,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/nishith/Documents/GitHub/algomin/core&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/nishith/Documents/GitHub/algomin/loaders&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -114,17 +72,17 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/loaders" />
       <recent name="$PROJECT_DIR$/core" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/tools" />
       <recent name="$PROJECT_DIR$/live/src/live" />
-      <recent name="$PROJECT_DIR$/historical" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/" />
       <recent name="$PROJECT_DIR$/core" />
       <recent name="$PROJECT_DIR$/data" />
       <recent name="$PROJECT_DIR$/frontend" />
-      <recent name="$PROJECT_DIR$/" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>

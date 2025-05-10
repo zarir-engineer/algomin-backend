@@ -1,5 +1,5 @@
 from SmartApi.smartConnect import SmartConnect
-from base.config_loader import ConfigLoader
+from core.config_loader import ConfigLoader
 import pyotp
 
 class AngelOneSession:

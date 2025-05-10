@@ -1,7 +1,13 @@
+import asyncio
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
+
+from core.config_loader import ConfigLoader
 from core.websocket_client import SmartWebSocketV2Client
-from base.observer.ema import EMAObserver
-from base.observer.chart import ChartObserver
+from observer.ema import EMAObserver
+from observer.chart import ChartObserver
+from utils.loader_factory import get_loader
+from observer.limit_order_trigger import LimitOrderTriggerObserver
+
 
 router = APIRouter()
 ws_client = None  # global-like reference
@@ -47,3 +53,26 @@ async def websocket_endpoint(websocket: WebSocket):
             await asyncio.sleep(1)
     except WebSocketDisconnect:
         print("WebSocket disconnected")
+
+
+@router.post("/start-limit-observers/")
+def start_limit_observers():
+    config = ConfigLoader("config/common.yaml")
+    source = config.get("data_source")
+    loader = get_loader(source["type"], source["path"])
+    strategies = loader.load().get("limit_order_strategies", [])
+
+    ws_client = SmartWebSocketV2Client()
+
+    for strat in strategies:
+        observer = LimitOrderTriggerObserver(
+            symbol_token=strat["symbol_token"],
+            tradingsymbol=strat["tradingsymbol"],
+            target_price=strat["target_price"],
+            quantity=strat["quantity"],
+            order_type=strat["order_type"]
+        )
+        ws_client.add_observer(observer)
+
+    ws_client.start_websocket()
+    return {"status": "WebSocket and observers started."}

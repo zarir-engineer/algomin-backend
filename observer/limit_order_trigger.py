@@ -1,5 +1,5 @@
 from .base_observer import BaseObserver
-from base.session import AngelOneSession
+from core.session import AngelOneSession
 
 class LimitOrderTriggerObserver(BaseObserver):
     def __init__(self, tradingsymbol, target_price, quantity, symbol_token, order_type="BUY"):

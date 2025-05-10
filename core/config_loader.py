@@ -1,33 +1,35 @@
-"""
-✅ Single Source of Truth: Reads config.yml only once
-✅ Global Access: Call config.get("key") from anywhere in your code
-✅ Nested Keys Support: Use "api.api_key" instead of manually traversing dictionaries
-✅ Performance: Avoids unnecessary file reads
-"""
-import os
 import yaml
+import os
+
+def load_bootstrap_path():
+    bootstrap_path = os.path.join(os.path.dirname(__file__), "../config/bootstrap.yaml")
+    with open(bootstrap_path) as f:
+        data = yaml.safe_load(f)
+        return data["config_path"]
 
 class ConfigLoader:
-    _instance = None  # Singleton instance
+    _instance = None
 
-    def __new__(cls, config_path="config.yml"):
+    def __new__(cls, config_path=None):
         if cls._instance is None:
             cls._instance = super(ConfigLoader, cls).__new__(cls)
+            if config_path is None:
+                config_path = load_bootstrap_path()
             cls._instance._load_config(config_path)
         return cls._instance
 
     def _load_config(self, config_path):
-        # Resolve absolute path relative to this file
         if not os.path.isabs(config_path):
             config_path = os.path.join(os.path.dirname(__file__), config_path)
-
         with open(config_path, "r") as file:
             self.config = yaml.safe_load(file)
 
     def get(self, key, default=None):
-        """Retrieve nested config values using dot notation."""
         keys = key.split(".")
         value = self.config
         for k in keys:
-            value = value.get(k, {})
+            if isinstance(value, dict):
+                value = value.get(k, {})
+            else:
+                return default
         return value if value else default

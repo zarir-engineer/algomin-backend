@@ -11,7 +11,6 @@ import sys
 import time
 import json
 import pytz
-import yaml
 import asyncio
 import datetime
 import threading
@@ -20,6 +19,7 @@ from SmartApi.smartWebSocketV2 import SmartWebSocketV2
 
 # custom modules
 from core.session import AngelOneSession
+from core.config_loader import ConfigLoader  # adjust import as per your structure
 from observer import WebSocketRealObserver
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../")))
 
@@ -27,6 +27,9 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../")))
 '''
 ws_client.add_observer(ml_observer)  # ML price prediction
 '''
+
+def is_non_empty_list(value):
+    return isinstance(value, list) and len(value) > 0
 
 
 class SmartWebSocketV2Client:
@@ -40,33 +43,51 @@ class SmartWebSocketV2Client:
         Managing threading for heartbeat + message listening
         Providing utility methods like time_stamp
     """
-
-    def __init__(self):
-        self.session = AngelOneSession()
-
+    def __init__(self, api_key, client_id):
+        self.api_key = api_key
+        self.client_id = client_id
+        self.session = AngelOneSession()  # or inject it
+        # Strictly use feed_token from session
+        self.feed_token = self.session.feed_token
         self.sws = None  # Store WebSocket instance persistently
         self.lock = threading.Lock()  # Prevent race conditions
         self.observers = []  # Store observer instances
         self.stop_heartbeat = False  # Control flag for stopping heartbeat
         self.correlation_id = f"subscription_{int(time.time())}"  # Generates a unique ID
+        self.mode = "full"
+        self.token_list = []
 
-    def load_ws_config(self, config_path=None):
-        """Optional method to configure token list and mode externally"""
-        if config_path is None:
-            BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-            config_path = os.path.join(BASE_DIR, "../live/src", "data", "common.yaml")
+    @classmethod
+    def from_config(cls):
+        config_loader = ConfigLoader()
 
-        try:
-            with open(config_path, "r") as f:
-                config = yaml.safe_load(f)
-            ws_config = config.get("websocket", {})
-            self.mode = ws_config.get("mode", "full")
-            self.correlation_id = ws_config.get("correlation_id", self.correlation_id)
-            self.token_list = ws_config.get("subscriptions", [])
-        except Exception as e:
-            print(f"⚠️ Failed to load WebSocket config: {e}")
+        api_key = config_loader.get("api_key")
+        client_code = config_loader.get("client_code")
+
+        instance = cls(api_key, client_code)
+
+        # Load WS config into instance
+        instance.load_ws_config(config_loader)
+
+        return instance
+
+    def load_ws_config(self, config_loader=None):
+        if config_loader is None:
+            config_loader = ConfigLoader()
+
+        self.mode = config_loader.get_common("websocket.mode", "full")
+        if self.mode not in ("full", "lite"):
+            print(f"⚠️ Invalid mode '{self.mode}', defaulting to 'full'")
             self.mode = "full"
-            self.token_list = []
+
+        self.token_list = config_loader.get_common("websocket.subscriptions", [])
+        if not self.token_list:
+            print("⚠️ WebSocket subscriptions list is missing or empty")
+
+        self.correlation_id = config_loader.get_common("websocket.correlation_id", "default-correlation")
+
+        print(f"✅ WS mode: {self.mode}")
+        print(f"✅ Subscriptions: {self.token_list}")
 
     def add_observer(self, observer):
         """Attach an observer."""
@@ -115,13 +136,11 @@ class SmartWebSocketV2Client:
 
     def start_heartbeat_thread(self):
         """Starts the heartbeat in a separate thread."""
-        print('+++ start_heartbeat_thread')
         heartbeat_thread = threading.Thread(target=self.send_heartbeat, daemon=True)
         heartbeat_thread.start()
 
     def listen_websocket(self):
         """Listens for messages from the WebSocket."""
-        print('+++ listen websocket')
         while self.sws and self.sws.sock and self.sws.sock.connected:
             try:
                 message = self.sws.recv()  # Blocking call
@@ -134,7 +153,9 @@ class SmartWebSocketV2Client:
     def on_open(self, wsapp):
         print("✅ WebSocket Opened!")
         time.sleep(1)
-
+        print('+++ correlation id ', self.correlation_id)
+        print('+++ mode ', self.mode)
+        print('+++ token list ', self.token_list)
         try:
             # Ensure `self.sws` is properly initialized
             with self.lock:  # Ensure thread safety
@@ -182,7 +203,6 @@ class SmartWebSocketV2Client:
                         self.sws.on_open = self.on_open
                         self.sws.on_close = self.on_close
                         self.sws.on_error = self.on_error
-
                 self.sws.connect()
                 print('✅ WebSocket connection established ...')
 
@@ -209,6 +229,7 @@ class SmartWebSocketV2Client:
         return local_time.strftime('%Y-%m-%d %H:%M:%S')
 
     def on_data(self, wsapp, message):
+        print('+++ message ', message)
         try:
             data = json.loads(message)
             self.notify_observers(data)

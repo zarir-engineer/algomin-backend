@@ -5,25 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6dd9c6d9-38f6-4a34-863d-a92053a1a1e8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/config/bootstrap.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loaders/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loaders/base_loader.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loaders/db_loader.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loaders/yaml_loader.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/start_websocket.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_config_loader.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_loader_factory.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/loader_factory.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FIRST_STEPS.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/errors.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ARCHITECTURE.md" beforeDir="false" afterPath="$PROJECT_DIR$/ARCHITECTURE.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/INSTALL.md" beforeDir="false" afterPath="$PROJECT_DIR$/INSTALL.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/bootstrap.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/bootstrap.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/common.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/common.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/config_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/config_loader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/session.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/session.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/websocket_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/websocket_client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/observer/limit_order_trigger.py" beforeDir="false" afterPath="$PROJECT_DIR$/observer/limit_order_trigger.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/data/config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/strategies.yml" beforeDir="false" afterPath="$PROJECT_DIR$/data/strategies.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/start_websocket.py" beforeDir="false" afterPath="$PROJECT_DIR$/start_websocket.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tools/strategy_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/strategy_loader.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

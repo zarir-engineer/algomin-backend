@@ -19,8 +19,9 @@ def start_websocket():
     if ws_client:
         return {"status": "already running"}
 
-    ws_client = SmartWebSocketV2Client()
-    ws_client.load_ws_config()
+    ws_client = SmartWebSocketV2Client.from_config()
+    ws_client.load_ws_config()  # Needed to load mode, token_list, etc.
+
 
     ws_client.add_observer(EMAObserver(period=10))
     ws_client.add_observer(ChartObserver())

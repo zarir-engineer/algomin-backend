@@ -1,35 +1,54 @@
 import yaml
-import os
-
-def load_bootstrap_path():
-    bootstrap_path = os.path.join(os.path.dirname(__file__), "../config/bootstrap.yaml")
-    with open(bootstrap_path) as f:
-        data = yaml.safe_load(f)
-        return data["config_path"]
+from pathlib import Path
+from core.errors import YAMLLoadError
 
 class ConfigLoader:
     _instance = None
 
-    def __new__(cls, config_path=None):
+    def __new__(cls, *args, **kwargs):
         if cls._instance is None:
             cls._instance = super(ConfigLoader, cls).__new__(cls)
-            if config_path is None:
-                config_path = load_bootstrap_path()
-            cls._instance._load_config(config_path)
+            cls._instance._init_config(*args, **kwargs)
         return cls._instance
 
-    def _load_config(self, config_path):
-        if not os.path.isabs(config_path):
-            config_path = os.path.join(os.path.dirname(__file__), config_path)
-        with open(config_path, "r") as file:
-            self.config = yaml.safe_load(file)
+    def __init__(self, config_path="data/config.yaml", common_path="data/common.yaml"):
+        base_dir = Path(__file__).resolve().parent.parent
+        self.config_path = base_dir / config_path
+        self.common_path = base_dir / common_path
+
+        self.config = self._load_yaml(self.config_path)
+        self.common = self._load_yaml(self.common_path)
+
+    def _load_yaml(self, config_path):
+        try:
+            config_path = Path(config_path)
+            if not config_path.is_absolute():
+                base_dir = Path(__file__).resolve().parent.parent
+                config_path = base_dir / config_path
+
+            with open(config_path, "r") as f:
+                return yaml.safe_load(f)
+        except YAMLLoadError as e:
+            print(e)
 
     def get(self, key, default=None):
-        keys = key.split(".")
-        value = self.config
+        """
+        Get from config.yaml using dotted path (e.g., "api_key")
+        """
+        return self._get_nested(self.config, key, default)
+
+    def get_common(self, key, default=None):
+        """
+        Get from common.yaml using dotted path (e.g., "websocket.tokenList")
+        """
+        return self._get_nested(self.common, key, default)
+
+    def _get_nested(self, data_dict, dotted_key, default):
+        keys = dotted_key.split(".")
+        val = data_dict
         for k in keys:
-            if isinstance(value, dict):
-                value = value.get(k, {})
+            if isinstance(val, dict):
+                val = val.get(k, default)
             else:
                 return default
-        return value if value else default
+        return val if val else default

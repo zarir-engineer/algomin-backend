@@ -10,12 +10,6 @@ websocket:
   subscriptions:
     - "26000"
 
-limit_orders:
-  - tradingsymbol: "RELIANCE-EQ"
-    symbol_token: "26000"
-    quantity: 1
-    price: 95.0
-
 data_source:
   type: yaml
-  path: data/strategies.yml
+  path: data/strategies.yaml

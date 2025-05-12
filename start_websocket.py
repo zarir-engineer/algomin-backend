@@ -12,9 +12,8 @@ def load_limit_order_strategies():
     return data.get("limit_order_strategies", [])
 
 def main():
-    ws_client = SmartWebSocketV2Client()
+    ws_client = SmartWebSocketV2Client.from_config()
     strategies = load_limit_order_strategies()
-
     for strat in strategies:
         observer = LimitOrderTriggerObserver(
             symbol_token=strat["symbol_token"],

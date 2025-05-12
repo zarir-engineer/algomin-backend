@@ -10,14 +10,14 @@ link_strategies:
     strategy: "parse_with_heading_and_paragraphs"
 
 limit_order_strategies:
-  - symbol_token: "26000"
-    tradingsymbol: "RELIANCE-EQ"
-    target_price: 95
+  - symbol_token: "7"
+    tradingsymbol: "AARTIIND-EQ"
+    target_price: 420
     quantity: 1
     order_type: "BUY"
 
-  - symbol_token: "26009"
-    tradingsymbol: "INFY-EQ"
-    target_price: 1350
-    quantity: 2
+  - symbol_token: "14366"
+    tradingsymbol: "IDEA-EQ"
+    target_price: 5
+    quantity: 1
     order_type: "BUY"

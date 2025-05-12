@@ -5,18 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6dd9c6d9-38f6-4a34-863d-a92053a1a1e8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/FIRST_STEPS.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/errors.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/strategy_loader.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/bootstrap.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/bootstrap.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/common.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/common.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/config_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/config_loader.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/websocket_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/websocket_client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/data/config.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/strategies.yml" beforeDir="false" afterPath="$PROJECT_DIR$/data/strategies.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/start_websocket.py" beforeDir="false" afterPath="$PROJECT_DIR$/start_websocket.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/strategy_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/strategy_loader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/strategies.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/data/strategies.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

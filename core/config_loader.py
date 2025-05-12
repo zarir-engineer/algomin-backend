@@ -8,10 +8,9 @@ class ConfigLoader:
     def __new__(cls, *args, **kwargs):
         if cls._instance is None:
             cls._instance = super(ConfigLoader, cls).__new__(cls)
-            cls._instance._init_config(*args, **kwargs)
         return cls._instance
 
-    def __init__(self, config_path="data/config.yaml", common_path="data/common.yaml"):
+    def __init__(self, config_path="data/config.yaml", common_path="config/common.yaml"):
         base_dir = Path(__file__).resolve().parent.parent
         self.config_path = base_dir / config_path
         self.common_path = base_dir / common_path

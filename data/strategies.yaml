@@ -15,9 +15,11 @@ limit_order_strategies:
     target_price: 420
     quantity: 1
     order_type: "BUY"
+    exchange_type: 1
 
   - symbol_token: "14366"
     tradingsymbol: "IDEA-EQ"
     target_price: 5
     quantity: 1
     order_type: "BUY"
+    exchange_type: 1

@@ -20,6 +20,7 @@ from SmartApi.smartWebSocketV2 import SmartWebSocketV2
 # custom modules
 from core.session import AngelOneSession
 from core.config_loader import ConfigLoader  # adjust import as per your structure
+from core.strategy_loader import StrategyLoader
 from observer import WebSocketRealObserver
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../")))
 
@@ -71,20 +72,19 @@ class SmartWebSocketV2Client:
 
         return instance
 
-    def load_ws_config(self, config_loader=None):
-        if config_loader is None:
-            config_loader = ConfigLoader()
+    def load_ws_config(self):
+        """
+        Now loads token_list from strategies.yaml instead of common.yaml
+        """
+        strategy_loader = StrategyLoader()
+        subscriptions = strategy_loader.extract_subscription_tokens("limit_order_strategies")
 
-        self.mode = config_loader.get_common("websocket.mode", "full")
-        if self.mode not in ("full", "lite"):
-            print(f"⚠️ Invalid mode '{self.mode}', defaulting to 'full'")
-            self.mode = "full"
+        self.token_list = subscriptions
+        self.mode = "full"
+        self.correlation_id = f"limit_order_{int(time.time())}"
 
-        self.token_list = config_loader.get_common("websocket.subscriptions", [])
         if not self.token_list:
-            print("⚠️ WebSocket subscriptions list is missing or empty")
-
-        self.correlation_id = config_loader.get_common("websocket.correlation_id", "default-correlation")
+            print("⚠️ No tokens extracted from strategies.yaml")
 
         print(f"✅ WS mode: {self.mode}")
         print(f"✅ Subscriptions: {self.token_list}")
@@ -109,7 +109,7 @@ class SmartWebSocketV2Client:
 
         while not self.stop_heartbeat:
             try:
-                if self.sws and self.sws.sock and self.sws.sock.connected:
+                if self.is_connected():
                     print("💓 Sending heartbeat: ping")
                     self.sws.send(json.dumps({
                         "correlationID": self.correlation_id,
@@ -141,7 +141,7 @@ class SmartWebSocketV2Client:
 
     def listen_websocket(self):
         """Listens for messages from the WebSocket."""
-        while self.sws and self.sws.sock and self.sws.sock.connected:
+        while self.is_connected():
             try:
                 message = self.sws.recv()  # Blocking call
                 if message:
@@ -233,8 +233,10 @@ class SmartWebSocketV2Client:
         try:
             data = json.loads(message)
             self.notify_observers(data)
+        except json.JSONDecodeError as e:
+            logger.error(f"⚠️ Failed to decode JSON: {e}")
         except Exception as e:
-            print(f"⚠️ Error in on_data: {e}")
+            logger.error(f"⚠️ Error in on_data: {e}")
 
     def on_close(self, wsapp):
         """Handles WebSocket closing."""
@@ -252,6 +254,10 @@ class SmartWebSocketV2Client:
 
     def stop(self):
         self._running = False
-        if self.sws and self.sws.sock and self.sws.sock.connected:
+        if self.is_connected():
             self.sws.close_connection()
             print("🔴 WebSocket manually stopped.")
+
+
+    def is_connected(self):
+        return self.sws and self.sws.sock and self.sws.sock.connected

@@ -1,8 +1,8 @@
 import asyncio
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 
-from core.config_loader import ConfigLoader
-from core.websocket_client import SmartWebSocketV2Client
+from utils.config_loader import ConfigLoader
+from clients.websocket_client import SmartWebSocketV2Client
 from observer.ema import EMAObserver
 from observer.chart import ChartObserver
 from utils.loader_factory import get_loader

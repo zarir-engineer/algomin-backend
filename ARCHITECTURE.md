@@ -1,3 +1,14 @@
+## 🖥️ UI Panels (Future Expansion View)
+
+| Panel               | Powered By              | Features                          |
+|---------------------|--------------------------|------------------------------------|
+| 📈 Live Charts      | SmartWebSocketV2Client   | Candlesticks / ticks / volume     |
+| 📋 Order Panel      | SmartConnectClient       | Buy / Sell / Modify / Cancel      |
+| 🧠 Strategy Viewer  | StrategyManager          | View + trigger strategies         |
+| 📊 Orders & Holdings| SmartConnectClient       | Portfolio / open positions        |
+| 📍 Notifications    | Events from WebSocket or strategy | Real-time alerts & updates |
+
+
 ## 📐 Why This Layout Follows SOLID Principles
 
 | Principle                 | Applied Design Practice |

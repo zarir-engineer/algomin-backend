@@ -5,12 +5,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6dd9c6d9-38f6-4a34-863d-a92053a1a1e8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/core/strategy_loader.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/clients/smart_connect_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/orders/limit_order.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/orders/market_order.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/orders/order_factory.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/orders/stop_loss_order.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/test_placeOrder.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ARCHITECTURE.md" beforeDir="false" afterPath="$PROJECT_DIR$/ARCHITECTURE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bracket_order/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/brokers/base_websocket.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bracket_order/bracket_order_derivative_stock.py" beforeDir="false" afterPath="$PROJECT_DIR$/orders/bracket_order_derivative_stock.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/common.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/common.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/config_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/config_loader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/websocket_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/websocket_client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/config_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/config_loader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/session.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/session.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/strategy_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/strategy_loader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/websocket_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/clients/websocket_client.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/strategies.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/data/strategies.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/normal_order/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/orders/base_order_strategy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/normal_order/normal_order_derivative_stock.py" beforeDir="false" afterPath="$PROJECT_DIR$/orders/normal_order_derivative_stock.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/start_websocket.py" beforeDir="false" afterPath="$PROJECT_DIR$/start_websocket.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_advanced_line_command.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_candle_data.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_config_loader.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_loader_factory.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_observer_live_api.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_observer_smartwebsocketclient.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_only_observer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_simple_line_command.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_smartwebsocket.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tree_structure.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tree_structure.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,11 +90,11 @@
       <recent name="$PROJECT_DIR$/live/src/live" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/orders" />
+      <recent name="$PROJECT_DIR$/clients" />
+      <recent name="$PROJECT_DIR$/utils" />
       <recent name="$PROJECT_DIR$/" />
       <recent name="$PROJECT_DIR$/core" />
-      <recent name="$PROJECT_DIR$/data" />
-      <recent name="$PROJECT_DIR$/frontend" />
-      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="SharedIndexes">

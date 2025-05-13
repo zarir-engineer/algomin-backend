@@ -1,7 +1,6 @@
 from observer.limit_order_trigger import LimitOrderTriggerObserver
-from core.websocket_client import SmartWebSocketV2Client
-from loaders.yaml_loader import YamlLoader
-from core.config_loader import ConfigLoader
+from clients.websocket_client import SmartWebSocketV2Client
+from utils.config_loader import ConfigLoader
 from utils.loader_factory import get_loader  # optional helper
 
 def load_limit_order_strategies():

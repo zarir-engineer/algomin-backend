@@ -1,7 +1,7 @@
 from fastapi import WebSocket
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
-from core.websocket_client import SmartWebSocketV2Client  # Import your WebSocket client
+from clients.websocket_client import SmartWebSocketV2Client  # Import your WebSocket client
 
 from fastapi import FastAPI, Request, Form, Depends
 from sqlalchemy.orm import Session

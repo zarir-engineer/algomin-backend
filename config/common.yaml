@@ -6,10 +6,6 @@ order_defaults:  # order basic
 
 websocket:
   mode: full
-  correlation_id: "sub_001"
-  subscriptions:
-    - exchange_type: 1
-      tokens: ["7", "14366"]
 
 data_source:
   type: yaml

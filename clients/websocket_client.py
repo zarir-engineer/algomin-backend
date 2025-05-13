@@ -10,20 +10,17 @@ import os
 import sys
 import time
 import json
-import pytz
 import asyncio
-import datetime
 import threading
 from logzero import logger
+from brokers.base_websocket import BaseWebSocketClient
 from SmartApi.smartWebSocketV2 import SmartWebSocketV2
 
 # custom modules
 from core.session import AngelOneSession
-from core.config_loader import ConfigLoader  # adjust import as per your structure
-from core.strategy_loader import StrategyLoader
+from utils.config_loader import ConfigLoader  # adjust import as per your structure
 from observer import WebSocketRealObserver
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../")))
-
 
 '''
 ws_client.add_observer(ml_observer)  # ML price prediction
@@ -33,7 +30,7 @@ def is_non_empty_list(value):
     return isinstance(value, list) and len(value) > 0
 
 
-class SmartWebSocketV2Client:
+class SmartWebSocketV2Client(BaseWebSocketClient):
     """
         Core WebSocket client — responsible only for connection and observer dispatch.
         What should SmartWebSocketV2Client ideally be responsible for?
@@ -63,28 +60,27 @@ class SmartWebSocketV2Client:
         config_loader = ConfigLoader()
 
         api_key = config_loader.get("api_key")
-        client_code = config_loader.get("client_code")
+        client_id = config_loader.get("client_id")
 
-        instance = cls(api_key, client_code)
+        instance = cls(api_key, client_id)
 
         # Load WS config into instance
-        instance.load_ws_config(config_loader)
+        instance.load_ws_config()
 
         return instance
 
     def load_ws_config(self):
-        """
-        Now loads token_list from strategies.yaml instead of common.yaml
-        """
-        strategy_loader = StrategyLoader()
-        subscriptions = strategy_loader.extract_subscription_tokens("limit_order_strategies")
+        from core.strategy_loader import StrategyLoader
+        from utils.config_loader import ConfigLoader
 
-        self.token_list = subscriptions
-        self.mode = "full"
+        # Load general WS config
+        config = ConfigLoader("config/common.yaml").get("websocket", {})
+        self.mode = config.get("mode", "full")  # fallback to 'full' if missing
         self.correlation_id = f"limit_order_{int(time.time())}"
 
-        if not self.token_list:
-            print("⚠️ No tokens extracted from strategies.yaml")
+        # Load tokens from strategies.yaml
+        strategy_loader = StrategyLoader()
+        self.token_list = strategy_loader.extract_subscription_tokens("limit_order_strategies")
 
         print(f"✅ WS mode: {self.mode}")
         print(f"✅ Subscriptions: {self.token_list}")
@@ -153,9 +149,6 @@ class SmartWebSocketV2Client:
     def on_open(self, wsapp):
         print("✅ WebSocket Opened!")
         time.sleep(1)
-        print('+++ correlation id ', self.correlation_id)
-        print('+++ mode ', self.mode)
-        print('+++ token list ', self.token_list)
         try:
             # Ensure `self.sws` is properly initialized
             with self.lock:  # Ensure thread safety
@@ -165,7 +158,7 @@ class SmartWebSocketV2Client:
                         mode=self.mode,
                         token_list=self.token_list
                     )
-                    print("✅ Subscription successful!")
+                    print(f"📡 Subscribed to: {json.dumps(self.token_list, indent=2)}")
                 else:
                     print("⚠️ WebSocket instance (self.sws) is not initialized!")
         except Exception as e:
@@ -199,6 +192,7 @@ class SmartWebSocketV2Client:
                             max_retry_attempt=5
                         )
 
+                        self.sws.on_ticks = self.on_ticks
                         self.sws.on_data = self.on_data
                         self.sws.on_open = self.on_open
                         self.sws.on_close = self.on_close
@@ -219,20 +213,17 @@ class SmartWebSocketV2Client:
                 print(f"⚠️ WebSocket connection failed: {e}")
                 time.sleep(5)  # Retry after a delay
 
-    def time_stamp(self, message):
-        data = json.loads(message)  # Convert JSON string to dictionary
-        timestamp = data['exchange_timestamp'] / 1000  # Convert to seconds
-        utc_time = datetime.datetime.utcfromtimestamp(timestamp)
-
-        timezone = pytz.timezone('Asia/Kolkata')
-        local_time = utc_time.replace(tzinfo=pytz.utc).astimezone(timezone)
-        return local_time.strftime('%Y-%m-%d %H:%M:%S')
+    def on_ticks(self, ws, ticks):
+        print("+++ 📈 Ticks received:", ticks)
+        # for tick in ticks:
+        #     token = tick.get("instrument_token")
+        #     last_price = tick.get("last_price")
+        #     print(f"Tick received for token {token}: Last price = {last_price}")
 
     def on_data(self, wsapp, message):
-        print('+++ message ', message)
         try:
             data = json.loads(message)
-            self.notify_observers(data)
+            # self.notify_observers(data)
         except json.JSONDecodeError as e:
             logger.error(f"⚠️ Failed to decode JSON: {e}")
         except Exception as e:
@@ -250,7 +241,7 @@ class SmartWebSocketV2Client:
 
     def on_message(self, wsapp, message):
         print("[WebSocket] Message received")
-        self.notify_observers(message)
+        # self.notify_observers(message)
 
     def stop(self):
         self._running = False

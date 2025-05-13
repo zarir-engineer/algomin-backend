@@ -33,7 +33,7 @@ ws_client.add_observer(ml_observer)  # ML price prediction
 def is_non_empty_list(value):
     return isinstance(value, list) and len(value) > 0
 
-class SmartWebSocketV2Client(BaseWebSocketClient, ObserverMixin, HeartbeatMixin):
+class AngelOneWebSocketV2Client(BaseWebSocketClient, ObserverMixin, HeartbeatMixin):
     """
         Core WebSocket client — responsible only for connection and observer dispatch.
         What should SmartWebSocketV2Client ideally be responsible for?

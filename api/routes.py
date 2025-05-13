@@ -2,7 +2,7 @@ import asyncio
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 
 from utils.ws_config_loader import ConfigLoader
-from brokers.smart_websocket_client import SmartWebSocketV2Client
+from brokers.angelone_websocket_client import AngelOneWebSocketV2Client
 from observer.ema import EMAObserver
 from observer.chart import ChartObserver
 from utils.loader_factory import get_loader
@@ -19,7 +19,7 @@ def start_websocket():
     if ws_client:
         return {"status": "already running"}
 
-    ws_client = SmartWebSocketV2Client.from_config()
+    ws_client = AngelOneWebSocketV2Client.from_config()
     ws_client.load_ws_config()  # Needed to load mode, token_list, etc.
 
 
@@ -63,7 +63,7 @@ def start_limit_observers():
     loader = get_loader(source["type"], source["path"])
     strategies = loader.load().get("limit_order_strategies", [])
 
-    ws_client = SmartWebSocketV2Client()
+    ws_client = AngelOneWebSocketV2Client()
 
     for strat in strategies:
         observer = LimitOrderTriggerObserver(

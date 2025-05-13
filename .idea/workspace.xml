@@ -5,41 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6dd9c6d9-38f6-4a34-863d-a92053a1a1e8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/brokers/base_websocket_client.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/brokers/mixins/heartbeat_mixin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/brokers/mixins/observer_mixin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/brokers/smart_event_handler.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/brokers/websocket_factory.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config_loader/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config_loader/base_config_loader.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config_loader/broker_config_loader.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config_loader/common.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_loader/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sessions/angelone_session.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sessions/base_broker_session.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/strategies/base_order_strategy.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/strategy_loader/base_strategy_loader.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/strategy_loader/yaml_strategy_loader.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brokers/angelone_trading_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brokers/angelone_websocket_event_handler.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brokers/base_trading_client.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ARCHITECTURE.md" beforeDir="false" afterPath="$PROJECT_DIR$/ARCHITECTURE.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brokers/base_websocket.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/clients/smart_connect_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/brokers/smart_connect_client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/clients/websocket_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/brokers/smart_websocket_client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/brokers/USAGE.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/bootstrap.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config_loader/bootstrap.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/common.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/session.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/session.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loaders/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/brokers/base_event_handler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loaders/base_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_loader/base_loader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loaders/db_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_loader/db_loader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loaders/yaml_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_loader/yaml_loader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brokers/smart_event_handler.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/brokers/smart_websocket_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/brokers/angelone_websocket_client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brokers/websocket_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/brokers/websocket_factory.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/start_websocket.py" beforeDir="false" afterPath="$PROJECT_DIR$/start_websocket.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_placeOrder.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_placeOrder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/strategy_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/strategy_loader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/config_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/ws_config_loader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/loader_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/loader_factory.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

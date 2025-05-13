@@ -14,14 +14,24 @@ start_websocket.py	                            Entry point to plug it all togeth
 | 🧪 **Testable**      | You can mock or stub event handlers easily in unit tests |
 
 
+
+| Principle | How it's followed                                      |
+| --------- | ------------------------------------------------------ |
+| SRP       | Each client class handles only its own API logic       |
+| OCP       | New brokers can be added without changing order logic  |
+| DIP       | Strategies depend on the abstract base, not the broker |
+| Testable  | Easy to stub/mock `BaseTradingClient` in tests         |
+
 '''
 
 # start_websocket.py
 from config_loader.broker_config_loader import BrokerConfigLoader
 from sessions.angelone_session import AngelOneSession
-from brokers.smart_websocket_client import SmartWebSocketV2Client
+from brokers.angelone_websocket_client import AngelOneWebSocketV2Client
 from strategy_loader.yaml_strategy_loader import YAMLStrategyLoader
-from brokers.smart_event_handler import SmartWebSocketEventHandler
+from brokers.angelone_trading_client import AngelOneConnectClient
+from brokers.angelone_websocket_event_handler import AngelOneWebSocketEventHandler
+
 
 def main():
     # Step 1: Load config
@@ -29,7 +39,7 @@ def main():
     credentials = config_loader.load_credentials()
     ws_config = config_loader.load_ws_config()
 
-    # Step 2: Load strategies (optional for now)
+    # Step 2: Load strategies
     strategy_loader = YAMLStrategyLoader()
     strategies = strategy_loader.load_strategies("config/strategies.yaml")
     print("📊 Loaded Strategies:", strategies)
@@ -37,9 +47,15 @@ def main():
     # Step 3: Start session
     session = AngelOneSession(credentials)
 
-    # Step 4: Init WebSocket Client
-    ws_client = SmartWebSocketV2Client(session)
-    event_handler = SmartWebSocketEventHandler()
+    # Step 4: Init trading client
+    trading_client = AngelOneConnectClient(session)
+    print("✅ Trading client ready")
+
+    # Step 5: Init event handler
+    event_handler = AngelOneWebSocketEventHandler(strategies, trading_client)
+
+    # Step 6: Init WebSocket client
+    ws_client = AngelOneWebSocketV2Client(session)
     ws_client.set_callbacks(
         event_handler.on_data,
         event_handler.on_open,
@@ -47,15 +63,13 @@ def main():
         event_handler.on_error
     )
 
-    # Step 5: Subscribe to market data
+    # Step 7: Subscribe and start
     ws_client.connect()
     ws_client.subscribe(
         correlation_id=ws_config.get("correlation_id", "sub_default"),
         mode=ws_config.get("mode", "full"),
         token_list=ws_config.get("subscriptions", [])
     )
-
-    # Step 6: Run WebSocket forever
     ws_client.run_forever()
 
 

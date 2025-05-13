@@ -1,7 +1,7 @@
 from fastapi import WebSocket
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
-from brokers.smart_websocket_client import SmartWebSocketV2Client  # Import your WebSocket client
+from brokers.angelone_websocket_client import AngelOneWebSocketV2Client  # Import your WebSocket client
 
 from fastapi import FastAPI, Request, Form, Depends
 from sqlalchemy.orm import Session
@@ -26,7 +26,7 @@ db = mongo_client["trading"]
 collection = db["market_data"]
 
 # Initialize WebSocket Client
-ws_client = SmartWebSocketV2Client(MONGO_URI)
+ws_client = AngelOneWebSocketV2Client(MONGO_URI)
 
 # Store connected WebSocket clients
 active_connections = set()

@@ -8,17 +8,21 @@
 # system modules
 import os
 import sys
-import time
 import json
 import asyncio
-import threading
 from logzero import logger
-from brokers.base_websocket import BaseWebSocketClient
+
+# smart_websocket_client.py
+from brokers.base_websocket_client import BaseWebSocketClient
 from SmartApi.smartWebSocketV2 import SmartWebSocketV2
+from brokers.mixins.observer_mixin import ObserverMixin
+from brokers.mixins.heartbeat_mixin import HeartbeatMixin
+import threading
+import time
 
 # custom modules
 from core.session import AngelOneSession
-from utils.config_loader import ConfigLoader  # adjust import as per your structure
+from utils.ws_config_loader import ConfigLoader  # adjust import as per your structure
 from observer import WebSocketRealObserver
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../")))
 
@@ -29,8 +33,7 @@ ws_client.add_observer(ml_observer)  # ML price prediction
 def is_non_empty_list(value):
     return isinstance(value, list) and len(value) > 0
 
-
-class SmartWebSocketV2Client(BaseWebSocketClient):
+class SmartWebSocketV2Client(BaseWebSocketClient, ObserverMixin, HeartbeatMixin):
     """
         Core WebSocket client — responsible only for connection and observer dispatch.
         What should SmartWebSocketV2Client ideally be responsible for?
@@ -41,49 +44,50 @@ class SmartWebSocketV2Client(BaseWebSocketClient):
         Managing threading for heartbeat + message listening
         Providing utility methods like time_stamp
     """
-    def __init__(self, api_key, client_id):
-        self.api_key = api_key
-        self.client_id = client_id
-        self.session = AngelOneSession()  # or inject it
-        # Strictly use feed_token from session
-        self.feed_token = self.session.feed_token
-        self.sws = None  # Store WebSocket instance persistently
-        self.lock = threading.Lock()  # Prevent race conditions
-        self.observers = []  # Store observer instances
-        self.stop_heartbeat = False  # Control flag for stopping heartbeat
-        self.correlation_id = f"subscription_{int(time.time())}"  # Generates a unique ID
+    def __init__(self, session):
+        super().__init__()
+        ObserverMixin.__init__(self)
+        HeartbeatMixin.__init__(self)
+        self.session = session
+
+        auth_info = self.session.get_auth_info()
+        if not auth_info or any(i is None for i in auth_info.values()):
+            raise RuntimeError("Missing required auth info from session")
+
+        self.auth_token = auth_info["auth_token"]
+        self.feed_token = auth_info["feed_token"]
+        self.api_key = auth_info["api_key"]
+        self.client_id = auth_info["client_id"]
+
+        self.sws = SmartWebSocketV2(
+            self.auth_token,
+            self.api_key,
+            self.client_id,
+            self.feed_token,
+            max_retry_attempt=3
+        )
+        self.lock = threading.Lock()
+        self.correlation_id = f"subscription_{int(time.time())}"
         self.mode = "full"
         self.token_list = []
 
-    @classmethod
-    def from_config(cls):
-        config_loader = ConfigLoader()
+    def connect(self):
+        self.sws.connect()
 
-        api_key = config_loader.get("api_key")
-        client_id = config_loader.get("client_id")
+    def set_callbacks(self, on_data, on_open, on_close, on_error):
+        self.sws.on_data = on_data
+        self.sws.on_open = on_open
+        self.sws.on_close = on_close
+        self.sws.on_error = on_error
 
-        instance = cls(api_key, client_id)
+    def run_forever(self):
+        self.start_heartbeat()
+        self.sws.run_forever()
 
-        # Load WS config into instance
-        instance.load_ws_config()
+    def close(self):
+        self.stop_heartbeat()
+        self.sws.close_connection()
 
-        return instance
-
-    def load_ws_config(self):
-        from core.strategy_loader import StrategyLoader
-        from utils.config_loader import ConfigLoader
-
-        # Load general WS config
-        config = ConfigLoader("config/common.yaml").get("websocket", {})
-        self.mode = config.get("mode", "full")  # fallback to 'full' if missing
-        self.correlation_id = f"limit_order_{int(time.time())}"
-
-        # Load tokens from strategies.yaml
-        strategy_loader = StrategyLoader()
-        self.token_list = strategy_loader.extract_subscription_tokens("limit_order_strategies")
-
-        print(f"✅ WS mode: {self.mode}")
-        print(f"✅ Subscriptions: {self.token_list}")
 
     def add_observer(self, observer):
         """Attach an observer."""

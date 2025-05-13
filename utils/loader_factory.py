@@ -1,4 +1,4 @@
-from loaders.yaml_loader import YamlLoader
+from data_loader.yaml_loader import YamlLoader
 # from loaders.json_loader import JsonLoader  # future
 # from loaders.db_loader import DatabaseLoader  # future
 

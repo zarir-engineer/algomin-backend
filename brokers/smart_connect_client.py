@@ -4,7 +4,6 @@ from SmartApi import SmartConnect
 from orders.order_factory import OrderFactory
 
 
-
 class SmartConnectClient:
     def __init__(self, config_path="data/config.yaml"):
         self.config = self.load_config(config_path)

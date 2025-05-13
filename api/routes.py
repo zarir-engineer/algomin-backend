@@ -1,8 +1,8 @@
 import asyncio
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 
-from utils.config_loader import ConfigLoader
-from clients.websocket_client import SmartWebSocketV2Client
+from utils.ws_config_loader import ConfigLoader
+from brokers.smart_websocket_client import SmartWebSocketV2Client
 from observer.ema import EMAObserver
 from observer.chart import ChartObserver
 from utils.loader_factory import get_loader
@@ -58,7 +58,7 @@ async def websocket_endpoint(websocket: WebSocket):
 
 @router.post("/start-limit-observers/")
 def start_limit_observers():
-    config = ConfigLoader("config/common.yaml")
+    config = ConfigLoader("config_loader/common.yaml")
     source = config.get("data_source")
     loader = get_loader(source["type"], source["path"])
     strategies = loader.load().get("limit_order_strategies", [])

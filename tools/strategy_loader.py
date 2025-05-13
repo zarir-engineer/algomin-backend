@@ -9,7 +9,7 @@ def load_limit_order_strategies():
         return data.get("limit_order_strategies", [])
 
 
-from loaders.yaml_loader import YamlLoader
+from data_loader.yaml_loader import YamlLoader
 
 loader = YamlLoader('data/strategies.yml')
 strategies = loader.load()

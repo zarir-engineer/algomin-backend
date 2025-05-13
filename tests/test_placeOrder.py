@@ -1,6 +1,6 @@
 from logzero import logger
 from SmartApi.smartConnect import SmartConnect
-from utils.config_loader import ConfigLoader  # adjust import as per your structure
+from utils.ws_config_loader import ConfigLoader  # adjust import as per your structure
 import pyotp
 import time
 

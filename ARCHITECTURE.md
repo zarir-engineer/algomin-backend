@@ -1,3 +1,20 @@
+1. start_websocket.py
+   - Load config using BrokerConfigLoader
+   - Load strategy using BaseStrategyLoader (optional at this point)
+   - Create session using broker-specific session class (AngelOneSession)
+   - Create WebSocket client using the session
+
+2. Run client:
+    connect()
+    subscribe()
+    run_forever()
+
+BaseConfigLoader — for broker-agnostic config loading
+BaseStrategyLoader — for broker-agnostic strategy loading
+BaseBrokerSession — generic interface for session creation
+AngelOneSession — SmartAPI-specific implementation of a broker session
+
+
 ## 🖥️ UI Panels (Future Expansion View)
 
 | Panel               | Powered By              | Features                          |

@@ -10,7 +10,7 @@ class ConfigLoader:
             cls._instance = super(ConfigLoader, cls).__new__(cls)
         return cls._instance
 
-    def __init__(self, config_path="data/config.yaml", common_path="config/common.yaml"):
+    def __init__(self, config_path="data/config.yaml", common_path="config_loader/common.yaml"):
         base_dir = Path(__file__).resolve().parent.parent
         self.config_path = base_dir / config_path
         self.common_path = base_dir / common_path
@@ -51,3 +51,39 @@ class ConfigLoader:
             else:
                 return default
         return val if val else default
+
+
+    @classmethod
+    def from_config(cls):
+        config_loader = ConfigLoader()
+
+        api_key = config_loader.get("api_key")
+        client_id = config_loader.get("client_id")
+
+        instance = cls(api_key, client_id)
+
+        # Load WS config into instance
+        instance.load_ws_config()
+
+        return instance
+
+    def load_ws_config(self):
+        from core.strategy_loader import StrategyLoader
+        from utils.ws_config_loader import ConfigLoader
+
+        # Load general WS config
+        config = ConfigLoader("config_loader/common.yaml").get("websocket", {})
+        self.mode = config.get("mode", "full")  # fallback to 'full' if missing
+        self.correlation_id = f"limit_order_{int(time.time())}"
+
+        # Load tokens from strategies.yaml
+        strategy_loader = StrategyLoader()
+        self.token_list = strategy_loader.extract_subscription_tokens("limit_order_strategies")
+
+        print(f"✅ WS mode: {self.mode}")
+        print(f"✅ Subscriptions: {self.token_list}")
+
+def load_ws_config(path="config_loader/common.yaml"):
+    with open(Path(path)) as f:
+        data = yaml.safe_load(f)
+    return data.get("websocket", {})

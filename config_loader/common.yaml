@@ -1,0 +1,22 @@
+order_defaults:  # order basic
+  exchange: "NFO"  # NSE Derivative Segment
+  producttype: "INTRADAY"  # Bracket Order only supports INTRADAY
+  duration: "DAY"
+  ordertype: "LIMIT"   # LIMIT or MARKET
+
+data_source:
+  type: yaml
+  path: data/strategies.yaml
+
+websocket:
+  mode: full
+  correlation_id: "sub_001"
+  subscriptions:
+    - exchange_type: 1
+      tokens: ["123", "456"]
+
+smart_connect:
+  api_key: "liiHdetf"  # As generated in smart API panel
+  client_id: "P74418"  # Your Angel login user-id
+  password: "2030"  # Your Angel login password
+  totp_secret: "55QWHV2AP2VJ3UJK5ITAYRZMYI"

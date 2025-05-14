@@ -10,16 +10,37 @@
 │   ├── __init__.py
 │   └── routes.py
 ├── ARCHITECTURE.md
-├── bracket_order
-│   ├── bracket_order_derivative_stock.py
-│   └── __init__.py
-├── clients
+├── brokers
+│   ├── angelone_trading_client.py
+│   ├── angelone_websocket_client.py
+│   ├── angelone_websocket_event_handler.py
+│   ├── base_event_handler.py
+│   ├── base_trading_client.py
+│   ├── base_websocket_client.py
+│   ├── mixins
+│   │   ├── heartbeat_mixin.py
+│   │   ├── observer_mixin.py
+│   │   └── __pycache__
+│   ├── __pycache__
+│   │   ├── angelone_trading_client.cpython-310.pyc
+│   │   ├── angelone_websocket_client.cpython-310.pyc
+│   │   ├── angelone_websocket_event_handler.cpython-310.pyc
+│   │   ├── base_event_handler.cpython-310.pyc
+│   │   ├── base_trading_client.cpython-310.pyc
+│   │   └── base_websocket_client.cpython-310.pyc
 │   ├── smart_connect_client.py
-│   └── websocket_client.py
-├── config
+│   ├── USAGE.md
+│   └── websocket_factory.py
+├── config_loader
+│   ├── base_config_loader.py
 │   ├── bootstrap.yaml
+│   ├── broker_config_loader.py
 │   ├── common.yaml
-│   └── __init__.py
+│   ├── __init__.py
+│   └── __pycache__
+│       ├── base_config_loader.cpython-310.pyc
+│       ├── broker_config_loader.cpython-310.pyc
+│       └── __init__.cpython-310.pyc
 ├── core
 │   ├── errors.py
 │   ├── __init__.py
@@ -35,6 +56,15 @@
 │   ├── bo_stock_data.yaml
 │   ├── config.yaml
 │   └── strategies.yaml
+├── data_loader
+│   ├── base_loader.py
+│   ├── db_loader.py
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── base_loader.cpython-310.pyc
+│   │   ├── __init__.cpython-310.pyc
+│   │   └── yaml_loader.cpython-310.pyc
+│   └── yaml_loader.py
 ├── db
 │   └── database.py
 ├── FIRST_STEPS.md
@@ -46,27 +76,17 @@
 ├── __init__.py
 ├── INSTALL.md
 ├── LICENSE
-├── loaders
-│   ├── base_loader.py
-│   ├── db_loader.py
-│   ├── __init__.py
-│   ├── __pycache__
-│   │   ├── base_loader.cpython-310.pyc
-│   │   ├── __init__.cpython-310.pyc
-│   │   └── yaml_loader.cpython-310.pyc
-│   └── yaml_loader.py
 ├── logs
 │   ├── 2025-05-12
 │   │   └── app.log
-│   └── 2025-05-13
+│   ├── 2025-05-13
+│   │   └── app.log
+│   └── 2025-05-14
 │       └── app.log
 ├── main.py
 ├── models
 │   └── models.py
 ├── nixpacks.toml
-├── normal_order
-│   ├── __init__.py
-│   └── normal_order_derivative_stock.py
 ├── observer
 │   ├── alert.py
 │   ├── base_observer.py
@@ -95,8 +115,10 @@
 │   └── web_socket_base.py
 ├── orders
 │   ├── base_order_strategy.py
+│   ├── bracket_order_derivative_stock.py
 │   ├── limit_order.py
 │   ├── market_order.py
+│   ├── normal_order_derivative_stock.py
 │   ├── order_factory.py
 │   └── stop_loss_order.py
 ├── __pycache__
@@ -107,9 +129,22 @@
 ├── routes
 │   └── html_to_audio_api.py
 ├── server.py
+├── sessions
+│   ├── angelone_session.py
+│   ├── base_broker_session.py
+│   └── __pycache__
+│       └── angelone_session.cpython-310.pyc
 ├── setup.cfg
 ├── setup.py
 ├── start_websocket.py
+├── strategies
+│   └── base_order_strategy.py
+├── strategy_loader
+│   ├── base_strategy_loader.py
+│   ├── __pycache__
+│   │   ├── base_strategy_loader.cpython-310.pyc
+│   │   └── yaml_strategy_loader.cpython-310.pyc
+│   └── yaml_strategy_loader.py
 ├── templates
 │   ├── base.html
 │   ├── html_to_audio.html
@@ -133,10 +168,10 @@
 │   └── troubleshoot.txt
 ├── tree_structure.txt
 └── utils
-    ├── config_loader.py
     ├── loader_factory.py
-    └── __pycache__
-        ├── config_loader.cpython-310.pyc
-        └── loader_factory.cpython-310.pyc
+    ├── __pycache__
+    │   ├── loader_factory.cpython-310.pyc
+    │   └── ws_config_loader.cpython-310.pyc
+    └── ws_config_loader.py
 
-29 directories, 110 files
+37 directories, 137 files

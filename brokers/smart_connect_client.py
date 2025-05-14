@@ -52,7 +52,10 @@ class SmartConnectClient:
     def get_positions(self):
         return self.smart_api.position()
 
-    def modify_order(self): pass
+    def cancel_order(self, order_id: str) -> dict:
+        return self.api.cancelOrder({"orderid": order_id})
 
-    def cancel_order(self): pass
-
+    def modify_order(self, order_id: str, changes: dict) -> dict:
+        data = {"orderid": order_id}
+        data.update(changes)
+        return self.api.modifyOrder(data)

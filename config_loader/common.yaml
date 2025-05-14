@@ -13,7 +13,7 @@ websocket:
   correlation_id: "sub_001"
   subscriptions:
     - exchange_type: 1
-      tokens: ["123", "456"]
+      tokens: ["26009","1594"]
 
 smart_connect:
   api_key: "liiHdetf"  # As generated in smart API panel

@@ -1,3 +1,12 @@
+start_websocket.py
+├── session = AngelOneSession(...)       ✅ Login & credentials
+├── ws_client = AngelOneWebSocketV2Client(session)   ✅ WebSocket client
+├── ws_client.set_callbacks(...)         ✅ Hand over control
+├── ws_client.connect()                  ✅ Establish connection
+├── ws_client.subscribe(...)             ✅ Send tokens
+└── ws_client.run_forever()              ✅ Wait for ticks (calls .on_data)
+
+
 # 🚀 First Steps with Algomin
 
 Welcome to **Algomin**, your configurable algorithmic trading assistant.

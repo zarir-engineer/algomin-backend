@@ -1,25 +1,26 @@
-from SmartApi import SmartConnect
 import pyotp
-import yaml
+
+from SmartApi import SmartConnect
 
 class AngelOneSession:
-    def __init__(self, config_path="config_loader/common.yaml"):
-        with open(config_path) as f:
-            config = yaml.safe_load(f).get("smart_connect", {})
-
-        self.api_key = config["api_key"]
-        self.client_id = config["client_id"]
-        self.password = config["password"]
-        self.totp_secret = config["totp_secret"]
-
+    def __init__(self, credentials):
+        self.api_key = credentials["api_key"]
+        self.client_id = credentials["client_id"]
+        self.password = credentials["password"]
+        _totp_secret = credentials["totp_secret"]
+        self.totp = pyotp.TOTP(_totp_secret).now()
         self.api = SmartConnect(api_key=self.api_key)
+
+        self.auth_token = None
+        self.feed_token = None
+
         self.login()
 
     def login(self):
-        totp = pyotp.TOTP(self.totp_secret).now()
-        data = self.smart_api.generateSession(self.client_id, self.password, totp)
+        data = self.api.generateSession(self.client_id, self.password, self.totp)
+        self.auth_token = data["data"]["jwtToken"]
         self.feed_token = data["data"]["feedToken"]
-        self.access_token = data["data"]["access_token"]
+        # self.access_token = data["data"]["access_token"]
 
     def get_auth_info(self):
         return {

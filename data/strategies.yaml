@@ -10,7 +10,7 @@ link_strategies:
     strategy: "parse_with_heading_and_paragraphs"
 
 limit_order_strategies:
-  - symbol_token: "3045"
+  - symbol_token: "2885"
     tradingsymbol: "RELIANCE-EQ"
     target_price: 700
     quantity: 1

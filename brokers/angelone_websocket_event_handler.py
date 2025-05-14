@@ -1,40 +1,44 @@
 # brokers/smart_event_handler.py
-
-from brokers.base_event_handler import BaseEventHandler
-import time
+from logzero import logger
 import json
 
-class AngelOneWebSocketEventHandler(BaseEventHandler):
-		def on_data(self, ws, message):
-		    print("📩 TICK:", message)
-		    tick_data = json.loads(message)
+class AngelOneWebSocketEventHandler:
+    def __init__(self, strategy_executor, ws_client=None, correlation_id=None, mode=None, token_list=None):
+        self.strategy_executor = strategy_executor
+        self.ws_client = ws_client  # optional
+        self.correlation_id = correlation_id
+        self.mode = mode
+        self.token_list = token_list
 
-		    for strategy in loaded_strategies:
-		        if strategy.should_trigger(tick_data):  # custom logic
-		            order_data = strategy.build_order()
-		            result = trading_client.place_order(order_data)
-		            print("✅ Order Executed:", result)
-#TODO You might pass them into the event handler via a constructor (more on that later).
+    def on_data(self, ws, message):
+        logger.info("Ticks: {}".format(message))
+        self.close_connection()
+
+        # print("📩 TICK:", message)
+        # try:
+        #     tick_data = json.loads(message)
+        #     print("🔍 Parsed Tick:", tick_data)
+        #     self.strategy_executor.evaluate(tick_data)
+        # except json.JSONDecodeError:
+        #     print("⚠️ Received non-JSON message:", message)
+        # except Exception as e:
+        #     print(f"⚠️ Error in on_data: {e}")
+
     def on_open(self, ws):
         print("✅ WebSocket Opened")
-        time.sleep(1)
-        try:
-            # Ensure `self.sws` is properly initialized
-            with self.lock:  # Ensure thread safety
-                if self.sws:
-                    self.sws.subscribe(
-                        correlation_id=self.correlation_id,
-                        mode=self.mode,
-                        token_list=self.token_list
-                    )
-                    print(f"📡 Subscribed to: {json.dumps(self.token_list, indent=2)}")
-                else:
-                    print("⚠️ WebSocket instance (self.sws) is not initialized!")
-        except Exception as e:
-            print(f"⚠️ Subscription failed: {e}")
+        logger.info("on open")
+        some_error_condition = False
+        if some_error_condition:
+            error_message = "Simulated error"
+            if hasattr(ws, 'on_error'):
+                ws.on_error("Custom Error Type", error_message)
+        else:
+            self.ws_client.subscribe(self.correlation_id, self.mode, self.token_list)
+            # sws.unsubscribe(correlation_id, mode, token_list1)
 
-    def on_close(self, ws):
-        print("❌ WebSocket Closed")
+    def on_close(self, ws): print("❌ WebSocket Closed")
+    def on_error(self, ws, error): print("⚠️ WebSocket Error:", error)
 
-    def on_error(self, ws, error):
-        print("⚠️ WebSocket Error:", error)
+    def close_connection(self):
+        if self.ws_client:
+            self.ws_client.close()

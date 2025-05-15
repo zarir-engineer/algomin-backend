@@ -5,15 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6dd9c6d9-38f6-4a34-863d-a92053a1a1e8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/tests/test_live_data_looking_like_start_websocket.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/brokers/angelone_websocket_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/brokers/angelone_websocket_client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brokers/angelone_websocket_event_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/brokers/angelone_websocket_event_handler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brokers/base_websocket_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/brokers/base_websocket_client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config_loader/common.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config_loader/common.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/strategy_executor.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/strategy_executor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/start_websocket.py" beforeDir="false" afterPath="$PROJECT_DIR$/start_websocket.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_live_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_live_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_live_data_looking_like_start_websocket.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_live_data_looking_like_start_websocket.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

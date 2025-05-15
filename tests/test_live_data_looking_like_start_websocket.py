@@ -47,5 +47,12 @@ ws_client.set_callbacks(
 
 # Step 9: Connect and wait for ticks
 ws_client.connect()
+
+if hasattr(ws_client, "add_observer"):
+    ws_client.add_observer(event_handler)
+
+if hasattr(ws_client, "start_heartbeat"):
+    ws_client.start_heartbeat()
+
 ws_client.run_forever()
 # ws_client.sws._ws.run_forever()

@@ -3,11 +3,11 @@ from SmartApi.smartWebSocketV2 import SmartWebSocketV2
 from brokers.base_websocket_client import BaseWebSocketClient
 import threading
 import time
+from brokers.mixins.heartbeat_mixin import HeartbeatMixin
+from brokers.mixins.observer_mixin import ObserverMixin
 
-from tests.test_live_data import on_control_message
 
-
-class AngelOneWebSocketV2Client(BaseWebSocketClient):
+class AngelOneWebSocketV2Client(BaseWebSocketClient, HeartbeatMixin, ObserverMixin):
     def __init__(self,
                  session,
                  max_retry_attempt,
@@ -17,6 +17,8 @@ class AngelOneWebSocketV2Client(BaseWebSocketClient):
                  retry_duration
                  ):
 
+        HeartbeatMixin.__init__(self)
+        ObserverMixin.__init__(self)
         self.session = session
         auth_info = self.session.get_auth_info()
         self.max_retry_attempt = max_retry_attempt

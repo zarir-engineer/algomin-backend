@@ -3,13 +3,13 @@ from SmartApi.smartConnect import SmartConnect
 import pyotp
 
 
-api_key = 'xxxxxxx'
-username = 'xxxxxx'
-pwd = 'xxxxx'
+api_key = 'liiHdetf'
+username = 'P74418'
+pwd = '2030'
 smartApi = SmartConnect(api_key)
 
 try:
-    token = "fffffP2rrrJKxxxxxxZMYI"
+    token = "55QWHV2AP2VJ3UJK5ITAYRZMYI"
     totp = pyotp.TOTP(token).now()
 except Exception as e:
     logger.error("Invalid Token: The provided token is not valid.")
@@ -60,9 +60,9 @@ else:
     #retry_strategy=1 for exponential retry mechanism
     # sws = SmartWebSocketV2(AUTH_TOKEN, API_KEY, CLIENT_CODE, FEED_TOKEN,max_retry_attempt=3, retry_strategy=1, retry_delay=10,retry_multiplier=2, retry_duration=30)
 
-    def on_data(wsapp, message):
+    def on_data(ws, message):
         logger.info("Ticks: {}".format(message))
-        close_connection()
+        print("+++ Ticks: {}".format(message))
 
     def on_control_message(wsapp, message):
         logger.info(f"Control Message: {message}")

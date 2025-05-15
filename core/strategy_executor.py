@@ -1,10 +1,14 @@
+from logzero import logger
 # strategy_executor.py
 class StrategyExecutor:
-    def __init__(self, strategies, trading_client):
+    def __init__(self, trading_client, strategies=None):
         self.strategies = strategies
         self.trading_client = trading_client
 
     def evaluate(self, tick_data):
+        if not self.strategies:
+            logger.error("Strategies can have some values")
+            return
         for strategy in self.strategies:
             if strategy.get("symbol_token") in tick_data.get("token", ""):
                 print("🧠 Strategy triggered for token:", strategy["symbol_token"])

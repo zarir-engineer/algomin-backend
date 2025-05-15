@@ -36,10 +36,9 @@ def main():
     config_loader = BrokerConfigLoader()
     credentials = config_loader.load_credentials()
     ws_config = config_loader.load_ws_config()
-    # Step 2: Load strategies
-    strategy_loader = YAMLStrategyLoader()
-    strategies = strategy_loader.load_strategies("data/strategies.yaml")
-    print("📊 Loaded Strategies:", strategies)
+
+    # Step 2: Optionally load strategies (skip for live tick test)
+    strategies = []
 
     # Step 3: Start session
     session = AngelOneSession(credentials)
@@ -55,13 +54,15 @@ def main():
     ws_client = AngelOneWebSocketV2Client(session)
 
     # Step 7: Init event handler
-    event_handler = AngelOneWebSocketEventHandler(strategy_executor,
-                                                  ws_client,
-                                                  ws_config.get("correlation_id", "sub_default"),
-                                                  ws_config.get("mode", "full"),
-                                                  ws_config.get("subscriptions", [])
-                                                  )
+    event_handler = AngelOneWebSocketEventHandler(
+        strategy_executor,
+        correlation_id=ws_config.get("correlation_id", "sub_default"),
+        mode=ws_config.get("mode", "full"),
+        token_list=ws_config.get("subscriptions", []),
+        sws=ws_client.sws
+    )
 
+    # Step 8: Attach callbacks
     ws_client.set_callbacks(
         event_handler.on_data,
         event_handler.on_open,
@@ -69,15 +70,8 @@ def main():
         event_handler.on_error
     )
 
-    # Step 8: Subscribe and start
+    # Step 9: Connect and wait for ticks
     ws_client.connect()
-    ws_client.subscribe(
-        correlation_id=ws_config.get("correlation_id", "sub_default"),
-        mode=ws_config.get("mode", "full"),
-        token_list=ws_config.get("subscriptions", [])
-    )
-    ws_client.run_forever()
-
 
 if __name__ == "__main__":
     main()

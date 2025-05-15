@@ -10,7 +10,7 @@ class BaseWebSocketClient(ABC):
     def subscribe(self, correlation_id: str, mode: str, token_list: list): pass
 
     @abstractmethod
-    def set_callbacks(self, on_data, on_open, on_close, on_error): pass
+    def set_callbacks(self, on_data, on_open, on_close, on_error, on_control_message): pass
 
     @abstractmethod
     def run_forever(self): pass

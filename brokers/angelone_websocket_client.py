@@ -4,11 +4,27 @@ from brokers.base_websocket_client import BaseWebSocketClient
 import threading
 import time
 
+from tests.test_live_data import on_control_message
+
+
 class AngelOneWebSocketV2Client(BaseWebSocketClient):
-    def __init__(self, session):
+    def __init__(self,
+                 session,
+                 max_retry_attempt,
+                 retry_strategy,
+                 retry_delay,
+                 retry_multiplier,
+                 retry_duration
+                 ):
 
         self.session = session
         auth_info = self.session.get_auth_info()
+        self.max_retry_attempt = max_retry_attempt
+        self.retry_strategy = retry_strategy
+        self.retry_delay = retry_delay
+        self.retry_multiplier = retry_multiplier
+        self.retry_duration = retry_duration
+
 
         self.auth_token = auth_info["auth_token"]
         self.feed_token = auth_info["feed_token"]
@@ -20,21 +36,23 @@ class AngelOneWebSocketV2Client(BaseWebSocketClient):
             self.api_key,
             self.client_id,
             self.feed_token,
-            max_retry_attempt=2,
-            # retry_strategy=0,
-            # retry_delay=10,
-            # retry_duration=30
+            self.max_retry_attempt,
+            self.retry_strategy,
+            self.retry_delay,
+            self.retry_multiplier,
+            self.retry_duration
         )
         self.lock = threading.Lock()
         self.correlation_id = f"subscription_{int(time.time())}"
         self.mode = "full"
         self.token_list = []
 
-    def set_callbacks(self, on_data, on_open, on_close, on_error):
+    def set_callbacks(self, on_data, on_open, on_close, on_error, on_control_message):
         self.sws.on_data = on_data
         self.sws.on_open = on_open
         self.sws.on_close = on_close
         self.sws.on_error = on_error
+        self.sws.on_control_message = on_control_message
 
     def connect(self):
         self.sws.connect()
@@ -43,6 +61,7 @@ class AngelOneWebSocketV2Client(BaseWebSocketClient):
         self.correlation_id = correlation_id
         self.mode = mode
         self.token_list = token_list
+        print(f'+++ subscribe to : {token_list}')
         self.sws.subscribe(
             correlation_id=self.correlation_id,
             mode=self.mode,
@@ -50,7 +69,11 @@ class AngelOneWebSocketV2Client(BaseWebSocketClient):
         )
 
     def run_forever(self):
-        self.sws.run_forever()
+        if self.sws and self.sws._ws:
+            self.sws._ws.run_forever()
+
+    # def run_forever(self):
+    #     pass
 
     def close(self):
         self.sws.close_connection()

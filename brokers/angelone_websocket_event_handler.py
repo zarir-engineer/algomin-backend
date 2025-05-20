@@ -18,15 +18,22 @@ class AngelOneWebSocketEventHandler:
         from logzero import logger
         logger.info("✅ WebSocket Opened")
 
-        if self.sws and self.correlation_id and self.mode and self.token_list:
-            self.sws.subscribe(
-                correlation_id=self.correlation_id,
-                mode=self.mode,
-                token_list=self.token_list
-            )
+        some_error_condition = False
+        if some_error_condition:
+            error_message = "Simulated error"
+            if hasattr(ws, 'on_error'):
+                ws.on_error("Custom Error Type", error_message)
+        else:
+            if self.sws and self.correlation_id and self.mode and self.token_list:
+                self.sws.subscribe(
+                    correlation_id=self.correlation_id,
+                    mode=self.mode,
+                    token_list=self.token_list
+                )
+
             logger.info(f"📡 Subscribed: {self.token_list}")
 
-    def on_close(self, ws): print("❌ WebSocket Closed")
+    def on_close(self, ws): logger.info("❌ WebSocket Closed")
     def on_error(self, ws, error): print("⚠️ WebSocket Error:", error)
     def on_control_message(self, ws, message): print(f"⚠️ Control Message: {message}")
 

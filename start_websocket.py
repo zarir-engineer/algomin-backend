@@ -33,7 +33,7 @@ def main():
     config_loader = BrokerConfigLoader()
     credentials = config_loader.load_credentials()
     # get credentials for AngelOne and what instrument needs live data
-    ws_config = config_loader.load_ws_config()
+    ws_config = config_loader.load_websocket_config()
 
     # Step 2: Optionally load strategies (skip for live tick test)
     strategies = []
@@ -42,7 +42,7 @@ def main():
     session = AngelOneSession(credentials)
 
     # Step 6: Init WebSocket client
-    retry_config = ws_config.get("websocket.retry", {})
+    retry_config = ws_config.get("retry", {})
     ws_client = AngelOneWebSocketV2Client(
         session,
         max_retry_attempt=retry_config.get("max_attempt", 3),

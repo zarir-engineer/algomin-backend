@@ -6,4 +6,4 @@ class BaseConfigLoader(ABC):
     def load_credentials(self) -> dict: pass
 
     @abstractmethod
-    def load_ws_config(self) -> dict: pass
+    def load_websocket_config(self) -> dict: pass

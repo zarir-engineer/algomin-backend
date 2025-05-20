@@ -1,6 +1,6 @@
 # brokers/smart_trading_client.py
 
-from brokers.base_trading_client import BaseTradingClient
+from brokers.abstract_trading_client import BaseTradingClient
 from SmartApi import SmartConnect
 
 class AngelOneConnectClient(BaseTradingClient):

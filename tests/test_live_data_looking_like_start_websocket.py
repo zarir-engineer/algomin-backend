@@ -7,7 +7,7 @@ from brokers.angelone_websocket_event_handler import AngelOneWebSocketEventHandl
 config_loader = BrokerConfigLoader()
 credentials = config_loader.load_credentials()
 # get credentials for AngelOne and what instrument needs live data
-ws_config = config_loader.load_ws_config()
+ws_config = config_loader.load_websocket_config()
 
 # Step 2: Optionally load strategies (skip for live tick test)
 strategies = []
@@ -16,7 +16,7 @@ strategies = []
 session = AngelOneSession(credentials)
 
 # Step 6: Init WebSocket client
-retry_config = ws_config.get("websocket.retry", {})
+retry_config = ws_config.get("retry", {})
 ws_client = AngelOneWebSocketV2Client(
     session,
     max_retry_attempt=retry_config.get("max_attempt", 3),
@@ -25,8 +25,6 @@ ws_client = AngelOneWebSocketV2Client(
     retry_multiplier=retry_config.get("multiplier", 2),
     retry_duration=retry_config.get("duration", 30)
 )
-
-
 # Step 7: Init event handler
 event_handler = AngelOneWebSocketEventHandler(
     strategy_executor=None,

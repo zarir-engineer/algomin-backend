@@ -20,13 +20,13 @@ data = smartApi.generateSession(username, pwd, totp)
 if data['status'] == False:
     logger.error(data)
 else:
-    # logger.info(f"data: {data}")
+    logger.info(f"data: {data}")
     authToken = data['data']['jwtToken']
     refreshToken = data['data']['refreshToken']
     feedToken = smartApi.getfeedToken()
-    # logger.info(f"Feed-Token :{feedToken}")
+    logger.info(f"Feed-Token :{feedToken}")
     res = smartApi.getProfile(refreshToken)
-    # logger.info(f"Get Profile: {res}")
+    logger.info(f"Get Profile: {res}")
     smartApi.generateToken(refreshToken)
     res=res['data']['exchanges']
 

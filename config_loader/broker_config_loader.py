@@ -20,5 +20,5 @@ class BrokerConfigLoader(BaseConfigLoader):
     def load_credentials(self) -> dict:
         return self.config.get("smart_connect", {})
 
-    def load_ws_config(self) -> dict:
+    def load_websocket_config(self) -> dict:
         return self.config.get("websocket", {})

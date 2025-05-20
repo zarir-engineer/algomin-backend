@@ -1,13 +1,11 @@
-# smart_websocket_client.pya
-from SmartApi.smartWebSocketV2 import SmartWebSocketV2
-from brokers.base_websocket_client import BaseWebSocketClient
-import threading
 import time
-from brokers.mixins.heartbeat_mixin import HeartbeatMixin
+import threading
+
+from brokers.abstract_websocket_client import AbstractWebSocketClient
 from brokers.mixins.observer_mixin import ObserverMixin
+from brokers.custom_angel_one_web_socket import CustomAngelOneWebSocketV2
 
-
-class AngelOneWebSocketV2Client(BaseWebSocketClient, HeartbeatMixin, ObserverMixin):
+class AngelOneWebSocketV2Client(AbstractWebSocketClient, ObserverMixin):
     def __init__(self,
                  session,
                  max_retry_attempt,
@@ -16,9 +14,8 @@ class AngelOneWebSocketV2Client(BaseWebSocketClient, HeartbeatMixin, ObserverMix
                  retry_multiplier,
                  retry_duration
                  ):
-
-        HeartbeatMixin.__init__(self)
-        ObserverMixin.__init__(self)
+        super().__init__()
+        # ObserverMixin.__init__(self)
         self.session = session
         auth_info = self.session.get_auth_info()
         self.max_retry_attempt = max_retry_attempt
@@ -33,7 +30,7 @@ class AngelOneWebSocketV2Client(BaseWebSocketClient, HeartbeatMixin, ObserverMix
         self.api_key = auth_info["api_key"]
         self.client_id = auth_info["client_id"]
 
-        self.sws = SmartWebSocketV2(
+        self.sws = CustomAngelOneWebSocketV2(
             self.auth_token,
             self.api_key,
             self.client_id,
@@ -74,8 +71,8 @@ class AngelOneWebSocketV2Client(BaseWebSocketClient, HeartbeatMixin, ObserverMix
         if self.sws and self.sws._ws:
             self.sws._ws.run_forever()
 
-    # def run_forever(self):
-    #     pass
+    def is_connected(self) -> bool:
+        return self.sws.is_connected()
 
-    def close(self):
+    def disconnect(self):
         self.sws.close_connection()

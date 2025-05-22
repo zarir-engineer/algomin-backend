@@ -5,27 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6dd9c6d9-38f6-4a34-863d-a92053a1a1e8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Procfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/routes.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scratch.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_order_client.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_run_live_order.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_websocket_manager.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/order_builder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.DONOTIGNORE_THIS_REMINDER.md" beforeDir="false" afterPath="$PROJECT_DIR$/.DONOTIGNORE_THIS_REMINDER.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brokers/WebSocketManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_socket_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brokers/angelone_order_client.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/brokers/angelone_trading_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/brokers/angelone_smart_connect_client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brokers/angelone_websocket_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/brokers/angelone_websocket_client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brokers/order_client_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/brokers/order_client_factory.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brokers/smart_connect_client.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/brokers/websocket_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/brokers/websocket_client_factory.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config_loader/broker_config_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/config_loader/broker_config_loader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config_loader/common.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config_loader/common.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sessions/angelone_session.py" beforeDir="false" afterPath="$PROJECT_DIR$/sessions/angelone_session.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_live_data_like_start_websocket.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_live_data_like_start_websocket.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

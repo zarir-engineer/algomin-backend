@@ -1,4 +1,5 @@
 # config_loader.py
+import os
 import yaml
 from pathlib import Path
 from config_loader.base_config_loader import BaseConfigLoader
@@ -17,8 +18,16 @@ class BrokerConfigLoader(BaseConfigLoader):
             print(f"⚠️ Failed to load YAML from {path}: {e}")
             return {}
 
-    def load_credentials(self) -> dict:
-        return self.config.get("smart_connect", {})
+    def load_credentials(self):
+        if os.getenv("RAILWAY_ENVIRONMENT"):
+            return {
+                "api_key": os.environ["API_KEY"],
+                "client_code": os.environ["CLIENT_CODE"],
+                "password": os.environ["PASSWORD"],
+                "totp_secret": os.environ["TOTP_SECRET"],
+            }
+        else:
+            return self.config.get("smart_connect", {})
 
     def load_websocket_config(self) -> dict:
         return self.config.get("websocket", {})

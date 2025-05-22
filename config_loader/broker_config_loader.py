@@ -22,7 +22,7 @@ class BrokerConfigLoader(BaseConfigLoader):
         if os.getenv("RAILWAY_ENVIRONMENT"):
             return {
                 "api_key": os.environ["API_KEY"],
-                "client_code": os.environ["CLIENT_CODE"],
+                "client_id": os.environ["CLIENT_ID"],
                 "password": os.environ["PASSWORD"],
                 "totp_secret": os.environ["TOTP_SECRET"],
             }

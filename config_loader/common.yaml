@@ -22,6 +22,20 @@ websocket:
     - exchangeType: 1
       tokens: ["26009"]
 
+order:
+  tradingsymbol: SBIN-EQ
+  symboltoken: "3045"
+  transactiontype: BUY
+  exchange: NSE
+  ordertype: LIMIT
+  producttype: INTRADAY
+  quantity: 1
+  variety: NORMAL
+  duration: DAY
+  price: "60"
+  squareoff: "0"
+  stoploss: "0"
+
 smart_connect:
   api_key: "liiHdetf"  # As generated in smart API panel
   client_id: "P74418"  # Your Angel login user-id

@@ -1,13 +1,11 @@
-# brokers/websocket_factory.py
-
 from brokers.angelone_websocket_client import AngelOneWebSocketV2Client
 # from brokers.zerodha_websocket_client import ZerodhaWebSocketClient
 
 class WebSocketClientFactory:
     @staticmethod
     def create(broker_name: str, auth_data: dict):
-        if broker_name == "smart_connect":
-            retry_config = auth_data.get("retry_config", {})
+        if broker_name == "angel_one":
+            retry_config = auth_data.get("retry", {})
 
             return AngelOneWebSocketV2Client(
                 session=auth_data["session"],
@@ -28,7 +26,7 @@ class WebSocketClientFactory:
 # EXAMPLE USAGE
 
 
-client = WebSocketClientFactory.create("smart_connect", {
+client = WebSocketClientFactory.create("angel_one", {
     "session": angelone_session,
     "retry_config": {
         "max_attempt": 5,
@@ -40,7 +38,7 @@ client = WebSocketClientFactory.create("smart_connect", {
 })
 
 BROKER_CLIENTS = {
-    "smart_connect": AngelOneWebSocketV2Client,
+    "angel_one": AngelOneWebSocketV2Client,
     "zerodha": ZerodhaWebSocketClient
 }
 """

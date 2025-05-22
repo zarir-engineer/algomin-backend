@@ -28,6 +28,7 @@ class AngelOneSession:
             # logger.info(f" +++ from api Feed-Token :{self.feed_token}")
             res = self.api.getProfile(self.refresh_token)
             # logger.info(f"+++ from api Get Profile: {res}")
+
             self.api.generateToken(self.refresh_token)
             res=res['data']['exchanges']
             # logger.info(f"+++ from api res data exchanges : {res}")

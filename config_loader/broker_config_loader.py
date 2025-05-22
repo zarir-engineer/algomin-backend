@@ -22,3 +22,6 @@ class BrokerConfigLoader(BaseConfigLoader):
 
     def load_websocket_config(self) -> dict:
         return self.config.get("websocket", {})
+
+    def load_order_config(self) -> dict:
+        return self.config.get("order", {})

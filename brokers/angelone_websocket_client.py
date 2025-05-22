@@ -53,6 +53,18 @@ class AngelOneWebSocketV2Client(AbstractWebSocketClient, ObserverMixin):
         self.sws.on_error = on_error
         self.sws.on_control_message = on_control_message
 
+        # NEW: Add observer if available
+        if hasattr(self, "add_observer") and callable(getattr(self, "add_observer", None)):
+            self.add_observer(on_data)  # or pass event_handler if needed
+
+        # NEW: Start heartbeat if supported
+        if hasattr(self.sws, "start_heartbeat"):
+            self.sws.start_heartbeat()
+
+        if not getattr(self, "_heartbeat_started", False):
+            self.sws.start_heartbeat()
+            self._heartbeat_started = True
+
     def connect(self):
         self.sws.connect()
 

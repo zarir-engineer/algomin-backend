@@ -1,18 +1,13 @@
 # brokers/order_client_factory.py
 
-from brokers.angelone_order_client import AngelOneOrderClient
+from brokers.angelone_smart_connect_client import AngelOneConnectClient
 # from brokers.zerodha_order_client import ZerodhaOrderClient
 
 class OrderClientFactory:
     @staticmethod
-    def create(broker_name: str, auth_data: dict):
+    def create(broker_name: str, session):
         if broker_name == "smart_connect":
-            return AngelOneOrderClient(
-                client_id=auth_data["client_id"],
-                api_key=auth_data["api_key"],
-                access_token=auth_data["access_token"],
-                base_url=auth_data.get("base_url", "https://apiconnect.angelone.in/rest")
-            )
+            return AngelOneConnectClient(session)
 
         # elif broker_name == "zerodha":
         #     return ZerodhaOrderClient(...)
@@ -21,11 +16,19 @@ class OrderClientFactory:
             raise ValueError(f"Unsupported broker: {broker_name}")
 
 """ EXAMPLE USAGE
+from sessions.angelone_session import AngelOneSession
+from config_loader.broker_config_loader import BrokerConfigLoader
+from brokers.angelone_websocket_event_handler import AngelOneWebSocketEventHandler
 
-client = OrderClientFactory.create("smart_connect", {
-    "client_id": "P123456",
-    "api_key": "abcd1234",
-    "access_token": "your-token",
+# Step 1: Load credentials and websocket config
+config_loader = BrokerConfigLoader()
+credentials = config_loader.load_credentials()
+ws_config = config_loader.load_websocket_config()
+
+# Step 2: Start AngelOne session
+session = AngelOneSession(credentials)
+
+client = OrderClientFactory.create("smart_connect", {session
 })
 
 order_response = client.place_order({

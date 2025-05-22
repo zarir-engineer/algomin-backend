@@ -81,6 +81,8 @@ celerybeat-schedule
 
 # dotenv
 .env
+config_loader/common.yaml
+
 
 # virtualenv
 venv/

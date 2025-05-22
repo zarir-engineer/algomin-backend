@@ -44,3 +44,7 @@ def place_order(order: OrderRequest):
 def health_check():
     return {"status": "ok"}
 
+
+@router.get("/ping")
+def ping():
+    return {"status": "ok", "message": "algomin backend is live"}

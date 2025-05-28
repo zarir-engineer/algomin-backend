@@ -48,3 +48,8 @@ def health_check():
 @router.get("/ping")
 def ping():
     return {"status": "ok", "message": "algomin backend is live"}
+
+@router.websocket("/ws/stream")
+async def stream_data(websocket: WebSocket):
+    await websocket.accept()
+    ws_manager.add_client(websocket)  # your manager routes SmartWSV2 ticks to this client

@@ -1,12 +1,15 @@
-from fastapi import APIRouter
-
-router = APIRouter()
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 
 from pydantic import BaseModel
 from brokers.order_client_factory import OrderClientFactory
 from sessions.angelone_session import AngelOneSession
 from config_loader.broker_config_loader import BrokerConfigLoader
 from utils.order_builder import OrderBuilder
+
+from web_socket_manager import WebSocketManager
+from brokers.websocket_client_factory import WebSocketClientFactory
+
+router = APIRouter()
 
 class OrderRequest(BaseModel):
     tradingsymbol: str
@@ -49,7 +52,31 @@ def health_check():
 def ping():
     return {"status": "ok", "message": "algomin backend is live"}
 
+
 @router.websocket("/ws/stream")
-async def stream_data(websocket: WebSocket):
+async def stream_data(websocket: WebSocket, broker: str = "angel_one"):
     await websocket.accept()
-    ws_manager.add_client(websocket)  # your manager routes SmartWSV2 ticks to this client
+
+    config_loader = BrokerConfigLoader()
+    credentials = config_loader.load_credentials()
+    session = AngelOneSession(credentials)  # in future, use broker condition
+
+    ws_config = config_loader.load_websocket_config()
+    ws_config["session"] = session
+
+    client = WebSocketClientFactory.create(broker, ws_config)
+    ws_manager = WebSocketManager(client)
+    ws_manager.start()
+
+    try:
+        while True:
+            data = await websocket.receive_json()
+            action = data.get("action")
+            symbol = data.get("symbol")
+
+            if action == "subscribe":
+                ws_manager.register(symbol, websocket)
+            elif action == "unsubscribe":
+                ws_manager.unregister(symbol, websocket)
+    except WebSocketDisconnect:
+        ws_manager.unregister_all(websocket)

@@ -2,12 +2,13 @@ import os
 import yaml
 import argparse
 import requests
+from pathlib import Path
 from gtts import gTTS
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 
 class InnerworthScraper:
-    def __init__(self, config_path="strategies.yml", target_module=None):
+    def __init__(self, config_path="data/strategies.yaml", target_module=None):
         self.base_url = "https://zerodha.com/varsity/module/"
         self.strategy_map = {
             "parse_with_paragraphs_only": self.parse_with_paragraphs_only,
@@ -37,6 +38,16 @@ class InnerworthScraper:
         """
         try:
             # Load YAML file with fallback for empty files
+            if not os.path.isabs(path):
+                base_dir = Path(__file__).parent.parent
+                path = os.path.abspath(os.path.join(base_dir, path))
+
+            try:
+                with open(path, 'r') as f:
+                    config = yaml.safe_load(f) or {'link_strategies': []}
+            except FileNotFoundError as e:
+                print(f"Error loading strategies: {e}")
+                config = {'link_strategies': []}  # Fallback to default config
             with open(path, 'r') as f:
                 config = yaml.safe_load(f) or {'link_strategies': []}
 

@@ -2,12 +2,15 @@ import time
 import threading
 import logging
 from brokers.base_websocket_client import BaseWebSocketClient
+from brokers.mixins.observer_mixin import ObserverMixin
+from fastapi import WebSocket
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-class WebSocketManager:
+class WebSocketManager(ObserverMixin):
     def __init__(self, client: BaseWebSocketClient, retry_config=None, heartbeat_interval=15):
+        super().__init__()  # initialize ObserverMixin
         self.ws_client = client
         self.retry_config = retry_config or {
             "max_attempt": 5,
@@ -74,6 +77,18 @@ class WebSocketManager:
     def is_connected(self):
         return self.ws_client and self.ws_client.is_connected()
 
+    def register(self, symbol, websocket: WebSocket):
+        self.add_observer(symbol, websocket)
+
+    def unregister(self, symbol, websocket: WebSocket):
+        self.remove_observer(symbol, websocket)
+
+    def unregister_all(self, websocket: WebSocket):
+        self.remove_all_for_observer(websocket)
+
+    def stream_tick(self, symbol, data):
+        self.notify_observers(symbol, data)
+
 
 """ HOW TO USE IT
 
@@ -85,6 +100,5 @@ client = WebSocketClientFactory.create("smart_connect", auth_data)
 
 manager = WebSocketManager(client)
 manager.start()
-
 
 """

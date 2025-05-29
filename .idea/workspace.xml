@@ -7,6 +7,18 @@
     <list default="true" id="6dd9c6d9-38f6-4a34-863d-a92053a1a1e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brokers/angelone_websocket_event_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/brokers/angelone_websocket_event_handler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brokers/mixins/observer_mixin.py" beforeDir="false" afterPath="$PROJECT_DIR$/brokers/mixins/observer_mixin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/start_websocket.py" beforeDir="false" afterPath="$PROJECT_DIR$/start_websocket.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/HTML_TO_AUDIO.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/html_to_audio_cli.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/html_to_audio_main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/scraper.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/strategy_loader.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/troubleshoot.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tree_structure.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tree_structure.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_socket_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_socket_manager.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

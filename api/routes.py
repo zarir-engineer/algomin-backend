@@ -27,6 +27,11 @@ class OrderRequest(BaseModel):
     is_exit: bool = False
     trailing_sl: bool = False
 
+@router.get("/")
+def root():
+    return {"status": "ok"}
+
+
 @router.post("/order/place")
 def place_order(order: OrderRequest):
     builder = OrderBuilder(order.dict())

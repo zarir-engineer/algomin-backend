@@ -17,7 +17,7 @@ class CustomAngelOneWebSocketV2(SmartWebSocketV2):
         super().__init__(auth_token, api_key, client_id, feed_token)
         self._connected = False
         self.on_open = self._on_open
-        self.on_close = self._on_close
+        self.on_close = self._on_close_wrapper
         self.on_error = self._on_error
         # Your custom retry params or additional setup
         self.max_retry_attempt = max_retry_attempt
@@ -30,7 +30,13 @@ class CustomAngelOneWebSocketV2(SmartWebSocketV2):
         self._connected = True
         print("WebSocket connected")
 
+    def _on_close_wrapper(self, ws, close_status_code, close_msg):
+        # Call the class-defined 2-param method
+        print(f"WebSocket closed with code {close_status_code}, message: {close_msg}")
+        self._on_close(ws)
+
     def _on_close(self, wsapp):
+        # Optional: Handle or log closure
         self._connected = False
         print("WebSocket closed")
 

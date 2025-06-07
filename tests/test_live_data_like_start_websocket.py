@@ -1,9 +1,9 @@
-from sessions.angelone_session import AngelOneSession
-from config_loader.broker_config_loader import BrokerConfigLoader
-from brokers.angelone_websocket_event_handler import AngelOneWebSocketEventHandler
+from src.algomin.sessions.angelone_session import AngelOneSession
+from src.algomin.config_loader import BrokerConfigLoader
+from src.algomin.brokers.angelone_websocket_event_handler import AngelOneWebSocketEventHandler
 
-from brokers.websocket_client_factory import WebSocketClientFactory
-from web_socket_manager import WebSocketManager
+from src.algomin.brokers.websocket_client_factory import WebSocketClientFactory
+from src.algomin.web_socket_manager import WebSocketManager
 
 
 def main():

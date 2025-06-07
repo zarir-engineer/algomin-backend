@@ -1,4 +1,4 @@
-from brokers.order_client_factory import OrderClientFactory
+from src.algomin.brokers.order_client_factory import OrderClientFactory
 
 auth_data = {
     "client_id": "P123456",

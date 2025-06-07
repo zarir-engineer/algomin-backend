@@ -1,19 +1,17 @@
 .
 ├── add_to_bashrc.sh
-├── algomin.egg-info
-│   ├── dependency_links.txt
-│   ├── entry_points.txt
-│   ├── PKG-INFO
-│   ├── requires.txt
-│   ├── SOURCES.txt
-│   └── top_level.txt
 ├── api
 │   ├── __init__.py
-│   ├── __pycache__
-│   │   ├── __init__.cpython-310.pyc
-│   │   └── routes.cpython-310.pyc
 │   └── routes.py
 ├── ARCHITECTURE.md
+├── audio_tools
+│   ├── html_to_audio_cli.py
+│   ├── html_to_audio_main.py
+│   ├── HTML_TO_AUDIO.md
+│   ├── __init__.py
+│   ├── scraper.py
+│   ├── strategy_loader.py
+│   └── troubleshoot.txt
 ├── brokers
 │   ├── abstract_trading_client.py
 │   ├── abstract_websocket_client.py
@@ -29,15 +27,11 @@
 │   │   └── __pycache__
 │   ├── order_client_factory.py
 │   ├── __pycache__
-│   │   ├── abstract_trading_client.cpython-310.pyc
 │   │   ├── abstract_websocket_client.cpython-310.pyc
-│   │   ├── angelone_smart_connect_client.cpython-310.pyc
 │   │   ├── angelone_websocket_client.cpython-310.pyc
 │   │   ├── angelone_websocket_event_handler.cpython-310.pyc
-│   │   ├── base_event_handler.cpython-310.pyc
 │   │   ├── base_websocket_client.cpython-310.pyc
 │   │   ├── custom_angel_one_web_socket.cpython-310.pyc
-│   │   ├── order_client_factory.cpython-310.pyc
 │   │   └── websocket_client_factory.cpython-310.pyc
 │   ├── USAGE.md
 │   └── websocket_client_factory.py
@@ -54,10 +48,6 @@
 ├── core
 │   ├── errors.py
 │   ├── __init__.py
-│   ├── __pycache__
-│   │   ├── errors.cpython-310.pyc
-│   │   ├── __init__.cpython-310.pyc
-│   │   └── strategy_executor.cpython-310.pyc
 │   └── strategy_executor.py
 ├── data
 │   ├── bo_derivative_data.yaml
@@ -68,10 +58,6 @@
 │   ├── base_loader.py
 │   ├── db_loader.py
 │   ├── __init__.py
-│   ├── __pycache__
-│   │   ├── base_loader.cpython-310.pyc
-│   │   ├── __init__.cpython-310.pyc
-│   │   └── yaml_loader.cpython-310.pyc
 │   └── yaml_loader.py
 ├── db
 │   └── database.py
@@ -85,21 +71,11 @@
 ├── INSTALL.md
 ├── LICENSE
 ├── logs
-│   ├── 2025-05-12
-│   │   └── app.log
-│   ├── 2025-05-13
-│   │   └── app.log
-│   ├── 2025-05-14
-│   │   └── app.log
-│   ├── 2025-05-15
-│   │   └── app.log
-│   ├── 2025-05-20
-│   │   └── app.log
-│   ├── 2025-05-21
-│   │   └── app.log
-│   └── 2025-05-22
+│   └── 2025-06-07
 │       └── app.log
 ├── main.py
+├──  misc
+│   └── websocket_programming.py
 ├── models
 │   └── models.py
 ├── nixpacks.toml
@@ -116,18 +92,6 @@
 │   ├── logger.py
 │   ├── mongodaba.py
 │   ├── price_prediction.py
-│   ├── __pycache__
-│   │   ├── alert.cpython-310.pyc
-│   │   ├── base_observer.cpython-310.pyc
-│   │   ├── database.cpython-310.pyc
-│   │   ├── ema.cpython-310.pyc
-│   │   ├── email.cpython-310.pyc
-│   │   ├── __init__.cpython-310.pyc
-│   │   ├── limit_order_trigger.cpython-310.pyc
-│   │   ├── logger.cpython-310.pyc
-│   │   ├── mongodaba.cpython-310.pyc
-│   │   ├── price_prediction.cpython-310.pyc
-│   │   └── web_socket_base.cpython-310.pyc
 │   └── web_socket_base.py
 ├── orders
 │   ├── base_order_strategy.py
@@ -139,8 +103,8 @@
 │   └── stop_loss_order.py
 ├── Procfile
 ├── __pycache__
-│   ├── main.cpython-310.pyc
-│   └── start_websocket.cpython-310.pyc
+│   ├── start_websocket.cpython-310.pyc
+│   └── web_socket_manager.cpython-310.pyc
 ├── pyproject.toml
 ├── README.md
 ├── requirements.txt
@@ -159,9 +123,6 @@
 │   └── base_order_strategy.py
 ├── strategy_loader
 │   ├── base_strategy_loader.py
-│   ├── __pycache__
-│   │   ├── base_strategy_loader.cpython-310.pyc
-│   │   └── yaml_strategy_loader.cpython-310.pyc
 │   └── yaml_strategy_loader.py
 ├── templates
 │   ├── base.html
@@ -170,11 +131,7 @@
 │   └── strategy_list.html
 ├── tests
 │   ├── __pycache__
-│   │   ├── test_live_data.cpython-310.pyc
-│   │   ├── test_live_data_like_start_websocket.cpython-310.pyc
-│   │   ├── test_live_data_looking_like_start_websocket.cpython-310.pyc
-│   │   ├── test_placeOrder.cpython-310.pyc
-│   │   └── test_run_live_order.cpython-310.pyc
+│   │   └── test_live_data.cpython-310.pyc
 │   ├── test_live_data_like_start_websocket.py
 │   ├── test_live_data_looking_like_start_websocket.py
 │   ├── test_live_data.py
@@ -183,24 +140,10 @@
 │   ├── test_run_live_order.py
 │   └── test_websocket_manager.py
 ├── TODO.md
-├── tools
-│   ├── html_to_audio_cli.py
-│   ├── html_to_audio_main.py
-│   ├── HTML_TO_AUDIO.md
-│   ├── __init__.py
-│   ├── __pycache__
-│   │   ├── __init__.cpython-310.pyc
-│   │   └── strategy_loader.cpython-310.pyc
-│   ├── scraper.py
-│   ├── strategy_loader.py
-│   └── troubleshoot.txt
 ├── tree_structure.txt
 ├── utils
 │   ├── loader_factory.py
-│   ├── order_builder.py
-│   └── __pycache__
-│       ├── loader_factory.cpython-310.pyc
-│       └── order_builder.cpython-310.pyc
+│   └── order_builder.py
 └── web_socket_manager.py
 
-42 directories, 161 files
+29 directories, 117 files

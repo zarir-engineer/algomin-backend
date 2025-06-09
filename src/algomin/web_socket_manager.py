@@ -1,8 +1,8 @@
 import time
 import threading
 import logging
-from brokers.base_websocket_client import BaseWebSocketClient
-from brokers.mixins.observer_mixin import ObserverMixin
+from src.algomin.brokers.base_websocket_client import BaseWebSocketClient
+from src.algomin.brokers.mixins.observer_mixin import ObserverMixin
 from fastapi import WebSocket
 
 logging.basicConfig(level=logging.INFO)

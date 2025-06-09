@@ -3,7 +3,7 @@ from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 from pydantic import BaseModel
 from src.algomin.brokers.order_client_factory import OrderClientFactory
 from src.algomin.sessions.angelone_session import AngelOneSession
-from src.algomin.config_loader import BrokerConfigLoader
+from src.algomin.config_loader.broker_config_loader import BrokerConfigLoader
 from src.algomin.utils.order_builder import OrderBuilder
 
 from src.algomin.web_socket_manager import WebSocketManager

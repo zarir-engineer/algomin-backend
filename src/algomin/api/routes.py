@@ -27,6 +27,7 @@ class OrderRequest(BaseModel):
     is_exit: bool = False
     trailing_sl: bool = False
 
+
 @router.get("/")
 def root():
     return {"status": "ok"}
@@ -56,6 +57,11 @@ def health_check():
 @router.get("/ping")
 def ping():
     return {"status": "ok", "message": "algomin backend is live"}
+
+
+@router.get("/ws/stream")
+async def ws_stream_info():
+    return {"info": "This endpoint only speaks WebSocket — use a WS client."}
 
 
 @router.websocket("/ws/stream")

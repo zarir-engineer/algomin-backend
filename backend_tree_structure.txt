@@ -1,6 +1,7 @@
 .
 ├── add_to_bashrc.sh
 ├── ARCHITECTURE.md
+├── backend_tree_structure.txt
 ├── bin
 │   ├── init_db.py
 │   └── start_websocket.py
@@ -63,4 +64,4 @@
 ├── TODO.md
 └── tree_structure.txt
 
-23 directories, 40 files
+23 directories, 41 files

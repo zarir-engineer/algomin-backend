@@ -1,5 +1,6 @@
-from fastapi import APIRouter, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect, Query, HTTPException
 
+from typing import Optional
 from pydantic import BaseModel
 from src.algomin.brokers.order_client_factory import OrderClientFactory
 from src.algomin.sessions.angelone_session import AngelOneSession
@@ -10,6 +11,7 @@ from src.algomin.web_socket_manager import WebSocketManager
 from src.algomin.brokers.websocket_client_factory import WebSocketClientFactory
 
 router = APIRouter()
+
 
 class OrderRequest(BaseModel):
     tradingsymbol: str
@@ -47,6 +49,47 @@ def place_order(order: OrderRequest):
 
     clean_order = builder.build()
     return client.place_order(clean_order)
+
+@router.get("/candles")
+def get_candles(
+    symbol: str = Query(..., description="Trading symbol, e.g. NIFTY21JUL6700CE"),
+    interval: str = Query(..., description="Candle interval, e.g. ‘ONE_MINUTE’, ‘FIVE_MINUTE’, etc."),
+    from_ts: Optional[int] = Query(None, alias="from", description="Unix timestamp (milliseconds) for start"),
+    to_ts:   Optional[int] = Query(None, alias="to",   description="Unix timestamp (milliseconds) for end"),
+    limit:   Optional[int] = Query(None, description="Max number of bars to return"),
+    **extra_params  # will capture any other query params you tack on
+    ):
+    """
+    Fetch historical candlestick data from AngelOne.
+    """
+    # --- initialize session ---
+    config_loader = BrokerConfigLoader()
+    creds = config_loader.load_credentials()
+    session = AngelOneSession(creds)
+
+    # --- prepare upstream params ---
+    params = {
+        "symboltoken": symbol,
+        "interval": interval,
+    }
+    if from_ts is not None:
+        params["from"] = from_ts
+    if to_ts is not None:
+        params["to"] = to_ts
+    if limit is not None:
+        params["limit"] = limit
+    # include any additional filters
+    params.update(extra_params)
+
+    try:
+        # SmartConnect’s method for fetching candles is typically named `getCandleData`
+        resp = session.api.getCandleData(**params)
+    except Exception as e:
+        # Bubble up a 502 if AngelOne is unhappy
+        raise HTTPException(status_code=502, detail=f"Upstream error: {e}")
+
+    # `resp` should already be JSON-serializable (list of [time, open, high, low, close, volume] arrays)
+    return resp
 
 
 @router.get("/health")

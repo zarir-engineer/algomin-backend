@@ -79,7 +79,7 @@ python -m algomin.start_websocket
 #### Run Web Interface (Optional)
 Start the FastAPI server:
 
-uvicorn web.main:app --reload
+uvicorn main:app --reload
 
 Visit in your browser:
 

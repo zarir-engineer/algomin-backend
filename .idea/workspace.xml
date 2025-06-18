@@ -5,12 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6dd9c6d9-38f6-4a34-863d-a92053a1a1e8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documentation.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/algomin/factory/broker_factory.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/algomin/sessions/zerodha_session.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FIRST_STEPS.md" beforeDir="false" afterPath="$PROJECT_DIR$/FIRST_STEPS.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/algomin/api/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/algomin/api/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree_structure.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tree_structure.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algomin/sessions/angelone_session.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/algomin/sessions/angelone_session.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/algomin/sessions/base_broker_session.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/algomin/sessions/base_broker_session.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,30 +39,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/sinhurry/Documents/GitHub/algomin/src/algomin&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/sinhurry/Documents/GitHub/algomin/src/algomin/sessions",
+    "settings.editor.selected.configurable": "settings.sync"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
-      &quot;yaml&quot;,
-      &quot;Python&quot;
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "yaml",
+      "Python"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/algomin/sessions" />
       <recent name="$PROJECT_DIR$/config_loader" />
       <recent name="$PROJECT_DIR$/tests" />
       <recent name="$PROJECT_DIR$/loaders" />
       <recent name="$PROJECT_DIR$/core" />
-      <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/algomin" />

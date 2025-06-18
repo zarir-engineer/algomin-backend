@@ -1,8 +1,11 @@
 import pyotp
 from logzero import logger
 from SmartApi import SmartConnect
+from typing import Any, Dict, Optional
+from src.algomin.sessions.base_broker_session import BaseBrokerSession  # your abstract base
 
-class AngelOneSession:
+
+class AngelOneSession(BaseBrokerSession):
     def __init__(self, credentials):
         self.api_key = credentials["api_key"]
         self.client_id = credentials["client_id"]
@@ -42,3 +45,36 @@ class AngelOneSession:
             "api_key": self.api_key,
             "client_id": self.client_id
         }
+
+    def fetch_candles(
+        self,
+        symbol: str,
+        interval: str,
+        from_ts: Optional[int] = None,
+        to_ts: Optional[int] = None,
+        limit: Optional[int] = None,
+        **extra_params: Any
+    ) -> Any:
+        """
+        Fetch historical candlestick data via AngelOne’s REST API.
+        Delegates to SmartConnect’s getCandleData under the hood.
+        """
+        # Map our unified args to SmartConnect fields
+        params: Dict[str, Any] = {
+            "symboltoken": symbol,
+            "interval": interval,
+        }
+        if from_ts is not None:
+            params["from"] = from_ts
+        if to_ts is not None:
+            params["to"] = to_ts
+        if limit is not None:
+            params["limit"] = limit
+
+        # Attach any broker-specific extras
+        params.update(extra_params)
+
+        # Perform the request
+        resp = self.api.getCandleData(**params)
+        # Optionally: validate/normalize resp here before returning
+        return resp

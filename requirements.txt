@@ -23,7 +23,7 @@ joblib==1.4.2
 logzero==1.7.0
 motor==3.7.0
 narwhals==1.32.0
-numpy==1.25.2 --only-binary=numpy
+numpy==1.26.4 --only-binary=numpy
 packaging==24.2
 pandas==2.0.3
 plotly==6.0.0

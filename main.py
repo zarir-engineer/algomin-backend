@@ -28,8 +28,6 @@ async def add_csp_header(request: Request, call_next):
     )
     return response
 
-
-
 @app.get("/symbols.json", response_class=FileResponse)
 async def serve_symbols():
     # this path is relative to main.py

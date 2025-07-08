@@ -1,27 +1,27 @@
 .
 ├── add_to_bashrc.sh
 ├── ARCHITECTURE.md
-├── bin
-│   ├── init_db.py
-│   └── start_websocket.py
+├── backend_tree_structure.txt
+├── build.sh
 ├── data
 │   └── static
 │       ├── bo_derivative_data.yaml
 │       ├── bo_stock_data.yaml
 │       ├── config.yaml.example
 │       └── strategies.yaml
+├── documentation.md
 ├── FIRST_STEPS.md
 ├── __init__.py
 ├── INSTALL.md
 ├── LICENSE
-├── logs
-│   └── 2025-06-07
-│       └── app.log
 ├── main.py
 ├──  misc
 │   └── websocket_programming.py
 ├── nixpacks.toml
+├── package-lock.json
 ├── Procfile
+├── public
+│   └── symbols.json
 ├── __pycache__
 │   └── main.cpython-310.pyc
 ├── pyproject.toml
@@ -34,6 +34,7 @@
 │   │   ├── api
 │   │   ├── brokers
 │   │   ├── config_loader
+│   │   ├── factory
 │   │   ├── __init__.py
 │   │   ├── models
 │   │   ├── observer
@@ -49,8 +50,7 @@
 ├── templates
 │   └── index.html
 ├── tests
-│   ├── __pycache__
-│   │   └── test_live_data.cpython-310.pyc
+│   ├── conftest.py
 │   ├── test_api_routes.py
 │   ├── test_config_loader.py
 │   ├── test_live_data_like_start_websocket.py
@@ -63,4 +63,4 @@
 ├── TODO.md
 └── tree_structure.txt
 
-23 directories, 40 files
+21 directories, 42 files

@@ -9,9 +9,10 @@ from src.algomin.utils.order_builder import OrderBuilder
 
 from src.algomin.web_socket_manager import WebSocketManager
 from src.algomin.brokers.websocket_client_factory import WebSocketClientFactory
+from src.algomin.api.brokers import router as brokers_router
 
 router = APIRouter()
-
+router.include_router(brokers_router)
 
 class OrderRequest(BaseModel):
     tradingsymbol: str
